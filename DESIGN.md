@@ -25,7 +25,7 @@ En cada página, en este orden, y sin cargar fuentes de terceros:
 <link rel="stylesheet" href="design-system/components.css">
 ```
 
-Temas: `light`, `dark`, `high-contrast` vía `data-theme` en `<html>`. Por defecto sigue `prefers-contrast: more` → `high-contrast`, luego `prefers-color-scheme: dark` → `dark`. Ofrece un selector de apariencia (ver `reference`).
+Temas: `light`, `dark`, `high-contrast` vía `data-theme` en `<html>`. Por defecto siempre abre en `light` (identidad de marca); solo si la persona elige explícitamente "Automática" en el selector de apariencia se sigue `prefers-contrast: more` → `high-contrast`, luego `prefers-color-scheme: dark` → `dark`. La elección se recuerda en `localStorage`. Ofrece un selector de apariencia (ver `reference`).
 
 ## 3. Reglas obligatorias (resumen; detalle en la sección 8)
 

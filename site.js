@@ -20,7 +20,7 @@
   var sel = $('#theme');
   if (sel) {
     var saved = null; try { saved = localStorage.getItem('plenitud-theme'); } catch (e) {}
-    sel.value = saved || 'auto';
+    sel.value = saved || 'light'; /* matches the pre-paint script's default so the switch never lies about what's on screen */
     var apply = function () {
       var v = sel.value, m = function (q) { return window.matchMedia(q).matches; };
       document.documentElement.dataset.theme = v !== 'auto' ? v : m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light';

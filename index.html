@@ -12,7 +12,11 @@
     d.classList.add('js');
     try { s = localStorage.getItem('plenitud-theme'); } catch (e) {}
     var m = function (q) { return window.matchMedia && window.matchMedia(q).matches; };
-    d.dataset.theme = (s && s !== 'auto') ? s : m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light';
+    /* Brand default is light. 'auto' is only reached if the visitor explicitly chose
+       "Automática" in the appearance switch; first-time visitors always get light. */
+    d.dataset.theme = (s === 'light' || s === 'dark' || s === 'high-contrast') ? s
+      : (s === 'auto') ? (m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light')
+      : 'light';
   })();
 </script>
 <link rel="preload" href="design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
