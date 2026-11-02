@@ -1,0 +1,321 @@
+/* Plenitud Center — generated from tokens.json */
+
+:root, [data-theme="light"] {
+  --sage-900: #3f4a2e;
+  --sage-800: #556045;
+  --sage-700: #6b7754;
+  --sage-600: #808a65;
+  --sage-500: #95a07c;
+  --sage-400: #adb695;
+  --sage-300: #c5ccb1;
+  --sage-200: #dce0cc;
+  --sage-100: #eceee0;
+  --sage-50: #f6f7ee;
+  --bone-50: #fbf9f4;
+  --bone-100: #f5f1e8;
+  --bone-200: #ece6d7;
+  --bone-300: #ddd4be;
+  --clay-400: #b8a98a;
+  --clay-500: #8c7e60;
+  --clay-600: #6c5f45;
+  --clay-700: #5a5040;
+  --ink-900: #2a2d24;
+  --ink-700: #4a4d40;
+  --ink-600: #5c5f53;
+  --ink-500: #6e7065;
+  --pure-white: #ffffff;
+  --terracotta: #c97b5a;
+  --terracotta-700: #9a4a2e;
+  --honey: #d6a85c;
+  --honey-800: #6f5010;
+  --water: #7b9aa0;
+  --water-700: #3a6770;
+  --bg: var(--bone-50);
+  --bg-elevated: var(--pure-white);
+  --bg-muted: var(--bone-100);
+  --bg-sage: var(--sage-100);
+  --fg: var(--ink-900);
+  --fg-muted: var(--ink-600);
+  --fg-soft: var(--clay-600);
+  --on-brand: var(--pure-white);
+  --brand: var(--sage-700);
+  --brand-hover: var(--sage-800);
+  --brand-active: var(--sage-900);
+  --brand-deep: var(--sage-800);
+  --brand-text: var(--sage-800);
+  --brand-soft: var(--sage-200);
+  --border: var(--bone-300);
+  --border-soft: var(--bone-200);
+  --border-strong: var(--clay-400);
+  --border-control: var(--clay-500);
+  --focus-ring: var(--sage-800);
+  --selected-border: var(--sage-800);
+  --focus-ring-on-dark: var(--bone-50);
+  --overlay: rgba(42,45,36,0.55);
+  --success: var(--sage-800);
+  --success-bg: var(--sage-100);
+  --warning: var(--honey-800);
+  --warning-bg: #f8efd9;
+  --danger: var(--terracotta-700);
+  --danger-bg: #f8e9e2;
+  --info: var(--water-700);
+  --info-bg: #e6eff0;
+  --footer-bg: var(--sage-900);
+  --footer-fg: var(--bone-50);
+  --footer-fg-muted: var(--sage-200);
+  --shadow-xs: 0 1px 2px rgba(63,74,46,0.05);
+  --shadow-sm: 0 2px 8px rgba(63,74,46,0.06), 0 1px 2px rgba(63,74,46,0.04);
+  --shadow-md: 0 8px 24px rgba(63,74,46,0.08), 0 2px 6px rgba(63,74,46,0.04);
+  --shadow-lg: 0 24px 60px rgba(63,74,46,0.12), 0 4px 12px rgba(63,74,46,0.06);
+}
+
+[data-theme="dark"] {
+  --bg: #1b1e17;
+  --bg-elevated: #252920;
+  --bg-muted: #20231b;
+  --bg-sage: #262c21;
+  --fg: #f3efe4;
+  --fg-muted: #c4c7ba;
+  --fg-soft: #abae9f;
+  --on-brand: #14170f;
+  --brand: #adb695;
+  --brand-hover: #c5ccb1;
+  --brand-active: #dce0cc;
+  --brand-deep: #c5ccb1;
+  --brand-text: #c5ccb1;
+  --brand-soft: #3a4331;
+  --border: #3a3f33;
+  --border-soft: #2f342a;
+  --border-strong: #6c725f;
+  --border-control: #8a8f7b;
+  --focus-ring: #dce0cc;
+  --selected-border: #c5ccb1;
+  --focus-ring-on-dark: #dce0cc;
+  --overlay: rgba(0,0,0,0.65);
+  --success: #bfd3a0;
+  --success-bg: #26331f;
+  --warning: #e8c987;
+  --warning-bg: #33291a;
+  --danger: #f2ae92;
+  --danger-bg: #3a241c;
+  --info: #a9cbd2;
+  --info-bg: #1e2d31;
+  --footer-bg: #12150e;
+  --footer-fg: #f3efe4;
+  --footer-fg-muted: #c4c7ba;
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 24px 60px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.35);
+}
+
+[data-theme="high-contrast"] {
+  --bg: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-muted: #f2f2ee;
+  --bg-sage: #e8ebdd;
+  --fg: #14160f;
+  --fg-muted: #2b2e24;
+  --fg-soft: #3a3526;
+  --on-brand: #ffffff;
+  --brand: var(--sage-900);
+  --brand-hover: #14160f;
+  --brand-active: #000000;
+  --brand-deep: var(--sage-900);
+  --brand-text: var(--sage-900);
+  --brand-soft: var(--sage-200);
+  --border: #6e7065;
+  --border-soft: #9a9d8e;
+  --border-strong: #4a4d40;
+  --border-control: #4a4d40;
+  --focus-ring: #14160f;
+  --selected-border: #14160f;
+  --focus-ring-on-dark: #ffffff;
+  --overlay: rgba(0,0,0,0.75);
+  --success: #2f3a22;
+  --success-bg: #e8ebdd;
+  --warning: #5a4000;
+  --warning-bg: #fff4d6;
+  --danger: #8a2f12;
+  --danger-bg: #fde9e1;
+  --info: #1f4e58;
+  --info-bg: #e1eef0;
+  --footer-bg: #14160f;
+  --footer-fg: #ffffff;
+  --footer-fg-muted: #e6e8dc;
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+}
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 24px;
+  --r-xl: 36px;
+  --r-pill: 999px;
+  --container: 75rem;
+  --measure: 40rem;
+  --target-min: 2.75rem;
+  --target-floor: 1.5rem;
+  --font-display: "Cormorant Garamond", Cormorant, Garamond, Georgia, serif;
+  --font-body: Jost, "Avenir Next", Futura, system-ui, sans-serif;
+  --font-script: "Snell Roundhand", "Segoe Script", cursive;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("fonts/CormorantGaramond-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("fonts/CormorantGaramond-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("fonts/CormorantGaramond-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("fonts/CormorantGaramond-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Jost";
+  src: url("fonts/Jost-Variable.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.display-hero {
+  font-family: var(--font-display);
+  font-size: 6.5rem;
+  line-height: 1.05;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+.display-h1 {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  line-height: 1.1;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+.display-h2 {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+.display-h3 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.display-quote {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: 0;
+  font-style: italic;
+}
+
+.h4 {
+  font-family: var(--font-body);
+  font-size: 1.375rem;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.lead {
+  font-family: var(--font-body);
+  font-size: 1.375rem;
+  line-height: 1.7;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.small {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.caption {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+
+.button {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.wordmark {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+}

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Plenitud Center · Un lugar para volver a ti</title>
+<meta name="description" content="Plenitud Center: sesiones de respiración, movimiento y silencio." />
+<script>
+  /* Theme before first paint: saved choice, else the OS preference. No flash, no framework. */
+  (function () {
+    var d = document.documentElement, s = null;
+    d.classList.add('js');
+    try { s = localStorage.getItem('plenitud-theme'); } catch (e) {}
+    var m = function (q) { return window.matchMedia && window.matchMedia(q).matches; };
+    d.dataset.theme = (s && s !== 'auto') ? s : m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light';
+  })();
+</script>
+<link rel="preload" href="design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="design-system/colors_and_type.css" />
+<link rel="stylesheet" href="design-system/components.css" />
+<link rel="stylesheet" href="site.css" />
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<header class="nav">
+  <div class="nav__bar">
+    <a class="nav__brand" href="#inicio" aria-label="Plenitud Center, inicio">
+      <img src="design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
+      <span>Plenitud</span>
+    </a>
+    <button class="btn btn--ghost nav__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
+      <span class="icon icon--menu" aria-hidden="true"></span><span>Menú</span>
+    </button>
+    <nav aria-label="Principal" class="nav__nav">
+      <ul class="nav__list" id="menu-principal">
+        <li><a class="nav__link" href="#sesiones">Sesiones</a></li>
+        <li><a class="nav__link" href="#guias">Guías</a></li>
+        <li><a class="nav__link" href="#testimonio">Voces</a></li>
+        <li><a class="nav__link" href="#visita">Visita</a></li>
+        <li><button class="btn btn--primary" type="button" data-reserve>Reservar</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <section class="hero" id="inicio" aria-labelledby="hero-title">
+    <div class="container hero__inner">
+      <img class="hero__emblem" src="design-system/assets/logo-emblem.png" alt="" width="96" height="96" />
+      <p class="label eyebrow">Plenitud · Center</p>
+      <h1 class="display-hero" id="hero-title">Un lugar para volver <em>a ti.</em></h1>
+      <p class="lead">Sostenemos un espacio para la respiración, el movimiento y el silencio: tres de las medicinas más antiguas que conocemos. Llega como estás.</p>
+      <div class="hero__actions">
+        <button class="btn btn--primary btn--lg" type="button" data-reserve>Reservar una sesión</button>
+        <a class="btn btn--secondary btn--lg" href="#testimonio">Leer una voz</a>
+      </div>
+      <!-- PLACEHOLDER: horario de ejemplo, confirmar horario real con el cliente -->
+      <p class="caption">Abierto de martes a domingo · del amanecer al anochecer</p>
+    </div>
+  </section>
+
+  <section class="section" id="sesiones" aria-labelledby="sesiones-title">
+    <div class="container">
+      <header class="section__head">
+        <p class="label eyebrow">Lo que ofrecemos</p>
+        <h2 class="display-h2" id="sesiones-title">Tres medicinas antiguas.</h2>
+      </header>
+      <!-- PLACEHOLDER: sesiones, horarios y precios de ejemplo, confirmar con el cliente -->
+      <ul class="grid grid--3" role="list">
+        <li>
+          <article class="card card--sage card--interactive">
+            <p class="card__eyebrow">Respiración</p>
+            <h3 class="card__title">Calma matinal</h3>
+            <p class="card__body">Una práctica guiada y lenta para ordenar el día. Respiramos, nos suavizamos, empezamos.</p>
+            <p class="card__meta">Martes · 7:00 · 60 min</p>
+            <button class="card__action btn btn--ghost" type="button" data-reserve data-session="calma">Reservar <span class="sr-only">Calma matinal</span></button>
+          </article>
+        </li>
+        <li>
+          <article class="card card--cream card--interactive">
+            <p class="card__eyebrow">Movimiento</p>
+            <h3 class="card__title">Raíz</h3>
+            <p class="card__body">Una secuencia para el cuerpo: lenta, deliberada, enraizada.</p>
+            <p class="card__meta">Viernes · 18:00 · 75 min</p>
+            <button class="card__action btn btn--ghost" type="button" data-reserve data-session="raiz">Reservar <span class="sr-only">Raíz</span></button>
+          </article>
+        </li>
+        <li>
+          <article class="card card--interactive">
+            <p class="card__eyebrow">Quietud</p>
+            <h3 class="card__title">Silencio</h3>
+            <p class="card__body">Cuarenta minutos de quietud sostenida. Sin música, sin indicaciones. Solo la sala.</p>
+            <p class="card__meta">Domingo · 8:00 · 40 min</p>
+            <button class="card__action btn btn--ghost" type="button" data-reserve data-session="silencio">Reservar <span class="sr-only">Silencio</span></button>
+          </article>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--quote" id="testimonio" aria-labelledby="voces-title">
+    <div class="container container--narrow">
+      <h2 class="label eyebrow" id="voces-title">Una voz de la casa</h2>
+      <!-- PLACEHOLDER: testimonio de ejemplo, NO es un testimonio real. Sustituir por uno real o quitar la sección. -->
+      <figure class="quote">
+        <blockquote><p class="display-quote">“Llegué cargando una semana. Salí sin ella. La sala misma se sentía paciente.”</p></blockquote>
+        <figcaption class="caption">Marisol G. · Miembro desde 2024</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--sage" id="guias" aria-labelledby="guias-title">
+    <div class="container">
+      <header class="section__head section__head--split">
+        <div>
+          <p class="label eyebrow">Guías</p>
+          <h2 class="display-h2" id="guias-title">Personas que sostienen el espacio, con amabilidad.</h2>
+        </div>
+        <p class="lead">Nuestro equipo es pequeño por decisión. Cada sesión la guía alguien que ha dedicado mucho tiempo a aprender a escuchar: primero a sí mismo, luego a los demás.</p>
+      </header>
+      <!-- PLACEHOLDER: nombres y retratos de ejemplo, NO son personas reales. Sustituir por el equipo real con fotos y alt reales. -->
+      <ul class="grid grid--3" role="list">
+        <li><article class="card"><div class="portrait" aria-hidden="true"></div><h3 class="card__title card__title--sm">Camila Reyes</h3><p class="card__body">Respiración · Fundadora</p><p class="card__meta">Martes · Viernes</p></article></li>
+        <li><article class="card"><div class="portrait" aria-hidden="true"></div><h3 class="card__title card__title--sm">Mateo Ortiz</h3><p class="card__body">Movimiento somático</p><p class="card__meta">Miércoles · Sábado</p></article></li>
+        <li><article class="card"><div class="portrait" aria-hidden="true"></div><h3 class="card__title card__title--sm">Inés Vidal</h3><p class="card__body">Sonido y quietud</p><p class="card__meta">Domingo</p></article></li>
+      </ul>
+      <p class="caption note">Las áreas de retrato son marcadores: sustitúyelas por <code>&lt;img alt="…"&gt;</code> con texto alternativo que describa a la persona.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="visita">
+  <div class="container footer__inner">
+    <div class="footer__grid">
+      <div>
+        <p class="footer__word">Plenitud</p>
+        <p class="footer__tag">Un lugar para volver a ti.</p>
+        <!-- PLACEHOLDER: dirección de ejemplo, confirmar dirección real -->
+        <address class="footer__muted">Calle de la Calma 14<br />Patio del estudio, segundo piso<br />Abierto de martes a domingo</address>
+      </div>
+      <nav aria-labelledby="f-visita">
+        <h2 class="footer__heading" id="f-visita">Visita</h2>
+        <ul class="footer__links" role="list"><li><a href="#sesiones">Sesiones</a></li><li><a href="#guias">Guías</a></li></ul>
+      </nav>
+      <nav aria-labelledby="f-leer">
+        <h2 class="footer__heading" id="f-leer">Leer</h2>
+        <ul class="footer__links" role="list"><li><a href="#testimonio">Voces</a></li></ul>
+      </nav>
+      <div>
+        <h2 class="footer__heading" id="f-contacto">Contacto</h2>
+        <!-- PLACEHOLDER: correo de ejemplo, confirmar correo real -->
+        <ul class="footer__links" role="list"><li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li></ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__muted">© Plenitud Center · 2026</p>
+      <div class="field field--inline">
+        <label class="field__label" for="theme">Apariencia</label>
+        <select class="select" id="theme">
+          <option value="auto">Automática</option>
+          <option value="light">Clara</option>
+          <option value="dark">Oscura</option>
+          <option value="high-contrast">Alto contraste</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
+  <form class="dialog__panel" id="reserve-form" novalidate>
+    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Cerrar"><span class="icon icon--close" aria-hidden="true"></span></button>
+
+    <div data-step="1">
+      <p class="dialog__step">Paso 1 de 2</p>
+      <h2 class="dialog__title" id="reserve-t1" tabindex="-1">¿Qué sesión te llama?</h2>
+      <p class="dialog__lead">Elige una para empezar. Puedes cambiar de opinión cuando quieras.</p>
+      <fieldset class="choice-group">
+        <legend class="sr-only">Sesión</legend>
+        <label class="choice"><input type="radio" name="session" value="calma" checked /><span class="choice__box"><span class="choice__title">Calma matinal</span><span class="choice__meta">Martes · 7:00 · 60 min</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="raiz" /><span class="choice__box"><span class="choice__title">Raíz</span><span class="choice__meta">Viernes · 18:00 · 75 min</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="silencio" /><span class="choice__box"><span class="choice__title">Silencio</span><span class="choice__meta">Domingo · 8:00 · 40 min</span><span class="choice__check" aria-hidden="true"></span></span></label>
+      </fieldset>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" type="button" data-close>Cancelar</button>
+        <button class="btn btn--primary" type="button" data-next>Continuar</button>
+      </div>
+    </div>
+
+    <div data-step="2" hidden>
+      <p class="dialog__step">Paso 2 de 2</p>
+      <h2 class="dialog__title" id="reserve-t2" tabindex="-1">¿Dónde te escribimos?</h2>
+      <p class="dialog__lead">Recibirás una nota breve con la dirección y qué traer.</p>
+      <p class="alert alert--danger" id="form-status" role="alert" hidden></p>
+      <div class="stack" style="--stack: var(--space-5)">
+        <div class="field" data-field="name">
+          <label class="field__label" for="f-name">Nombre <span class="field__req">(obligatorio)</span></label>
+          <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
+          <p class="field__error" id="f-name-err">Escribe tu nombre.</p>
+        </div>
+        <div class="field" data-field="email">
+          <label class="field__label" for="f-email">Correo electrónico <span class="field__req">(obligatorio)</span></label>
+          <p class="field__hint" id="f-email-hint">Ejemplo: nombre@correo.com</p>
+          <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-hint f-email-err" />
+          <p class="field__error" id="f-email-err">Escribe un correo válido, por ejemplo nombre@correo.com.</p>
+        </div>
+      </div>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" type="button" data-back>Atrás</button>
+        <button class="btn btn--primary" type="submit">Confirmar reserva</button>
+      </div>
+    </div>
+
+    <div data-step="3" hidden>
+      <h2 class="dialog__title" id="reserve-t3" tabindex="-1">Listo, te esperamos.</h2>
+      <p class="alert alert--success" role="status" style="margin-top: var(--space-5)"><span class="icon icon--check" aria-hidden="true"></span><span class="alert__body" id="reserve-summary"></span></p>
+      <div class="dialog__actions"><button class="btn btn--primary" type="button" data-close>Cerrar</button></div>
+    </div>
+  </form>
+</dialog>
+
+<script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+/* Page layout for the Plenitud reference site. Components live in components/bundle.css. */
+.nav__nav { margin-left: auto; }
+.nav__nav .nav__list { margin: 0; }
+@media (max-width: 52rem) { .js .nav__nav { width: 100%; margin: 0; } .nav { top: var(--space-2); } }
+
+.section { padding-block: var(--space-8); }
+@media (min-width: 48rem) { .section { padding-block: var(--space-9); } }
+.section--sage { background: var(--bg-sage); }
+.section__head { margin-bottom: var(--space-7); }
+.section__head .label { margin-bottom: var(--space-3); }
+.section__head--split { display: grid; gap: var(--space-5); }
+@media (min-width: 60rem) { .section__head--split { grid-template-columns: 1fr 1fr; align-items: end; gap: var(--space-7); } }
+.section__head--split .lead { font-size: 1.125rem; }
+
+.hero { padding-block: calc(var(--space-9) + var(--space-4)) var(--space-8); text-align: center;
+  background: radial-gradient(ellipse at top, var(--bg-sage) 0%, var(--bg) 62%); }
+.hero__inner { display: grid; justify-items: center; gap: var(--space-5); }
+.hero__emblem { width: 6rem; height: 6rem; border-radius: var(--r-pill); box-shadow: var(--shadow-md); }
+.hero .lead { margin-inline: auto; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; margin-top: var(--space-2); }
+.hero .display-hero { max-width: 14ch; }
+
+.grid { display: grid; gap: var(--space-5); list-style: none; margin: 0; padding: 0; }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr)); }
+.grid > li { display: flex; }
+.grid > li > .card { flex: 1; }
+.card__title--sm { font-size: 1.75rem; }
+.card__action { align-self: flex-start; margin: var(--space-2) 0 calc(-1 * var(--space-2)) calc(-1 * var(--space-4)); }
+
+.container--narrow { max-width: 52rem; }
+.section--quote { text-align: center; }
+.section--quote .label { margin-bottom: var(--space-5); }
+.quote { margin: 0; }
+.quote blockquote { margin: 0; }
+.quote .display-quote { font-style: italic; margin-inline: auto; max-width: 28ch; }
+.quote .caption { margin-top: var(--space-6); letter-spacing: 0.06em; }
+
+.portrait { aspect-ratio: 4 / 5; border-radius: var(--r-md); background: linear-gradient(135deg, var(--sage-200), var(--bone-300)); }
+.note { margin-top: var(--space-6); max-width: none; }
+code { font-size: 0.9em; }
+
+.footer__inner { padding-block: var(--space-8) var(--space-6); }
+.footer__grid { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); padding-bottom: var(--space-7); border-bottom: 1px solid var(--footer-fg-muted); }
+@media (min-width: 60rem) { .footer__grid { grid-template-columns: 2fr 1fr 1fr 1.4fr; } }
+.footer__word { font-size: 1.5rem; letter-spacing: var(--tracking-wordmark); text-transform: uppercase; margin-bottom: var(--space-2); }
+.footer__tag { font-family: var(--font-display); font-style: italic; font-size: 1.25rem; color: var(--footer-fg-muted); margin-bottom: var(--space-5); }
+.footer address { font-style: normal; font-size: 1rem; line-height: 1.7; }
+.footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-4); padding-top: var(--space-5); }
+.field--inline { flex-direction: row; align-items: center; gap: var(--space-3); }
+.field--inline .select { width: auto; min-width: 11rem; }
+.field--inline .field__label { color: var(--footer-fg); }
