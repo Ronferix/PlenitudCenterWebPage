@@ -36,6 +36,8 @@
 .quote .caption { margin-top: var(--space-6); letter-spacing: 0.06em; }
 
 .portrait { aspect-ratio: 4 / 5; border-radius: var(--r-md); background: linear-gradient(135deg, var(--sage-200), var(--bone-300)); }
+.thumb { aspect-ratio: 1 / 1; border-radius: var(--r-md); background: linear-gradient(135deg, var(--bone-300), var(--sage-200)); margin-bottom: var(--space-2); }
+.thumb--lg { max-width: 16rem; }
 .note { margin-top: var(--space-6); max-width: none; }
 code { font-size: 0.9em; }
 

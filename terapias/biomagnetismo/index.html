@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Terapia de biomagnetismo · Plenitud Center</title>
+<meta name="description" content="Pares de imanes colocados en puntos específicos para buscar equilibrio corporal." />
+<script>
+  (function () {
+    var d = document.documentElement, s = null;
+    d.classList.add('js');
+    try { s = localStorage.getItem('plenitud-theme'); } catch (e) {}
+    var m = function (q) { return window.matchMedia && window.matchMedia(q).matches; };
+    d.dataset.theme = (s === 'light' || s === 'dark' || s === 'high-contrast') ? s
+      : (s === 'auto') ? (m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light')
+      : 'light';
+  })();
+</script>
+<link rel="preload" href="../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="../../design-system/colors_and_type.css" />
+<link rel="stylesheet" href="../../design-system/components.css" />
+<link rel="stylesheet" href="../../site.css" />
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<header class="nav">
+  <div class="nav__bar">
+    <a class="nav__brand" href="../../" aria-label="Plenitud Center, inicio">
+      <img src="../../design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
+      <span>Plenitud</span>
+    </a>
+    <button class="btn btn--ghost nav__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
+      <span class="icon icon--menu" aria-hidden="true"></span><span>Menú</span>
+    </button>
+    <nav aria-label="Principal" class="nav__nav">
+      <ul class="nav__list" id="menu-principal">
+        <li><a class="nav__link" href="../../terapias/" aria-current="page">Terapias</a></li>
+        <li><a class="nav__link" href="../../productos/">Productos</a></li>
+        <li><a class="nav__link" href="../../guias/">Guías</a></li>
+        <li><a class="nav__link" href="../../voces/">Voces</a></li>
+        <li><a class="nav__link" href="../../visita/">Visita</a></li>
+        <li><button class="btn btn--primary" type="button" data-reserve>Reservar</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <section class="section" aria-labelledby="t-h1">
+    <div class="container container--narrow">
+      <p class="label eyebrow">Energética</p>
+      <h1 class="display-h1" id="t-h1">Terapia de biomagnetismo</h1>
+      <span class="tag tag--warning">Contenido de ejemplo</span>
+      <p class="lead" style="margin-top: var(--space-4)">Una terapia que usa pares de imanes de polaridad opuesta, colocados en puntos específicos del cuerpo, buscando restablecer el equilibrio del terreno interno.</p>
+
+      <h2 class="h4" style="margin-top: var(--space-8)">Qué esperar</h2>
+      <ol class="body" style="padding-left: 1.25em">
+          <li>Te recuestas vestida o vestido durante toda la sesión.</li>
+          <li>Los imanes se colocan en pares, según los puntos que se revisen ese día.</li>
+          <li>La sesión suele incluir varios minutos de reposo con los imanes puestos.</li>
+      </ol>
+
+      <div class="meta-row" style="margin-top: var(--space-6)">
+        <span>Duración: pendiente</span>
+        <span>Horario: pendiente</span>
+        <span>Precio: pendiente</span>
+      </div>
+
+      <p style="margin-top: var(--space-7)">
+        <button class="btn btn--primary btn--lg" type="button" data-reserve data-session="biomagnetismo">Reservar Terapia de biomagnetismo</button>
+      </p>
+      <p class="caption" style="margin-top: var(--space-5)"><a href="../../terapias/">← Ver todas las terapias</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="visita">
+  <div class="container footer__inner">
+    <div class="footer__grid">
+      <div>
+        <p class="footer__word">Plenitud</p>
+        <p class="footer__tag">Un lugar para volver a ti.</p>
+        <!-- PLACEHOLDER: dirección de ejemplo, confirmar dirección real -->
+        <address class="footer__muted">Calle de la Calma 14<br />Patio del estudio, segundo piso<br />Abierto de martes a domingo</address>
+      </div>
+      <nav aria-labelledby="f-terapias">
+        <h2 class="footer__heading" id="f-terapias">Terapias</h2>
+        <ul class="footer__links" role="list"><li><a href="../../terapias/">Ver todas</a></li><li><a href="../../productos/">Productos</a></li></ul>
+      </nav>
+      <nav aria-labelledby="f-leer">
+        <h2 class="footer__heading" id="f-leer">Leer</h2>
+        <ul class="footer__links" role="list"><li><a href="../../voces/">Voces</a></li><li><a href="../../guias/">Guías</a></li></ul>
+      </nav>
+      <div>
+        <h2 class="footer__heading" id="f-contacto">Contacto</h2>
+        <!-- PLACEHOLDER: correo de ejemplo, confirmar correo real -->
+        <ul class="footer__links" role="list"><li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li></ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__muted">© Plenitud Center · 2026</p>
+      <div class="field field--inline">
+        <label class="field__label" for="theme">Apariencia</label>
+        <select class="select" id="theme">
+          <option value="auto">Automática</option>
+          <option value="light">Clara</option>
+          <option value="dark">Oscura</option>
+          <option value="high-contrast">Alto contraste</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
+  <form class="dialog__panel" id="reserve-form" novalidate>
+    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Cerrar"><span class="icon icon--close" aria-hidden="true"></span></button>
+
+    <div data-step="1">
+      <p class="dialog__step">Paso 1 de 2</p>
+      <h2 class="dialog__title" id="reserve-t1" tabindex="-1">¿Qué terapia te llama?</h2>
+      <p class="dialog__lead">Elige una para empezar. Puedes cambiar de opinión cuando quieras.</p>
+      <fieldset class="choice-group">
+        <legend class="sr-only">Terapia</legend>
+        <label class="choice"><input type="radio" name="session" value="masaje-corporal" checked /><span class="choice__box"><span class="choice__title">Masaje corporal</span><span class="choice__meta">Corporal</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="reiki" /><span class="choice__box"><span class="choice__title">Reiki</span><span class="choice__meta">Energética</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="limpia" /><span class="choice__box"><span class="choice__title">Limpia</span><span class="choice__meta">Espiritual</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="flores-de-bach" /><span class="choice__box"><span class="choice__title">Flores de Bach</span><span class="choice__meta">Energética</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="biomagnetismo" /><span class="choice__box"><span class="choice__title">Terapia de biomagnetismo</span><span class="choice__meta">Energética</span><span class="choice__check" aria-hidden="true"></span></span></label>
+      </fieldset>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" type="button" data-close>Cancelar</button>
+        <button class="btn btn--primary" type="button" data-next>Continuar</button>
+      </div>
+    </div>
+
+    <div data-step="2" hidden>
+      <p class="dialog__step">Paso 2 de 2</p>
+      <h2 class="dialog__title" id="reserve-t2" tabindex="-1">¿Dónde te escribimos?</h2>
+      <p class="dialog__lead">Recibirás una nota breve con la dirección y qué traer.</p>
+      <p class="alert alert--danger" id="form-status" role="alert" hidden></p>
+      <div class="stack" style="--stack: var(--space-5)">
+        <div class="field" data-field="name">
+          <label class="field__label" for="f-name">Nombre <span class="field__req">(obligatorio)</span></label>
+          <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
+          <p class="field__error" id="f-name-err">Escribe tu nombre.</p>
+        </div>
+        <div class="field" data-field="email">
+          <label class="field__label" for="f-email">Correo electrónico <span class="field__req">(obligatorio)</span></label>
+          <p class="field__hint" id="f-email-hint">Ejemplo: nombre@correo.com</p>
+          <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-hint f-email-err" />
+          <p class="field__error" id="f-email-err">Escribe un correo válido, por ejemplo nombre@correo.com.</p>
+        </div>
+      </div>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" type="button" data-back>Atrás</button>
+        <button class="btn btn--primary" type="submit">Confirmar reserva</button>
+      </div>
+    </div>
+
+    <div data-step="3" hidden>
+      <h2 class="dialog__title" id="reserve-t3" tabindex="-1">Listo, te esperamos.</h2>
+      <p class="alert alert--success" role="status" style="margin-top: var(--space-5)"><span class="icon icon--check" aria-hidden="true"></span><span class="alert__body" id="reserve-summary"></span></p>
+      <div class="dialog__actions"><button class="btn btn--primary" type="button" data-close>Cerrar</button></div>
+    </div>
+  </form>
+</dialog>
+
+<script src="../../site.js"></script>
+</body>
+</html>

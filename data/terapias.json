@@ -1,0 +1,98 @@
+{
+  "categories": {
+    "corporal": {
+      "name": "Corporal",
+      "summary": "Trabajo directo sobre el cuerpo: manos, presión, movimiento."
+    },
+    "energetica": {
+      "name": "Energética",
+      "summary": "Equilibrio del campo energético: Reiki, imanes, esencias florales."
+    },
+    "espiritual": {
+      "name": "Espiritual",
+      "summary": "Limpieza y acompañamiento del espacio personal y ritual."
+    }
+  },
+  "terapias": [
+    {
+      "slug": "masaje-corporal",
+      "name": "Masaje corporal",
+      "category": "corporal",
+      "draft": true,
+      "summary": "Trabajo manual sobre el cuerpo para liberar la tensión acumulada.",
+      "body": "Una sesión de manos que recorre el cuerpo con presión sostenida, pensada para soltar lo que la postura y los días cargan en hombros, espalda y piernas.",
+      "expect": [
+        "Llegas unos minutos antes para instalarte con calma.",
+        "La sesión se adapta a las zonas que más lo necesitan ese día.",
+        "Sales con tiempo para moverte despacio antes de volver a tu ritmo."
+      ],
+      "duration": null,
+      "schedule": null,
+      "price": null
+    },
+    {
+      "slug": "reiki",
+      "name": "Reiki",
+      "category": "energetica",
+      "draft": true,
+      "summary": "Sanación energética canalizada con las manos, sin contacto invasivo.",
+      "body": "Una práctica de origen japonés que trabaja el campo energético del cuerpo a través de las manos, favoreciendo una relajación profunda y sostenida.",
+      "expect": [
+        "Te recuestas vestida o vestido, sin necesidad de tocar directamente la piel.",
+        "La guía coloca las manos sobre distintos puntos del cuerpo.",
+        "Es común salir con una sensación de calma poco habitual."
+      ],
+      "duration": null,
+      "schedule": null,
+      "price": null
+    },
+    {
+      "slug": "limpia",
+      "name": "Limpia",
+      "category": "espiritual",
+      "draft": true,
+      "summary": "Ritual de limpieza energética del espacio personal.",
+      "body": "Una práctica ritual para despejar lo que se acumula en el espacio personal — pensamientos, cargas, residuos del día a día — y volver a empezar desde un lugar más claro.",
+      "expect": [
+        "Se conversa brevemente antes de empezar, para entender qué traes.",
+        "El ritual se adapta a lo que la persona necesita soltar.",
+        "Se cierra con unos minutos de silencio antes de volver afuera."
+      ],
+      "duration": null,
+      "schedule": null,
+      "price": null
+    },
+    {
+      "slug": "flores-de-bach",
+      "name": "Flores de Bach",
+      "category": "energetica",
+      "draft": true,
+      "summary": "Esencias florales para acompañar estados emocionales.",
+      "body": "Un sistema de esencias florales pensado para acompañar estados de ánimo y procesos emocionales, elegidas junto con la guía según lo que estés atravesando.",
+      "expect": [
+        "Una primera conversación para identificar qué esencias acompañan mejor tu momento.",
+        "Se arma una mezcla personal para tomar en casa.",
+        "El acompañamiento suele incluir una revisión a las semanas."
+      ],
+      "duration": null,
+      "schedule": null,
+      "price": null
+    },
+    {
+      "slug": "biomagnetismo",
+      "name": "Terapia de biomagnetismo",
+      "category": "energetica",
+      "draft": true,
+      "summary": "Pares de imanes colocados en puntos específicos para buscar equilibrio corporal.",
+      "body": "Una terapia que usa pares de imanes de polaridad opuesta, colocados en puntos específicos del cuerpo, buscando restablecer el equilibrio del terreno interno.",
+      "expect": [
+        "Te recuestas vestida o vestido durante toda la sesión.",
+        "Los imanes se colocan en pares, según los puntos que se revisen ese día.",
+        "La sesión suele incluir varios minutos de reposo con los imanes puestos."
+      ],
+      "duration": null,
+      "schedule": null,
+      "price": null
+    }
+  ]
+}

@@ -34,7 +34,6 @@
   if (!dlg || typeof dlg.showModal !== 'function') return;
   var steps = $$('[data-step]', form), titles = { 1: 'reserve-t1', 2: 'reserve-t2', 3: 'reserve-t3' };
   var status = $('#form-status');
-  var names = { calma: 'Calma matinal · martes 7:00', raiz: 'Raíz · viernes 18:00', silencio: 'Silencio · domingo 8:00' };
 
   function show(n) {
     steps.forEach(function (s) { s.hidden = Number(s.dataset.step) !== n; });
@@ -75,10 +74,27 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!validate()) return;
-    var key = $('input[name=session]:checked', form).value;
-    $('#reserve-summary').textContent = names[key] + '. Te escribimos a ' + $('#f-email').value.trim() + '.';
+    var checked = $('input[name=session]:checked', form);
+    var label = checked.closest('.choice').querySelector('.choice__title').textContent;
+    $('#reserve-summary').textContent = label + '. Te escribimos a ' + $('#f-email').value.trim() + '.';
     show(3);
   });
   /* Light dismiss: a click on the backdrop closes the dialog. Esc is built in. */
   dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+
+  /* ---------- Product catalog filter (progressive enhancement) ---------- */
+  var filter = $('#product-filter'), grid = $('#product-grid');
+  if (filter && grid) {
+    var items = $$('li', grid), empty = $('#product-empty');
+    filter.addEventListener('input', function () {
+      var q = filter.value.trim().toLowerCase();
+      var shown = 0;
+      items.forEach(function (li) {
+        var match = !q || li.dataset.name.indexOf(q) !== -1;
+        li.hidden = !match;
+        if (match) shown++;
+      });
+      if (empty) empty.hidden = shown !== 0;
+    });
+  }
 })();

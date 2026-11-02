@@ -1,0 +1,76 @@
+{
+  "productos": [
+    {
+      "slug": "inciensos",
+      "name": "Inciensos",
+      "draft": true,
+      "summary": "Varillas de incienso en tres aromas.",
+      "variants": ["Nag Champa", "Copal", "Canela"],
+      "price": null
+    },
+    {
+      "slug": "clorofila",
+      "name": "Clorofila",
+      "draft": true,
+      "summary": "Suplemento líquido de clorofila.",
+      "variants": null,
+      "price": null
+    },
+    {
+      "slug": "velas-de-color",
+      "name": "Velas de color",
+      "draft": true,
+      "summary": "Velas rituales en nueve colores.",
+      "variants": ["Rojo", "Rosa", "Naranja", "Morado", "Blanca", "Plateada", "Dorada", "Verde", "Azul"],
+      "price": null
+    },
+    {
+      "slug": "copal-resina",
+      "name": "Copal en resina",
+      "draft": true,
+      "summary": "Resina de copal para quemar sobre carbón.",
+      "variants": null,
+      "price": null
+    },
+    {
+      "slug": "carbon-compactado",
+      "name": "Carbón compactado",
+      "draft": true,
+      "summary": "Carbón para encender resinas e inciensos de grano.",
+      "variants": null,
+      "price": null
+    },
+    {
+      "slug": "base-metalica-vela",
+      "name": "Base metálica para vela",
+      "draft": true,
+      "summary": "Base para sostener y proteger la superficie al quemar una vela.",
+      "variants": null,
+      "price": null
+    },
+    {
+      "slug": "portaincienso",
+      "name": "Portaincienso",
+      "draft": true,
+      "summary": "Soporte para quemar varillas de incienso.",
+      "variants": null,
+      "price": null
+    },
+    {
+      "slug": "portaincienso-compartimiento",
+      "name": "Portaincienso con compartimiento",
+      "draft": true,
+      "summary": "Portaincienso con espacio para guardar varillas de repuesto.",
+      "variants": null,
+      "price": null
+    },
+    {
+      "slug": "ozono",
+      "name": "Ozono",
+      "draft": true,
+      "summary": "Pendiente de confirmar: ¿producto, equipo o terapia?",
+      "variants": null,
+      "price": null
+    }
+  ]
+}
