@@ -171,6 +171,14 @@ function draftTag() {
   return `<span class="tag tag--warning">Contenido de ejemplo</span>`;
 }
 
+/* Reference photo (CC-licensed stock standing in for real studio photography) or,
+   when none was found, the existing neutral gradient placeholder. Always captioned
+   so nobody mistakes a stock photo for the real product/space/person. */
+function mediaBlock(image, prefix, sizeClass, placeholderClass) {
+  if (!image) return placeholderClass ? `<div class="${placeholderClass}" aria-hidden="true"></div>` : '';
+  return `<div class="${sizeClass}"><img class="thumb__img" src="${prefix}${image.file}" alt="${esc(image.alt)}" loading="lazy" /><p class="caption media-credit">Foto de referencia (banco CC, no es el producto real) · ${esc(image.credit)}</p></div>`;
+}
+
 function layout({ prefix, active, title, description, bodyHtml, mainId = 'contenido' }) {
   return `<!doctype html>
 <html lang="es" data-theme="light">
@@ -289,6 +297,7 @@ function terapiasIndexBody(prefix) {
     const items = terapias.filter((t) => t.category === catKey);
     const cards = items.map((t) => `          <li>
             <article class="card card--interactive">
+              ${mediaBlock(t.image, prefix, 'thumb', 'thumb')}
               ${t.draft ? draftTag() : ''}
               <h3 class="card__title card__title--sm">${esc(t.name)}</h3>
               <p class="card__body">${esc(t.summary)}</p>
@@ -322,6 +331,7 @@ function terapiaDetailBody(prefix, t) {
   const expectItems = t.expect.map((e) => `          <li>${esc(e)}</li>`).join('\n');
   return `  <section class="section" aria-labelledby="t-h1">
     <div class="container container--narrow">
+      ${mediaBlock(t.image, prefix, 'thumb thumb--lg', '')}
       <p class="label eyebrow">${esc(cat.name)}</p>
       <h1 class="display-h1" id="t-h1">${esc(t.name)}</h1>
       ${t.draft ? draftTag() : ''}
@@ -351,7 +361,7 @@ function productosIndexBody(prefix) {
     const variants = p.variants ? `<p class="meta-row">${p.variants.map((v) => `<span>${esc(v)}</span>`).join('')}</p>` : '';
     return `        <li data-name="${esc(p.name.toLowerCase())}">
           <article class="card card--interactive">
-            <div class="thumb" aria-hidden="true"></div>
+            ${mediaBlock(p.image, prefix, 'thumb', 'thumb')}
             ${p.draft ? draftTag() : ''}
             <h2 class="card__title card__title--sm">${esc(p.name)}</h2>
             <p class="card__body">${esc(p.summary)}</p>
@@ -388,7 +398,7 @@ function productoDetailBody(prefix, p) {
   const subject = encodeURIComponent(`Pregunta sobre ${p.name}`);
   return `  <section class="section" aria-labelledby="p-h1">
     <div class="container container--narrow">
-      <div class="thumb thumb--lg" aria-hidden="true"></div>
+      ${mediaBlock(p.image, prefix, 'thumb thumb--lg', 'thumb thumb--lg')}
       <p class="label eyebrow">Producto</p>
       <h1 class="display-h1" id="p-h1">${esc(p.name)}</h1>
       ${p.draft ? draftTag() : ''}

@@ -60,7 +60,8 @@
       ],
       "duration": null,
       "schedule": null,
-      "price": null
+      "price": null,
+      "image": { "file": "media/cuenco-ritual.jpg", "alt": "Cuenco con hierbas ardiendo en un ritual de limpieza", "credit": "Eddi van W. · Flickr · CC BY-ND 2.0" }
     },
     {
       "slug": "flores-de-bach",
