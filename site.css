@@ -97,6 +97,11 @@
 .variant-chip input:checked + .variant-chip__box::after { content: ""; width: 1rem; height: 1rem; background: currentColor; -webkit-mask: var(--icon-check) center / contain no-repeat; mask: var(--icon-check) center / contain no-repeat; }
 .variant-chip input:focus-visible + .variant-chip__box { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
 @media (forced-colors: active) { .variant-chip input:checked + .variant-chip__box { outline: 3px solid Highlight; } }
+/* Hours + reception lines sit right under the call to action, quiet but in reach */
+.detail__body > .detail__cta + .contact-note { margin-top: var(--space-3); }
+.contact-list { display: grid; margin: 0; padding: 0; list-style: none; }
+.contact-list a { display: inline-flex; align-items: center; min-height: var(--target-min); }
+.footer__hours { margin-top: var(--space-3); font-size: 0.9375rem; }
 .buy { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-4); }
 
 /* Photo bleeds to the card edges; the card's padding is --space-6 */

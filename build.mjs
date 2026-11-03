@@ -94,8 +94,12 @@ function footerPartial(prefix) {
       </nav>
       <div>
         <h2 class="footer__heading" id="f-contacto">Contacto</h2>
-        <!-- PLACEHOLDER: correo de ejemplo, confirmar correo real -->
-        <ul class="footer__links" role="list"><li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li></ul>
+        <ul class="footer__links" role="list">
+${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.display}</a></li>`).join('\n')}
+          <!-- PLACEHOLDER: correo de ejemplo, confirmar correo real -->
+          <li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li>
+        </ul>
+        <p class="footer__muted footer__hours">${ATTENTION_HOURS}</p>
       </div>
     </div>
     <div class="footer__bottom">
@@ -187,12 +191,24 @@ function detailMedia(image, prefix) {
   return `<figure class="detail__media"><img src="${prefix}${image.file}" alt="${esc(image.alt)}" /></figure>`;
 }
 
-// PLACEHOLDER: número de WhatsApp de ejemplo (formato internacional, sin "+" ni espacios). Reemplazar por el número real.
-const WHATSAPP = '5210000000000';
+// Reception lines (WhatsApp and calls). `intl` is the wa.me / tel: form: 52 + 10 digits.
+const CONTACTS = [
+  { display: '33 3599 2034', intl: '523335992034' },
+  { display: '33 2490 9550', intl: '523324909550' },
+];
+const ATTENTION_HOURS = 'Atención de 9:00 a 16:00';
 // Same message shape as site.js builds when the visitor picks another variant
-function whatsappLink(product, variant, price) {
+function whatsappLink(product, variant, price, number = CONTACTS[0].intl) {
   const text = `Hola, quiero pedir: ${product}${variant ? ` (${variant})` : ''}${price ? ` · ${price}` : ''}. ¿Está disponible?`;
-  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+  return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+}
+const waGeneral = (c) => `https://wa.me/${c.intl}?text=${encodeURIComponent('Hola, quisiera información sobre Plenitud Center.')}`;
+
+/* Quiet line under a call to action: hours + both reception lines on WhatsApp.
+   `attrs(c)` returns each link's attributes (product pages add the data site.js needs). */
+function contactNote(attrs = (c) => `href="${waGeneral(c)}"`) {
+  const links = CONTACTS.map((c) => `<a ${attrs(c)}>${c.display}</a>`).join(' o ');
+  return `<p class="caption contact-note">${ATTENTION_HOURS} · WhatsApp ${links}</p>`;
 }
 
 const swatch = (color) => `<span class="swatch" style="--swatch: ${esc(color)}" aria-hidden="true"></span>`;
@@ -413,6 +429,7 @@ function terapiaDetailBody(prefix, t) {
         <p class="lead">${esc(t.body)}</p>
         ${facts([['Precio', t.price != null ? money(t.price) : null], ['Duración', t.duration], ['Horario', t.schedule]])}
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve data-session="${esc(t.slug)}">Reservar ${esc(t.name)}</button></p>
+        ${contactNote()}
         <h2 class="h4">Qué esperar</h2>
         <ol class="body detail__list">
 ${expectItems}
@@ -476,6 +493,7 @@ function productoDetailBody(prefix, p) {
     : '';
   const subject = encodeURIComponent(`Pregunta sobre ${p.name}`);
   const priceText = p.price != null ? `${money(p.price)}${p.priceNote ? ` ${p.priceNote}` : ''}` : '';
+  const orderAttrs = (c) => `data-whatsapp data-product="${esc(p.name)}" data-variant-name="${esc(one)}" data-price="${esc(priceText)}" href="${whatsappLink(p.name, p.variants ? `${one}: ${p.variants[0]}` : '', priceText, c.intl)}"`;
   return `  <section class="section" aria-labelledby="p-h1">
     <div class="container detail">
       ${detailMedia(p.image, prefix)}
@@ -486,9 +504,10 @@ function productoDetailBody(prefix, p) {
         ${priceBlock(p.price, p.priceNote).replace('class="price', 'class="price price--lg')}
         ${variants}
         <div class="detail__cta buy">
-          <a class="btn btn--primary btn--lg" data-whatsapp data-product="${esc(p.name)}" data-variant-name="${esc(one)}" data-price="${esc(priceText)}" href="${whatsappLink(p.name, p.variants ? `${one}: ${p.variants[0]}` : '', priceText)}">Pedir por WhatsApp</a>
+          <a class="btn btn--primary btn--lg" ${orderAttrs(CONTACTS[0])}>Pedir por WhatsApp</a>
           <a class="btn btn--ghost" href="mailto:hola@plenitud.center?subject=${subject}">Preguntar por correo</a>
         </div>
+        ${contactNote(orderAttrs)}
         <p class="caption"><a href="${prefix}productos/">← Ver todos los productos</a></p>
       </div>
     </div>
@@ -537,8 +556,12 @@ function visitaBody(prefix) {
         <p class="lead">Calle de la Calma 14, patio del estudio, segundo piso.</p>
         <p class="body">Abierto de martes a domingo, del amanecer al anochecer.</p>
         <h2 class="h4">Contacto</h2>
-        <!-- PLACEHOLDER: correo de ejemplo -->
-        <p class="body"><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></p>
+        <p class="body">${ATTENTION_HOURS}, por WhatsApp o llamada:</p>
+        <ul class="body contact-list" role="list">
+${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.display}</a> · <a href="tel:+${c.intl}">Llamar <span class="sr-only">al ${c.display}</span></a></li>`).join('\n')}
+          <!-- PLACEHOLDER: correo de ejemplo -->
+          <li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li>
+        </ul>
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve>Reservar una terapia</button></p>
       </div>
     </div>

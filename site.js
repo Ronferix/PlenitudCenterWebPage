@@ -57,15 +57,16 @@
   });
 
   /* ---------- WhatsApp order link follows the chosen variant ---------- */
-  var wa = $('[data-whatsapp]');
-  if (wa) {
-    var base = wa.href.split('?')[0];
+  var waLinks = $$('[data-whatsapp]');   /* the order button plus each reception line */
+  if (waLinks.length) {
     var setMessage = function () {
       var picked = $('input[name=variant]:checked');
-      var text = 'Hola, quiero pedir: ' + wa.dataset.product +
-        (picked ? ' (' + wa.dataset.variantName + ': ' + picked.value + ')' : '') +
-        (wa.dataset.price ? ' · ' + wa.dataset.price : '') + '. ¿Está disponible?';
-      wa.href = base + '?text=' + encodeURIComponent(text);
+      waLinks.forEach(function (wa) {
+        var text = 'Hola, quiero pedir: ' + wa.dataset.product +
+          (picked ? ' (' + wa.dataset.variantName + ': ' + picked.value + ')' : '') +
+          (wa.dataset.price ? ' · ' + wa.dataset.price : '') + '. ¿Está disponible?';
+        wa.href = wa.href.split('?')[0] + '?text=' + encodeURIComponent(text);
+      });
     };
     $$('input[name=variant]').forEach(function (r) { r.addEventListener('change', setMessage); });
     setMessage();
