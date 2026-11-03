@@ -171,13 +171,26 @@ function draftTag() {
   return `<span class="tag tag--warning">Contenido de ejemplo</span>`;
 }
 
-/* Reference photo (CC-licensed stock standing in for real studio photography) or,
-   when none was found, the existing neutral gradient placeholder. Always captioned
-   so nobody mistakes a stock photo for the real product/space/person. */
-function mediaBlock(image, prefix, sizeClass, placeholderClass) {
-  if (!image) return placeholderClass ? `<div class="${placeholderClass}" aria-hidden="true"></div>` : '';
-  return `<div class="${sizeClass}"><img class="thumb__img" src="${prefix}${image.file}" alt="${esc(image.alt)}" loading="lazy" /><p class="caption media-credit">Foto de referencia (banco CC, no es el producto real) · ${esc(image.credit)}</p></div>`;
+/* Stock photos (Unsplash) stand in for real studio photography in this demo.
+   Cards show the photo edge to edge; detail pages caption it so nobody mistakes
+   it for the real product, space or person. No image → neutral placeholder. */
+const STOCK_NOTE = 'Foto de referencia, no es el producto real';
+
+function cardMedia(image, prefix, ratio = 'square') {
+  if (!image) return `<div class="card__media card__media--${ratio} card__media--empty" aria-hidden="true"></div>`;
+  return `<img class="card__media card__media--${ratio}" src="${prefix}${image.file}" alt="${esc(image.alt)}" loading="lazy" />`;
 }
+
+function detailMedia(image, prefix, note = STOCK_NOTE) {
+  if (!image) return `<div class="detail__media detail__media--empty" aria-hidden="true"></div>`;
+  return `<figure class="detail__media"><img src="${prefix}${image.file}" alt="${esc(image.alt)}" /><figcaption class="caption">${esc(note)} · ${esc(image.credit)}</figcaption></figure>`;
+}
+
+const GUIAS = [
+  { cat: 'Corporal', image: { file: 'media/guia-corporal.jpg', alt: 'Retrato de una mujer sonriendo con luz natural', credit: 'Unsplash' } },
+  { cat: 'Energética', image: { file: 'media/guia-energetica.jpg', alt: 'Retrato de una mujer con collar de cuentas en un estudio luminoso', credit: 'Unsplash' } },
+  { cat: 'Espiritual', image: { file: 'media/guia-espiritual.jpg', alt: 'Retrato de un hombre sonriendo al aire libre', credit: 'Unsplash' } },
+];
 
 function layout({ prefix, active, title, description, bodyHtml, mainId = 'contenido' }) {
   return `<!doctype html>
@@ -217,8 +230,17 @@ function homeBody(prefix) {
     terapias.find((t) => t.category === 'espiritual'),
   ].filter(Boolean);
 
+  const productTiles = productos.filter((p) => p.image).slice(0, 4).map((p) => `        <li>
+          <article class="card card--interactive card--compact">
+            ${cardMedia(p.image, prefix)}
+            <h3 class="card__title card__title--sm">${esc(p.name)}</h3>
+            <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">Ver producto <span class="sr-only">${esc(p.name)}</span></a>
+          </article>
+        </li>`).join('\n');
+
   const cards = featured.map((t) => `        <li>
           <article class="card card--interactive">
+            ${cardMedia(t.image, prefix, 'wide')}
             <p class="card__eyebrow">${esc(categories[t.category].name)}</p>
             <h3 class="card__title">${esc(t.name)}</h3>
             <p class="card__body">${esc(t.summary)}</p>
@@ -262,7 +284,10 @@ ${cards}
         <h2 class="display-h2" id="productos-title">Lo que sostiene la práctica en casa.</h2>
         <p class="lead">Incienso, velas, resinas y herramientas rituales para seguir el ritmo entre sesión y sesión.</p>
       </header>
-      <p><a class="btn btn--secondary btn--lg" href="${prefix}productos/">Ver productos</a></p>
+      <ul class="grid grid--4" role="list">
+${productTiles}
+      </ul>
+      <p class="section__more"><a class="btn btn--secondary btn--lg" href="${prefix}productos/">Ver productos</a></p>
     </div>
   </section>
 
@@ -287,8 +312,15 @@ ${cards}
         </div>
         <p class="lead">Conoce a quienes guían cada terapia. <a href="${prefix}guias/">Ver el equipo →</a></p>
       </header>
+      <ul class="grid grid--3" role="list">
+${guiaCards(prefix, 'h3')}
+      </ul>
     </div>
   </section>`;
+}
+
+function guiaCards(prefix, heading) {
+  return GUIAS.map((g) => `        <li><article class="card">${cardMedia(g.image, prefix, 'portrait')}${draftTag()}<${heading} class="card__title card__title--sm">Nombre — pendiente</${heading}><p class="card__body">${esc(g.cat)} · especialidad pendiente</p><p class="card__meta">Horario pendiente</p></article></li>`).join('\n');
 }
 
 function terapiasIndexBody(prefix) {
@@ -297,7 +329,7 @@ function terapiasIndexBody(prefix) {
     const items = terapias.filter((t) => t.category === catKey);
     const cards = items.map((t) => `          <li>
             <article class="card card--interactive">
-              ${mediaBlock(t.image, prefix, 'thumb', 'thumb')}
+              ${cardMedia(t.image, prefix, 'wide')}
               ${t.draft ? draftTag() : ''}
               <h3 class="card__title card__title--sm">${esc(t.name)}</h3>
               <p class="card__body">${esc(t.summary)}</p>
@@ -330,8 +362,9 @@ function terapiaDetailBody(prefix, t) {
   const cat = categories[t.category];
   const expectItems = t.expect.map((e) => `          <li>${esc(e)}</li>`).join('\n');
   return `  <section class="section" aria-labelledby="t-h1">
-    <div class="container container--narrow">
-      ${mediaBlock(t.image, prefix, 'thumb thumb--lg', '')}
+    <div class="container detail">
+      ${detailMedia(t.image, prefix, 'Foto de referencia, no es nuestro espacio')}
+      <div class="detail__body">
       <p class="label eyebrow">${esc(cat.name)}</p>
       <h1 class="display-h1" id="t-h1">${esc(t.name)}</h1>
       ${t.draft ? draftTag() : ''}
@@ -352,6 +385,7 @@ ${expectItems}
         <button class="btn btn--primary btn--lg" type="button" data-reserve data-session="${esc(t.slug)}">Reservar ${esc(t.name)}</button>
       </p>
       <p class="caption" style="margin-top: var(--space-5)"><a href="${prefix}terapias/">← Ver todas las terapias</a></p>
+      </div>
     </div>
   </section>`;
 }
@@ -361,7 +395,7 @@ function productosIndexBody(prefix) {
     const variants = p.variants ? `<p class="meta-row">${p.variants.map((v) => `<span>${esc(v)}</span>`).join('')}</p>` : '';
     return `        <li data-name="${esc(p.name.toLowerCase())}">
           <article class="card card--interactive">
-            ${mediaBlock(p.image, prefix, 'thumb', 'thumb')}
+            ${cardMedia(p.image, prefix)}
             ${p.draft ? draftTag() : ''}
             <h2 class="card__title card__title--sm">${esc(p.name)}</h2>
             <p class="card__body">${esc(p.summary)}</p>
@@ -397,8 +431,9 @@ function productoDetailBody(prefix, p) {
     : '';
   const subject = encodeURIComponent(`Pregunta sobre ${p.name}`);
   return `  <section class="section" aria-labelledby="p-h1">
-    <div class="container container--narrow">
-      ${mediaBlock(p.image, prefix, 'thumb thumb--lg', 'thumb thumb--lg')}
+    <div class="container detail">
+      ${detailMedia(p.image, prefix)}
+      <div class="detail__body">
       <p class="label eyebrow">Producto</p>
       <h1 class="display-h1" id="p-h1">${esc(p.name)}</h1>
       ${p.draft ? draftTag() : ''}
@@ -409,17 +444,12 @@ function productoDetailBody(prefix, p) {
         <a class="btn btn--primary btn--lg" href="mailto:hola@plenitud.center?subject=${subject}">Preguntar por este producto</a>
       </p>
       <p class="caption" style="margin-top: var(--space-5)"><a href="${prefix}productos/">← Ver todos los productos</a></p>
+      </div>
     </div>
   </section>`;
 }
 
 function guiasBody(prefix) {
-  const slots = [
-    ['Corporal', 'Nombre — pendiente'],
-    ['Energética', 'Nombre — pendiente'],
-    ['Espiritual', 'Nombre — pendiente'],
-  ];
-  const cards = slots.map(([cat, name]) => `        <li><article class="card"><div class="portrait" aria-hidden="true"></div>${draftTag()}<h2 class="card__title card__title--sm">${esc(name)}</h2><p class="card__body">${esc(cat)} · especialidad pendiente</p><p class="card__meta">Horario pendiente</p></article></li>`).join('\n');
   return `  <section class="section" aria-labelledby="guias-h1">
     <div class="container">
       <header class="section__head section__head--split">
@@ -430,9 +460,9 @@ function guiasBody(prefix) {
         <p class="lead">Nuestro equipo es pequeño por decisión. Cada terapia la guía alguien que ha dedicado mucho tiempo a aprender a escuchar: primero a sí mismo, luego a los demás.</p>
       </header>
       <ul class="grid grid--3" role="list">
-${cards}
+${guiaCards(prefix, 'h2')}
       </ul>
-      <p class="caption note">Tarjetas de marcador: a la espera de nombres, fotos reales (con <code>alt</code> descriptivo), especialidad y horario de cada guía.</p>
+      <p class="caption note">Tarjetas de ejemplo: los retratos son fotos de referencia (Unsplash), no personas del equipo. A la espera de nombres, fotos reales, especialidad y horario de cada guía.</p>
     </div>
   </section>`;
 }
@@ -451,9 +481,12 @@ function vocesBody() {
   </section>`;
 }
 
-function visitaBody() {
+function visitaBody(prefix) {
+  const espacio = { file: 'media/espacio.jpg', alt: 'Sala amplia y luminosa con grandes ventanales y piso de madera', credit: 'Unsplash' };
   return `  <section class="section" aria-labelledby="visita-h1">
-    <div class="container container--narrow">
+    <div class="container detail">
+      ${detailMedia(espacio, prefix, 'Foto de referencia, no es nuestro espacio')}
+      <div class="detail__body">
       <p class="label eyebrow">Visita</p>
       <h1 class="display-h1" id="visita-h1">Cómo llegar</h1>
       <!-- PLACEHOLDER: dirección y horario de ejemplo -->
@@ -464,6 +497,7 @@ function visitaBody() {
       <p class="body"><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></p>
       <p class="small note" style="margin-top: var(--space-6)">Pendiente: dirección exacta, horario por día, política de cancelación, mapa y un canal de contacto real (correo o WhatsApp).</p>
       <p style="margin-top: var(--space-7)"><button class="btn btn--primary btn--lg" type="button" data-reserve>Reservar una terapia</button></p>
+      </div>
     </div>
   </section>`;
 }
@@ -527,7 +561,7 @@ write('visita/index.html', layout({
   prefix: prefixFor(1), active: 'visita',
   title: 'Visita · Plenitud Center',
   description: 'Dirección, horario y contacto de Plenitud Center.',
-  bodyHtml: visitaBody(),
+  bodyHtml: visitaBody(prefixFor(1)),
 }));
 
 console.log(`Generado: 1 inicio, 1 terapias/ + ${terapias.length} detalle, 1 productos/ + ${productos.length} detalle, guías, voces, visita.`);

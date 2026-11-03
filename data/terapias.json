@@ -28,7 +28,12 @@
       ],
       "duration": null,
       "schedule": null,
-      "price": null
+      "price": null,
+      "image": {
+        "file": "media/masaje-corporal.jpg",
+        "alt": "Manos dando un masaje en la espalda",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "reiki",
@@ -44,7 +49,12 @@
       ],
       "duration": null,
       "schedule": null,
-      "price": null
+      "price": null,
+      "image": {
+        "file": "media/reiki.jpg",
+        "alt": "Manos abiertas con las palmas hacia arriba",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "limpia",
@@ -61,7 +71,11 @@
       "duration": null,
       "schedule": null,
       "price": null,
-      "image": { "file": "media/cuenco-ritual.jpg", "alt": "Cuenco con hierbas ardiendo en un ritual de limpieza", "credit": "Eddi van W. · Flickr · CC BY-ND 2.0" }
+      "image": {
+        "file": "media/limpia.jpg",
+        "alt": "Atado de salvia blanca en un cuenco de cerámica",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "flores-de-bach",
@@ -77,7 +91,12 @@
       ],
       "duration": null,
       "schedule": null,
-      "price": null
+      "price": null,
+      "image": {
+        "file": "media/flores-de-bach.jpg",
+        "alt": "Frascos goteros con flores secas en su interior",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "biomagnetismo",
@@ -93,7 +112,12 @@
       ],
       "duration": null,
       "schedule": null,
-      "price": null
+      "price": null,
+      "image": {
+        "file": "media/biomagnetismo.jpg",
+        "alt": "Esferas magnéticas plateadas agrupadas",
+        "credit": "Unsplash"
+      }
     }
   ]
 }

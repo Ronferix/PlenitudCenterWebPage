@@ -21,9 +21,33 @@
 .hero .display-hero { max-width: 14ch; }
 
 .grid { display: grid; gap: var(--space-5); list-style: none; margin: 0; padding: 0; }
-.grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr)); }
+/* At most 3 (or 4) columns that always fill the row; auto-fill (not auto-fit) so a
+   category with a single card keeps the column width instead of stretching across the page */
+.grid--3 { grid-template-columns: repeat(auto-fill, minmax(min(100%, max(17.5rem, (100% - 2 * var(--space-5)) / 3)), 1fr)); }
+.grid--4 { grid-template-columns: repeat(auto-fill, minmax(min(100%, max(13rem, (100% - 3 * var(--space-5)) / 4)), 1fr)); }
 .grid > li { display: flex; }
 .grid > li > .card { flex: 1; }
+.card > .tag { align-self: flex-start; }
+/* Tags are already separated by their own border; the meta-row "·" separator would sit loose between pills */
+.meta-row > .tag + .tag::before { content: none; }
+.meta-row:has(> .tag) { gap: var(--space-2); }
+.section__more { margin-top: var(--space-7); }
+
+/* Photo bleeds to the card edges; the card's padding is --space-6 */
+.card__media { display: block; width: calc(100% + 2 * var(--space-6)); max-width: none; margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-6)) var(--space-2);
+  border-radius: var(--r-lg) var(--r-lg) 0 0; object-fit: cover; background: linear-gradient(135deg, var(--bone-300), var(--sage-200)); }
+.card__media--square { aspect-ratio: 1 / 1; }
+.card__media--wide { aspect-ratio: 3 / 2; }
+.card__media--portrait { aspect-ratio: 4 / 5; }
+
+/* Detail pages: photo + text side by side from tablet up, stacked on phones */
+.detail { display: grid; gap: var(--space-7); align-items: start; }
+@media (min-width: 56rem) { .detail { grid-template-columns: 5fr 7fr; gap: var(--space-8); } }
+.detail__media { margin: 0; }
+.detail__media img, .detail__media--empty { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--r-lg); box-shadow: var(--shadow-sm); }
+.detail__media--empty { background: linear-gradient(135deg, var(--bone-300), var(--sage-200)); }
+.detail__media figcaption { margin-top: var(--space-2); }
+.detail__body { max-width: var(--measure); }
 .card__title--sm { font-size: 1.75rem; }
 .card__action { align-self: flex-start; margin: var(--space-2) 0 calc(-1 * var(--space-2)) calc(-1 * var(--space-4)); }
 
@@ -35,11 +59,6 @@
 .quote .display-quote { font-style: italic; margin-inline: auto; max-width: 28ch; }
 .quote .caption { margin-top: var(--space-6); letter-spacing: 0.06em; }
 
-.portrait { aspect-ratio: 4 / 5; border-radius: var(--r-md); background: linear-gradient(135deg, var(--sage-200), var(--bone-300)); }
-.thumb { aspect-ratio: 1 / 1; border-radius: var(--r-md); background: linear-gradient(135deg, var(--bone-300), var(--sage-200)); margin-bottom: var(--space-2); overflow: hidden; }
-.thumb--lg { max-width: 16rem; }
-.thumb__img { width: 100%; height: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
-.media-credit { margin-top: var(--space-1); }
 .note { margin-top: var(--space-6); max-width: none; }
 code { font-size: 0.9em; }
 

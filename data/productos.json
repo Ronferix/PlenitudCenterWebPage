@@ -5,9 +5,17 @@
       "name": "Inciensos",
       "draft": true,
       "summary": "Varillas de incienso en tres aromas.",
-      "variants": ["Nag Champa", "Copal", "Canela"],
+      "variants": [
+        "Nag Champa",
+        "Copal",
+        "Canela"
+      ],
       "price": null,
-      "image": { "file": "media/humo-incienso.jpg", "alt": "Humo de incienso elevándose sobre fondo oscuro", "credit": "wwarby · Flickr · CC BY 2.0" }
+      "image": {
+        "file": "media/inciensos.jpg",
+        "alt": "Manojos de varillas de incienso de colores",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "clorofila",
@@ -15,15 +23,35 @@
       "draft": true,
       "summary": "Suplemento líquido de clorofila.",
       "variants": null,
-      "price": null
+      "price": null,
+      "image": {
+        "file": "media/clorofila.jpg",
+        "alt": "Bebida verde vertida en un vaso de vidrio",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "velas-de-color",
       "name": "Velas de color",
       "draft": true,
       "summary": "Velas rituales en nueve colores.",
-      "variants": ["Rojo", "Rosa", "Naranja", "Morado", "Blanca", "Plateada", "Dorada", "Verde", "Azul"],
-      "price": null
+      "variants": [
+        "Rojo",
+        "Rosa",
+        "Naranja",
+        "Morado",
+        "Blanca",
+        "Plateada",
+        "Dorada",
+        "Verde",
+        "Azul"
+      ],
+      "price": null,
+      "image": {
+        "file": "media/velas-de-color.jpg",
+        "alt": "Velas de colores encendidas",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "copal-resina",
@@ -32,7 +60,11 @@
       "summary": "Resina de copal para quemar sobre carbón.",
       "variants": null,
       "price": null,
-      "image": { "file": "media/humo-incienso.jpg", "alt": "Humo de resina elevándose sobre fondo oscuro", "credit": "wwarby · Flickr · CC BY 2.0" }
+      "image": {
+        "file": "media/copal-resina.jpg",
+        "alt": "Trozos de resina ámbar sobre gránulos",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "carbon-compactado",
@@ -41,7 +73,11 @@
       "summary": "Carbón para encender resinas e inciensos de grano.",
       "variants": null,
       "price": null,
-      "image": { "file": "media/humo-incienso.jpg", "alt": "Humo elevándose sobre fondo oscuro", "credit": "wwarby · Flickr · CC BY 2.0" }
+      "image": {
+        "file": "media/carbon-compactado.jpg",
+        "alt": "Cuenco metálico con brasas que desprenden humo",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "base-metalica-vela",
@@ -49,7 +85,12 @@
       "draft": true,
       "summary": "Base para sostener y proteger la superficie al quemar una vela.",
       "variants": null,
-      "price": null
+      "price": null,
+      "image": {
+        "file": "media/base-metalica-vela.jpg",
+        "alt": "Vela encendida sobre una base de latón",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "portaincienso",
@@ -58,7 +99,11 @@
       "summary": "Soporte para quemar varillas de incienso.",
       "variants": null,
       "price": null,
-      "image": { "file": "media/humo-incienso.jpg", "alt": "Humo de incienso elevándose sobre fondo oscuro", "credit": "wwarby · Flickr · CC BY 2.0" }
+      "image": {
+        "file": "media/portaincienso.jpg",
+        "alt": "Varilla de incienso encendida en un soporte",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "portaincienso-compartimiento",
@@ -67,7 +112,11 @@
       "summary": "Portaincienso con espacio para guardar varillas de repuesto.",
       "variants": null,
       "price": null,
-      "image": { "file": "media/humo-incienso.jpg", "alt": "Humo de incienso elevándose sobre fondo oscuro", "credit": "wwarby · Flickr · CC BY 2.0" }
+      "image": {
+        "file": "media/portaincienso-compartimiento.jpg",
+        "alt": "Incienso humeando sobre un soporte en forma de loto",
+        "credit": "Unsplash"
+      }
     },
     {
       "slug": "ozono",
@@ -75,7 +124,12 @@
       "draft": true,
       "summary": "Pendiente de confirmar: ¿producto, equipo o terapia?",
       "variants": null,
-      "price": null
+      "price": null,
+      "image": {
+        "file": "media/ozono.jpg",
+        "alt": "Burbujas de aire bajo el agua",
+        "credit": "Unsplash"
+      }
     }
   ]
 }
