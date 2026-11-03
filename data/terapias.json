@@ -2,15 +2,27 @@
   "categories": {
     "corporal": {
       "name": "Corporal",
-      "summary": "Trabajo directo sobre el cuerpo: manos, presión, movimiento."
+      "summary": "Trabajo directo sobre el cuerpo: manos, presión, movimiento.",
+      "en": {
+        "name": "Body",
+        "summary": "Hands-on work with the body: touch, pressure, movement."
+      }
     },
     "energetica": {
       "name": "Energética",
-      "summary": "Equilibrio del campo energético: Reiki, imanes, esencias florales."
+      "summary": "Equilibrio del campo energético: Reiki, imanes, esencias florales.",
+      "en": {
+        "name": "Energy",
+        "summary": "Balancing the energy field: Reiki, magnets, flower essences."
+      }
     },
     "espiritual": {
       "name": "Espiritual",
-      "summary": "Limpieza y acompañamiento del espacio personal y ritual."
+      "summary": "Limpieza y acompañamiento del espacio personal y ritual.",
+      "en": {
+        "name": "Spiritual",
+        "summary": "Cleansing and care for your personal and ritual space."
+      }
     }
   },
   "terapias": [
@@ -27,12 +39,24 @@
         "Sales con tiempo para moverte despacio antes de volver a tu ritmo."
       ],
       "duration": "60 min",
-      "schedule": "Con cita, martes a domingo",
+      "schedule": "Con cita, de 9:00 a 16:00",
       "price": 750,
       "image": {
         "file": "media/masaje-corporal.jpg",
         "alt": "Manos dando un masaje en la espalda",
         "credit": "Unsplash"
+      },
+      "en": {
+        "name": "Body massage",
+        "summary": "Hands-on work to release built-up tension.",
+        "body": "A hands-on session that moves through the body with steady pressure, made to release what posture and long days leave in your shoulders, back and legs.",
+        "expect": [
+          "Arrive a few minutes early to settle in calmly.",
+          "The session adapts to the areas that need it most that day.",
+          "You leave with time to move slowly before returning to your pace."
+        ],
+        "schedule": "By appointment, 9:00 to 16:00",
+        "imageAlt": "Hands massaging a back"
       }
     },
     {
@@ -48,12 +72,24 @@
         "Es común salir con una sensación de calma poco habitual."
       ],
       "duration": "50 min",
-      "schedule": "Con cita, martes a domingo",
+      "schedule": "Con cita, de 9:00 a 16:00",
       "price": 600,
       "image": {
         "file": "media/reiki.jpg",
         "alt": "Manos abiertas con las palmas hacia arriba",
         "credit": "Unsplash"
+      },
+      "en": {
+        "name": "Reiki",
+        "summary": "Energy healing channeled through the hands, with no invasive contact.",
+        "body": "A practice of Japanese origin that works with the body’s energy field through the hands, encouraging a deep and lasting relaxation.",
+        "expect": [
+          "You lie down fully clothed; no direct skin contact is needed.",
+          "Your guide places their hands over different points of the body.",
+          "Many people leave with an unusual sense of calm."
+        ],
+        "schedule": "By appointment, 9:00 to 16:00",
+        "imageAlt": "Open hands with palms facing up"
       }
     },
     {
@@ -69,12 +105,24 @@
         "Se cierra con unos minutos de silencio antes de volver afuera."
       ],
       "duration": "40 min",
-      "schedule": "Con cita, martes a domingo",
+      "schedule": "Con cita, de 9:00 a 16:00",
       "price": 450,
       "image": {
         "file": "media/limpia.jpg",
         "alt": "Atado de salvia blanca en un cuenco de cerámica",
         "credit": "Unsplash"
+      },
+      "en": {
+        "name": "Limpia (energy cleansing)",
+        "summary": "A ritual cleansing of your personal energy space.",
+        "body": "A ritual practice to clear what builds up in your personal space — thoughts, burdens, the residue of everyday life — and start again from a clearer place.",
+        "expect": [
+          "A short conversation before starting, to understand what you bring.",
+          "The ritual adapts to what you need to let go of.",
+          "It closes with a few minutes of silence before you step back outside."
+        ],
+        "schedule": "By appointment, 9:00 to 16:00",
+        "imageAlt": "Bundle of white sage in a ceramic bowl"
       }
     },
     {
@@ -90,12 +138,24 @@
         "El acompañamiento suele incluir una revisión a las semanas."
       ],
       "duration": "45 min",
-      "schedule": "Con cita, martes a domingo",
+      "schedule": "Con cita, de 9:00 a 16:00",
       "price": 550,
       "image": {
         "file": "media/flores-de-bach.jpg",
         "alt": "Frascos goteros con flores secas en su interior",
         "credit": "Unsplash"
+      },
+      "en": {
+        "name": "Bach flower remedies",
+        "summary": "Flower essences to support emotional states.",
+        "body": "A system of flower essences to support moods and emotional processes, chosen together with your guide according to what you are going through.",
+        "expect": [
+          "A first conversation to find the essences that best suit your moment.",
+          "A personal blend is prepared for you to take at home.",
+          "Follow-up usually includes a check-in a few weeks later."
+        ],
+        "schedule": "By appointment, 9:00 to 16:00",
+        "imageAlt": "Dropper bottles with dried flowers inside"
       }
     },
     {
@@ -111,12 +171,24 @@
         "La sesión suele incluir varios minutos de reposo con los imanes puestos."
       ],
       "duration": "60 min",
-      "schedule": "Con cita, martes a domingo",
+      "schedule": "Con cita, de 9:00 a 16:00",
       "price": 700,
       "image": {
         "file": "media/biomagnetismo.jpg",
         "alt": "Esferas magnéticas plateadas agrupadas",
         "credit": "Unsplash"
+      },
+      "en": {
+        "name": "Biomagnetism therapy",
+        "summary": "Pairs of magnets placed on specific points to seek bodily balance.",
+        "body": "A therapy that uses pairs of magnets of opposite polarity, placed on specific points of the body, seeking to restore internal balance.",
+        "expect": [
+          "You stay fully clothed throughout the session.",
+          "Magnets are placed in pairs, according to the points checked that day.",
+          "The session usually includes several minutes of rest with the magnets in place."
+        ],
+        "schedule": "By appointment, 9:00 to 16:00",
+        "imageAlt": "Cluster of silver magnetic spheres"
       }
     }
   ]

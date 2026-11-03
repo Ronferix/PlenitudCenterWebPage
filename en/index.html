@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Plenitud Center · A place to come back to yourself</title>
+<meta name="description" content="Plenitud Center: body, energy and spiritual therapies, and products for your practice at home." />
+<script>
+  (function () {
+    var d = document.documentElement, s = null;
+    d.classList.add('js');
+    try { s = localStorage.getItem('plenitud-theme'); } catch (e) {}
+    var m = function (q) { return window.matchMedia && window.matchMedia(q).matches; };
+    d.dataset.theme = (s === 'light' || s === 'dark' || s === 'high-contrast') ? s
+      : (s === 'auto') ? (m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light')
+      : 'light';
+  })();
+</script>
+<link rel="alternate" hreflang="es" href="https://ronferix.github.io/PlenitudCenterWebPage/" />
+<link rel="alternate" hreflang="en" href="https://ronferix.github.io/PlenitudCenterWebPage/en/" />
+<link rel="alternate" hreflang="x-default" href="https://ronferix.github.io/PlenitudCenterWebPage/" />
+<link rel="preload" href="../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="../design-system/colors_and_type.css" />
+<link rel="stylesheet" href="../design-system/components.css" />
+<link rel="stylesheet" href="../site.css" />
+</head>
+<body>
+<a class="skip-link" href="#contenido">Skip to content</a>
+
+<header class="nav">
+  <div class="nav__bar">
+    <a class="nav__brand" href="./" aria-label="Plenitud Center, home">
+      <img src="../design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
+      <span>Plenitud</span>
+    </a>
+    <button class="btn btn--ghost nav__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
+      <span class="icon icon--menu" aria-hidden="true"></span><span>Menu</span>
+    </button>
+    <nav aria-label="Main" class="nav__nav">
+      <ul class="nav__list" id="menu-principal">
+        <li><a class="nav__link" href="terapias/">Therapies</a></li>
+        <li><a class="nav__link" href="productos/">Products</a></li>
+        <li><a class="nav__link" href="guias/">Guides</a></li>
+        <li><a class="nav__link" href="voces/">Voices</a></li>
+        <li><a class="nav__link" href="visita/">Visit</a></li>
+        <li><a class="nav__link nav__lang" href="../" lang="es" hreflang="es">Español</a></li>
+        <li><button class="btn btn--primary" type="button" data-reserve>Book</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <section class="hero" id="inicio" aria-labelledby="hero-title">
+    <div class="container hero__inner">
+      <img class="hero__emblem" src="../design-system/assets/logo-emblem.png" alt="" width="96" height="96" />
+      <p class="label eyebrow">Plenitud · Center</p>
+      <!-- PLACEHOLDER: tagline de ejemplo, confirmar si sigue aplicando al centro de terapias holísticas -->
+      <h1 class="display-hero" id="hero-title">A place to come back <em>to yourself.</em></h1>
+      <p class="lead">A space for body, energy and spiritual therapies, and for products that support that practice at home. Come as you are.</p>
+      <div class="hero__actions">
+        <button class="btn btn--primary btn--lg" type="button" data-reserve>Book a therapy</button>
+        <a class="btn btn--secondary btn--lg" href="terapias/">See therapies</a>
+      </div>
+      <p class="caption">Open 9 a.m. to 4 p.m.</p>
+    </div>
+  </section>
+
+  <section class="section" id="terapias" aria-labelledby="terapias-title">
+    <div class="container">
+      <header class="section__head">
+        <p class="label eyebrow">What we offer</p>
+        <h2 class="display-h2" id="terapias-title">Five paths, three families.</h2>
+      </header>
+      <ul class="grid grid--3" role="list">
+          <li>
+            <article class="card card--interactive">
+              <img class="card__media card__media--wide" src="../media/masaje-corporal.jpg" alt="Hands massaging a back" loading="lazy" />
+              <p class="card__eyebrow">Body</p>
+              <h3 class="card__title card__title--sm">Body massage</h3>
+              <p class="card__body">Hands-on work to release built-up tension.</p>
+              <div class="card__footer">
+                <p class="price">$750 MXN <span class="price__note">60 min</span></p>
+                <a class="card__action btn btn--ghost" href="terapias/masaje-corporal/">See more <span class="sr-only">about Body massage</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="card card--interactive">
+              <img class="card__media card__media--wide" src="../media/reiki.jpg" alt="Open hands with palms facing up" loading="lazy" />
+              <p class="card__eyebrow">Energy</p>
+              <h3 class="card__title card__title--sm">Reiki</h3>
+              <p class="card__body">Energy healing channeled through the hands, with no invasive contact.</p>
+              <div class="card__footer">
+                <p class="price">$600 MXN <span class="price__note">50 min</span></p>
+                <a class="card__action btn btn--ghost" href="terapias/reiki/">See more <span class="sr-only">about Reiki</span></a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="card card--interactive">
+              <img class="card__media card__media--wide" src="../media/limpia.jpg" alt="Bundle of white sage in a ceramic bowl" loading="lazy" />
+              <p class="card__eyebrow">Spiritual</p>
+              <h3 class="card__title card__title--sm">Limpia (energy cleansing)</h3>
+              <p class="card__body">A ritual cleansing of your personal energy space.</p>
+              <div class="card__footer">
+                <p class="price">$450 MXN <span class="price__note">40 min</span></p>
+                <a class="card__action btn btn--ghost" href="terapias/limpia/">See more <span class="sr-only">about Limpia (energy cleansing)</span></a>
+              </div>
+            </article>
+          </li>
+      </ul>
+      <p class="section__more"><a class="btn btn--secondary btn--lg" href="terapias/">See all therapies</a></p>
+    </div>
+  </section>
+
+  <section class="section section--sage" id="productos" aria-labelledby="productos-title">
+    <div class="container">
+      <header class="section__head">
+        <p class="label eyebrow">To take home</p>
+        <h2 class="display-h2" id="productos-title">What supports the practice at home.</h2>
+        <p class="lead">Incense, candles, resins and ritual tools to keep the rhythm between sessions.</p>
+      </header>
+      <ul class="grid grid--4" role="list">
+        <li>
+          <article class="card card--interactive card--compact">
+            <img class="card__media card__media--square" src="../media/inciensos.jpg" alt="Bundles of colorful incense sticks" loading="lazy" />
+            <h3 class="card__title card__title--sm">Incense sticks</h3>
+            <div class="card__footer">
+              <p class="price">$45 MXN</p>
+              <a class="card__action btn btn--ghost" href="productos/inciensos/">See <span class="sr-only">Incense sticks</span></a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="card card--interactive card--compact">
+            <img class="card__media card__media--square" src="../media/clorofila.jpg" alt="Green drink being poured into a glass" loading="lazy" />
+            <h3 class="card__title card__title--sm">Chlorophyll</h3>
+            <div class="card__footer">
+              <p class="price">$180 MXN</p>
+              <a class="card__action btn btn--ghost" href="productos/clorofila/">See <span class="sr-only">Chlorophyll</span></a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="card card--interactive card--compact">
+            <img class="card__media card__media--square" src="../media/velas-de-color.jpg" alt="Lit colored candles" loading="lazy" />
+            <h3 class="card__title card__title--sm">Colored candles</h3>
+            <div class="card__footer">
+              <p class="price">$35 MXN</p>
+              <a class="card__action btn btn--ghost" href="productos/velas-de-color/">See <span class="sr-only">Colored candles</span></a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="card card--interactive card--compact">
+            <img class="card__media card__media--square" src="../media/copal-resina.jpg" alt="Amber resin pieces on granules" loading="lazy" />
+            <h3 class="card__title card__title--sm">Copal resin</h3>
+            <div class="card__footer">
+              <p class="price">$90 MXN</p>
+              <a class="card__action btn btn--ghost" href="productos/copal-resina/">See <span class="sr-only">Copal resin</span></a>
+            </div>
+          </article>
+        </li>
+      </ul>
+      <p class="section__more"><a class="btn btn--secondary btn--lg" href="productos/">See products</a></p>
+    </div>
+  </section>
+
+  <section class="section section--quote" id="testimonio" aria-labelledby="voces-title">
+    <div class="container container--narrow">
+      <h2 class="label eyebrow" id="voces-title">A voice from the house</h2>
+      <!-- PLACEHOLDER: testimonio de ejemplo, NO es un testimonio real -->
+      <figure class="quote">
+        <blockquote><p class="display-quote">"I arrived carrying a whole week. I left without it. The room itself felt patient."</p></blockquote>
+        <figcaption class="caption">Marisol G. · Member since 2024</figcaption>
+      </figure>
+      <p class="caption" style="margin-top: var(--space-6)"><a href="voces/">Read more voices →</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="guias-teaser" aria-labelledby="guias-teaser-title">
+    <div class="container">
+      <header class="section__head section__head--split">
+        <div>
+          <p class="label eyebrow">Guides</p>
+          <h2 class="display-h2" id="guias-teaser-title">People who hold the space, with kindness.</h2>
+        </div>
+        <p class="lead">Meet the people who guide each therapy. <a href="guias/">Meet the team →</a></p>
+      </header>
+      <ul class="grid grid--3" role="list">
+        <li><article class="card"><img class="card__media card__media--portrait" src="../media/guia-corporal.jpg" alt="Portrait of Ana Lucía Ríos smiling in natural light" loading="lazy" /><h3 class="card__title card__title--sm">Ana Lucía Ríos</h3><p class="card__body">Body massage</p><p class="card__meta">Tuesday to Friday</p></article></li>
+        <li><article class="card"><img class="card__media card__media--portrait" src="../media/guia-energetica.jpg" alt="Portrait of Valeria Montes wearing a bead necklace in a bright studio" loading="lazy" /><h3 class="card__title card__title--sm">Valeria Montes</h3><p class="card__body">Reiki, Bach flowers and biomagnetism</p><p class="card__meta">Wednesday to Saturday</p></article></li>
+        <li><article class="card"><img class="card__media card__media--portrait" src="../media/guia-espiritual.jpg" alt="Portrait of Tomás Ibarra smiling outdoors" loading="lazy" /><h3 class="card__title card__title--sm">Tomás Ibarra</h3><p class="card__body">Limpias and spiritual guidance</p><p class="card__meta">Thursday to Sunday</p></article></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="visita">
+  <div class="container footer__inner">
+    <div class="footer__grid">
+      <div>
+        <p class="footer__word">Plenitud</p>
+        <p class="footer__tag">A place to come back to yourself.</p>
+        <!-- PLACEHOLDER: dirección de ejemplo, confirmar dirección real -->
+        <address class="footer__muted">Calle de la Calma 14<br />Studio courtyard, second floor<br />Open 9 a.m. to 4 p.m.</address>
+      </div>
+      <nav aria-labelledby="f-terapias">
+        <h2 class="footer__heading" id="f-terapias">Therapies</h2>
+        <ul class="footer__links" role="list"><li><a href="terapias/">See all</a></li><li><a href="productos/">Products</a></li></ul>
+      </nav>
+      <nav aria-labelledby="f-leer">
+        <h2 class="footer__heading" id="f-leer">Read</h2>
+        <ul class="footer__links" role="list"><li><a href="voces/">Voices</a></li><li><a href="guias/">Guides</a></li></ul>
+      </nav>
+      <div>
+        <h2 class="footer__heading" id="f-contacto">Contact</h2>
+        <ul class="footer__links" role="list">
+          <li><a href="https://wa.me/523335992034?text=Hi%2C%20I%20would%20like%20some%20information%20about%20Plenitud%20Center.">WhatsApp 33 3599 2034</a></li>
+          <li><a href="https://wa.me/523324909550?text=Hi%2C%20I%20would%20like%20some%20information%20about%20Plenitud%20Center.">WhatsApp 33 2490 9550</a></li>
+          <!-- PLACEHOLDER: correo de ejemplo, confirmar correo real -->
+          <li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li>
+        </ul>
+        <p class="footer__muted footer__hours">We answer 9 a.m. to 4 p.m.</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__muted">© Plenitud Center · 2026</p>
+      <div class="field field--inline">
+        <label class="field__label" for="theme">Appearance</label>
+        <select class="select" id="theme">
+          <option value="auto">Automatic</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="high-contrast">High contrast</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
+  <form class="dialog__panel" id="reserve-form" novalidate>
+    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Close"><span class="icon icon--close" aria-hidden="true"></span></button>
+
+    <div data-step="1">
+      <p class="dialog__step">Step 1 of 2</p>
+      <h2 class="dialog__title" id="reserve-t1" tabindex="-1">Which therapy calls you?</h2>
+      <p class="dialog__lead">Pick one to start. You can change your mind at any time.</p>
+      <fieldset class="choice-group">
+        <legend class="sr-only">Therapy</legend>
+        <label class="choice"><input type="radio" name="session" value="masaje-corporal" checked /><span class="choice__box"><span class="choice__title">Body massage</span><span class="choice__meta">Body</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="reiki" /><span class="choice__box"><span class="choice__title">Reiki</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="limpia" /><span class="choice__box"><span class="choice__title">Limpia (energy cleansing)</span><span class="choice__meta">Spiritual</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="flores-de-bach" /><span class="choice__box"><span class="choice__title">Bach flower remedies</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="biomagnetismo" /><span class="choice__box"><span class="choice__title">Biomagnetism therapy</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
+      </fieldset>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" type="button" data-close>Cancel</button>
+        <button class="btn btn--primary" type="button" data-next>Continue</button>
+      </div>
+    </div>
+
+    <div data-step="2" hidden>
+      <p class="dialog__step">Step 2 of 2</p>
+      <h2 class="dialog__title" id="reserve-t2" tabindex="-1">Where should we write to you?</h2>
+      <p class="dialog__lead">You will get a short note with the address and what to bring.</p>
+      <p class="alert alert--danger" id="form-status" role="alert" hidden></p>
+      <div class="stack" style="--stack: var(--space-5)">
+        <div class="field" data-field="name">
+          <label class="field__label" for="f-name">Name <span class="field__req">(required)</span></label>
+          <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
+          <p class="field__error" id="f-name-err">Enter your name.</p>
+        </div>
+        <div class="field" data-field="email">
+          <label class="field__label" for="f-email">Email <span class="field__req">(required)</span></label>
+          <p class="field__hint" id="f-email-hint">Example: name@email.com</p>
+          <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-hint f-email-err" />
+          <p class="field__error" id="f-email-err">Enter a valid email, for example name@email.com.</p>
+        </div>
+      </div>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" type="button" data-back>Back</button>
+        <button class="btn btn--primary" type="submit">Confirm booking</button>
+      </div>
+    </div>
+
+    <div data-step="3" hidden>
+      <h2 class="dialog__title" id="reserve-t3" tabindex="-1">All set, see you soon.</h2>
+      <p class="alert alert--success" role="status" style="margin-top: var(--space-5)"><span class="icon icon--check" aria-hidden="true"></span><span class="alert__body" id="reserve-summary"></span></p>
+      <div class="dialog__actions"><button class="btn btn--primary" type="button" data-close>Close</button></div>
+    </div>
+  </form>
+</dialog>
+
+<script src="../site.js"></script>
+</body>
+</html>

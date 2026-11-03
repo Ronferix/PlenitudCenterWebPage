@@ -5,6 +5,21 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
+  /* Messages written by script, in the page's language (<html lang>). Page text comes from build.mjs. */
+  var MESSAGES = {
+    es: {
+      order: 'Hola, quiero pedir: ', available: '. ¿Está disponible?',
+      errors: function (n) { return n === 1 ? 'Hay 1 campo por corregir.' : 'Hay ' + n + ' campos por corregir.'; },
+      booked: function (label, email) { return label + '. Te escribimos a ' + email + '.'; }
+    },
+    en: {
+      order: 'Hi, I would like to order: ', available: '. Is it available?',
+      errors: function (n) { return n === 1 ? '1 field needs fixing.' : n + ' fields need fixing.'; },
+      booked: function (label, email) { return label + '. We will write to you at ' + email + '.'; }
+    }
+  };
+  var T = MESSAGES[document.documentElement.lang] || MESSAGES.es;
+
   /* ---------- Menu disclosure (mobile) ---------- */
   var toggle = $('.nav__toggle'), list = $('#menu-principal');
   if (toggle && list) {
@@ -62,9 +77,9 @@
     var setMessage = function () {
       var picked = $('input[name=variant]:checked');
       waLinks.forEach(function (wa) {
-        var text = 'Hola, quiero pedir: ' + wa.dataset.product +
+        var text = T.order + wa.dataset.product +
           (picked ? ' (' + wa.dataset.variantName + ': ' + picked.value + ')' : '') +
-          (wa.dataset.price ? ' · ' + wa.dataset.price : '') + '. ¿Está disponible?';
+          (wa.dataset.price ? ' · ' + wa.dataset.price : '') + T.available;
         wa.href = wa.href.split('?')[0] + '?text=' + encodeURIComponent(text);
       });
     };
@@ -103,7 +118,7 @@
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) bad.push(email);
     bad.forEach(function (c) { c.setAttribute('aria-invalid', 'true'); c.closest('.field').classList.add('is-invalid'); });
     if (bad.length) {
-      status.textContent = bad.length === 1 ? 'Hay 1 campo por corregir.' : 'Hay ' + bad.length + ' campos por corregir.';
+      status.textContent = T.errors(bad.length);
       status.hidden = false;
       bad[0].focus();
     }
@@ -119,7 +134,7 @@
     if (!validate()) return;
     var checked = $('input[name=session]:checked', form);
     var label = checked.closest('.choice').querySelector('.choice__title').textContent;
-    $('#reserve-summary').textContent = label + '. Te escribimos a ' + $('#f-email').value.trim() + '.';
+    $('#reserve-summary').textContent = T.booked(label, $('#f-email').value.trim());
     show(3);
   });
   /* Light dismiss: a click on the backdrop closes the dialog. Esc is built in. */

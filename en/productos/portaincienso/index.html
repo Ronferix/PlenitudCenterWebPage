@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Incense holder · Plenitud Center</title>
+<meta name="description" content="Holder for burning incense sticks." />
+<script>
+  (function () {
+    var d = document.documentElement, s = null;
+    d.classList.add('js');
+    try { s = localStorage.getItem('plenitud-theme'); } catch (e) {}
+    var m = function (q) { return window.matchMedia && window.matchMedia(q).matches; };
+    d.dataset.theme = (s === 'light' || s === 'dark' || s === 'high-contrast') ? s
+      : (s === 'auto') ? (m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light')
+      : 'light';
+  })();
+</script>
+<link rel="alternate" hreflang="es" href="https://ronferix.github.io/PlenitudCenterWebPage/productos/portaincienso/" />
+<link rel="alternate" hreflang="en" href="https://ronferix.github.io/PlenitudCenterWebPage/en/productos/portaincienso/" />
+<link rel="alternate" hreflang="x-default" href="https://ronferix.github.io/PlenitudCenterWebPage/productos/portaincienso/" />
+<link rel="preload" href="../../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="../../../design-system/colors_and_type.css" />
+<link rel="stylesheet" href="../../../design-system/components.css" />
+<link rel="stylesheet" href="../../../site.css" />
+</head>
+<body>
+<a class="skip-link" href="#contenido">Skip to content</a>
+
+<header class="nav">
+  <div class="nav__bar">
+    <a class="nav__brand" href="../../" aria-label="Plenitud Center, home">
+      <img src="../../../design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
+      <span>Plenitud</span>
+    </a>
+    <button class="btn btn--ghost nav__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
+      <span class="icon icon--menu" aria-hidden="true"></span><span>Menu</span>
+    </button>
+    <nav aria-label="Main" class="nav__nav">
+      <ul class="nav__list" id="menu-principal">
+        <li><a class="nav__link" href="../../terapias/">Therapies</a></li>
+        <li><a class="nav__link" href="../../productos/" aria-current="page">Products</a></li>
+        <li><a class="nav__link" href="../../guias/">Guides</a></li>
+        <li><a class="nav__link" href="../../voces/">Voices</a></li>
+        <li><a class="nav__link" href="../../visita/">Visit</a></li>
+        <li><a class="nav__link nav__lang" href="../../../productos/portaincienso/" lang="es" hreflang="es">Español</a></li>
+        <li><button class="btn btn--primary" type="button" data-reserve>Book</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <section class="section" aria-labelledby="p-h1">
+    <div class="container detail">
+      <figure class="detail__media"><img src="../../../media/portaincienso.jpg" alt="Lit incense stick in a holder" /></figure>
+      <div class="detail__body">
+        <p class="label eyebrow">Product</p>
+        <h1 class="display-h1" id="p-h1">Incense holder</h1>
+        <p class="lead">Holder for burning incense sticks.</p>
+        <p class="price price--lg">$80 MXN</p>
+        
+        <div class="detail__cta buy">
+          <a class="btn btn--primary btn--lg" data-whatsapp data-product="Incense holder" data-variant-name="option" data-price="$80 MXN" href="https://wa.me/523335992034?text=Hi%2C%20I%20would%20like%20to%20order%3A%20Incense%20holder%20%C2%B7%20%2480%20MXN.%20Is%20it%20available%3F">Order on WhatsApp</a>
+          <a class="btn btn--ghost" href="mailto:hola@plenitud.center?subject=Question%20about%20Incense%20holder">Ask by email</a>
+        </div>
+        <p class="caption contact-note">We answer 9 a.m. to 4 p.m. · WhatsApp <a data-whatsapp data-product="Incense holder" data-variant-name="option" data-price="$80 MXN" href="https://wa.me/523335992034?text=Hi%2C%20I%20would%20like%20to%20order%3A%20Incense%20holder%20%C2%B7%20%2480%20MXN.%20Is%20it%20available%3F">33 3599 2034</a> or <a data-whatsapp data-product="Incense holder" data-variant-name="option" data-price="$80 MXN" href="https://wa.me/523324909550?text=Hi%2C%20I%20would%20like%20to%20order%3A%20Incense%20holder%20%C2%B7%20%2480%20MXN.%20Is%20it%20available%3F">33 2490 9550</a></p>
+        <p class="caption"><a href="../../productos/">← See all products</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="visita">
+  <div class="container footer__inner">
+    <div class="footer__grid">
+      <div>
+        <p class="footer__word">Plenitud</p>
+        <p class="footer__tag">A place to come back to yourself.</p>
+        <!-- PLACEHOLDER: dirección de ejemplo, confirmar dirección real -->
+        <address class="footer__muted">Calle de la Calma 14<br />Studio courtyard, second floor<br />Open 9 a.m. to 4 p.m.</address>
+      </div>
+      <nav aria-labelledby="f-terapias">
+        <h2 class="footer__heading" id="f-terapias">Therapies</h2>
+        <ul class="footer__links" role="list"><li><a href="../../terapias/">See all</a></li><li><a href="../../productos/">Products</a></li></ul>
+      </nav>
+      <nav aria-labelledby="f-leer">
+        <h2 class="footer__heading" id="f-leer">Read</h2>
+        <ul class="footer__links" role="list"><li><a href="../../voces/">Voices</a></li><li><a href="../../guias/">Guides</a></li></ul>
+      </nav>
+      <div>
+        <h2 class="footer__heading" id="f-contacto">Contact</h2>
+        <ul class="footer__links" role="list">
+          <li><a href="https://wa.me/523335992034?text=Hi%2C%20I%20would%20like%20some%20information%20about%20Plenitud%20Center.">WhatsApp 33 3599 2034</a></li>
+          <li><a href="https://wa.me/523324909550?text=Hi%2C%20I%20would%20like%20some%20information%20about%20Plenitud%20Center.">WhatsApp 33 2490 9550</a></li>
+          <!-- PLACEHOLDER: correo de ejemplo, confirmar correo real -->
+          <li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li>
+        </ul>
+        <p class="footer__muted footer__hours">We answer 9 a.m. to 4 p.m.</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__muted">© Plenitud Center · 2026</p>
+      <div class="field field--inline">
+        <label class="field__label" for="theme">Appearance</label>
+        <select class="select" id="theme">
+          <option value="auto">Automatic</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="high-contrast">High contrast</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
+  <form class="dialog__panel" id="reserve-form" novalidate>
+    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Close"><span class="icon icon--close" aria-hidden="true"></span></button>
+
+    <div data-step="1">
+      <p class="dialog__step">Step 1 of 2</p>
+      <h2 class="dialog__title" id="reserve-t1" tabindex="-1">Which therapy calls you?</h2>
+      <p class="dialog__lead">Pick one to start. You can change your mind at any time.</p>
+      <fieldset class="choice-group">
+        <legend class="sr-only">Therapy</legend>
+        <label class="choice"><input type="radio" name="session" value="masaje-corporal" checked /><span class="choice__box"><span class="choice__title">Body massage</span><span class="choice__meta">Body</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="reiki" /><span class="choice__box"><span class="choice__title">Reiki</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="limpia" /><span class="choice__box"><span class="choice__title">Limpia (energy cleansing)</span><span class="choice__meta">Spiritual</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="flores-de-bach" /><span class="choice__box"><span class="choice__title">Bach flower remedies</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="biomagnetismo" /><span class="choice__box"><span class="choice__title">Biomagnetism therapy</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
+      </fieldset>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" type="button" data-close>Cancel</button>
+        <button class="btn btn--primary" type="button" data-next>Continue</button>
+      </div>
+    </div>
+
+    <div data-step="2" hidden>
+      <p class="dialog__step">Step 2 of 2</p>
+      <h2 class="dialog__title" id="reserve-t2" tabindex="-1">Where should we write to you?</h2>
+      <p class="dialog__lead">You will get a short note with the address and what to bring.</p>
+      <p class="alert alert--danger" id="form-status" role="alert" hidden></p>
+      <div class="stack" style="--stack: var(--space-5)">
+        <div class="field" data-field="name">
+          <label class="field__label" for="f-name">Name <span class="field__req">(required)</span></label>
+          <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
+          <p class="field__error" id="f-name-err">Enter your name.</p>
+        </div>
+        <div class="field" data-field="email">
+          <label class="field__label" for="f-email">Email <span class="field__req">(required)</span></label>
+          <p class="field__hint" id="f-email-hint">Example: name@email.com</p>
+          <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-hint f-email-err" />
+          <p class="field__error" id="f-email-err">Enter a valid email, for example name@email.com.</p>
+        </div>
+      </div>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" type="button" data-back>Back</button>
+        <button class="btn btn--primary" type="submit">Confirm booking</button>
+      </div>
+    </div>
+
+    <div data-step="3" hidden>
+      <h2 class="dialog__title" id="reserve-t3" tabindex="-1">All set, see you soon.</h2>
+      <p class="alert alert--success" role="status" style="margin-top: var(--space-5)"><span class="icon icon--check" aria-hidden="true"></span><span class="alert__body" id="reserve-summary"></span></p>
+      <div class="dialog__actions"><button class="btn btn--primary" type="button" data-close>Close</button></div>
+    </div>
+  </form>
+</dialog>
+
+<script src="../../../site.js"></script>
+</body>
+</html>

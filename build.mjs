@@ -2,11 +2,16 @@
 // this script reads data/terapias.json + data/productos.json and writes plain
 // HTML files the same way a person would have typed them by hand. Re-run after
 // editing either JSON file or any template function below.
+//
+// Two languages: Spanish (primary) at the site root, English under en/ with the
+// same folder names, so switching language only adds or removes "en/". Interface
+// text lives in UI below; catalog text in each JSON item's `en` object.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
+const SITE_URL = 'https://ronferix.github.io/PlenitudCenterWebPage/';
 const terapiasData = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/terapias.json'), 'utf8'));
 const productosData = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/productos.json'), 'utf8'));
 const { categories, terapias } = terapiasData;
@@ -21,9 +26,122 @@ function write(relPath, html) {
   fs.writeFileSync(full, html);
 }
 
+// ---------- language ----------
+
+const UI = {
+  es: {
+    htmlLang: 'es', dir: '', toRoot: '', switchLabel: 'English', switchLang: 'en',
+    skip: 'Saltar al contenido', homeLabel: 'Plenitud Center, inicio', menu: 'Menú', mainNav: 'Principal', reserve: 'Reservar',
+    nav: { terapias: 'Terapias', productos: 'Productos', guias: 'Guías', voces: 'Voces', visita: 'Visita' },
+    tagline: 'Un lugar para volver a ti.', address: 'Calle de la Calma 14<br />Patio del estudio, segundo piso',
+    openHours: 'Abierto de 9:00 a 16:00', attention: 'Atención de 9:00 a 16:00',
+    fTherapies: 'Terapias', fSeeAll: 'Ver todas', fRead: 'Leer', fContact: 'Contacto',
+    appearance: 'Apariencia', themes: ['Automática', 'Clara', 'Oscura', 'Alto contraste'],
+    dlg: { close: 'Cerrar', step1: 'Paso 1 de 2', step2: 'Paso 2 de 2', t1: '¿Qué terapia te llama?', lead1: 'Elige una para empezar. Puedes cambiar de opinión cuando quieras.', legend: 'Terapia', cancel: 'Cancelar', next: 'Continuar', t2: '¿Dónde te escribimos?', lead2: 'Recibirás una nota breve con la dirección y qué traer.', name: 'Nombre', req: '(obligatorio)', nameErr: 'Escribe tu nombre.', email: 'Correo electrónico', emailHint: 'Ejemplo: nombre@correo.com', emailErr: 'Escribe un correo válido, por ejemplo nombre@correo.com.', back: 'Atrás', confirm: 'Confirmar reserva', t3: 'Listo, te esperamos.' },
+    pricePending: 'Precio por confirmar', or: 'o', options: 'opciones', option: 'opción',
+    waOrder: (prod, variant, price) => `Hola, quiero pedir: ${prod}${variant ? ` (${variant})` : ''}${price ? ` · ${price}` : ''}. ¿Está disponible?`,
+    waHello: 'Hola, quisiera información sobre Plenitud Center.',
+    seeMore: 'Ver más', seeMoreAbout: 'sobre', see: 'Ver',
+    home: {
+      title: 'Plenitud Center · Un lugar para volver a ti', description: 'Plenitud Center: terapias corporales, energéticas y espirituales, y productos para la práctica en casa.',
+      heroTitle: 'Un lugar para volver <em>a ti.</em>', heroLead: 'Un espacio de terapias corporales, energéticas y espirituales, y de productos para sostener esa práctica en casa. Llega como estás.',
+      heroReserve: 'Reservar una terapia', heroSee: 'Ver terapias',
+      offerEyebrow: 'Lo que ofrecemos', offerTitle: 'Cinco caminos, tres familias.', seeAllTherapies: 'Ver todas las terapias',
+      takeEyebrow: 'Para llevar', takeTitle: 'Lo que sostiene la práctica en casa.', takeLead: 'Incienso, velas, resinas y herramientas rituales para seguir el ritmo entre sesión y sesión.', seeProducts: 'Ver productos',
+      voiceEyebrow: 'Una voz de la casa', moreVoices: 'Leer más voces →',
+      guidesLead: 'Conoce a quienes guían cada terapia.', guidesLink: 'Ver el equipo →',
+    },
+    quote: '"Llegué cargando una semana. Salí sin ella. La sala misma se sentía paciente."', quoteBy: 'Marisol G. · Miembro desde 2024',
+    therapies: {
+      title: 'Terapias · Plenitud Center', description: 'Terapias corporales, energéticas y espirituales en Plenitud Center.',
+      h1: 'Corporal, energética, espiritual.', lead: 'Cinco formas de volver al cuerpo y al espacio personal, agrupadas por lo que trabajan primero.',
+      prev: (cat) => `Terapias anteriores de ${cat}`, next: (cat) => `Más terapias de ${cat}`,
+      note: 'Trae ropa cómoda. Qué traer exactamente depende de cada terapia — lo encuentras en su propia página.',
+      price: 'Precio', duration: 'Duración', schedule: 'Horario', reserveThis: 'Reservar', expect: 'Qué esperar', back: '← Ver todas las terapias',
+    },
+    products: {
+      title: 'Productos · Plenitud Center', description: 'Incienso, velas, resinas y herramientas rituales de Plenitud Center.',
+      eyebrow: 'Productos', h1: 'Para la práctica en casa.', lead: 'Para comprar, escríbenos por WhatsApp desde la página de cada producto — todavía no hay pago en línea.',
+      search: 'Buscar producto', searchPh: 'Ej. vela, incienso, copal', empty: 'No hay productos que coincidan con esa búsqueda.',
+      eyebrowOne: 'Producto', choose: 'Elige', orderWa: 'Pedir por WhatsApp', askMail: 'Preguntar por correo', subject: 'Pregunta sobre', back: '← Ver todos los productos',
+    },
+    guides: {
+      title: 'Guías · Plenitud Center', description: 'El equipo que sostiene las terapias de Plenitud Center.', eyebrow: 'Guías',
+      h1: 'Personas que sostienen el espacio, con amabilidad.', lead: 'Nuestro equipo es pequeño por decisión. Cada terapia la guía alguien que ha dedicado mucho tiempo a aprender a escuchar: primero a sí mismo, luego a los demás.',
+    },
+    voices: { title: 'Voces · Plenitud Center', description: 'Testimonios de Plenitud Center.', h1: 'Voces de la casa' },
+    visit: {
+      title: 'Visita · Plenitud Center', description: 'Dirección, horario y contacto de Plenitud Center.', eyebrow: 'Visita', h1: 'Cómo llegar',
+      address: 'Calle de la Calma 14, patio del estudio, segundo piso.', contact: 'Contacto', contactLead: 'Por WhatsApp o llamada, en el mismo horario:',
+      call: 'Llamar', callTo: 'al', reserve: 'Reservar una terapia', spaceAlt: 'Sala amplia y luminosa con grandes ventanales y piso de madera',
+    },
+    built: 'Generado',
+  },
+  en: {
+    htmlLang: 'en', dir: 'en/', toRoot: '../', switchLabel: 'Español', switchLang: 'es',
+    skip: 'Skip to content', homeLabel: 'Plenitud Center, home', menu: 'Menu', mainNav: 'Main', reserve: 'Book',
+    nav: { terapias: 'Therapies', productos: 'Products', guias: 'Guides', voces: 'Voices', visita: 'Visit' },
+    tagline: 'A place to come back to yourself.', address: 'Calle de la Calma 14<br />Studio courtyard, second floor',
+    openHours: 'Open 9 a.m. to 4 p.m.', attention: 'We answer 9 a.m. to 4 p.m.',
+    fTherapies: 'Therapies', fSeeAll: 'See all', fRead: 'Read', fContact: 'Contact',
+    appearance: 'Appearance', themes: ['Automatic', 'Light', 'Dark', 'High contrast'],
+    dlg: { close: 'Close', step1: 'Step 1 of 2', step2: 'Step 2 of 2', t1: 'Which therapy calls you?', lead1: 'Pick one to start. You can change your mind at any time.', legend: 'Therapy', cancel: 'Cancel', next: 'Continue', t2: 'Where should we write to you?', lead2: 'You will get a short note with the address and what to bring.', name: 'Name', req: '(required)', nameErr: 'Enter your name.', email: 'Email', emailHint: 'Example: name@email.com', emailErr: 'Enter a valid email, for example name@email.com.', back: 'Back', confirm: 'Confirm booking', t3: 'All set, see you soon.' },
+    pricePending: 'Price to be confirmed', or: 'or', options: 'options', option: 'option',
+    waOrder: (prod, variant, price) => `Hi, I would like to order: ${prod}${variant ? ` (${variant})` : ''}${price ? ` · ${price}` : ''}. Is it available?`,
+    waHello: 'Hi, I would like some information about Plenitud Center.',
+    seeMore: 'See more', seeMoreAbout: 'about', see: 'See',
+    home: {
+      title: 'Plenitud Center · A place to come back to yourself', description: 'Plenitud Center: body, energy and spiritual therapies, and products for your practice at home.',
+      heroTitle: 'A place to come back <em>to yourself.</em>', heroLead: 'A space for body, energy and spiritual therapies, and for products that support that practice at home. Come as you are.',
+      heroReserve: 'Book a therapy', heroSee: 'See therapies',
+      offerEyebrow: 'What we offer', offerTitle: 'Five paths, three families.', seeAllTherapies: 'See all therapies',
+      takeEyebrow: 'To take home', takeTitle: 'What supports the practice at home.', takeLead: 'Incense, candles, resins and ritual tools to keep the rhythm between sessions.', seeProducts: 'See products',
+      voiceEyebrow: 'A voice from the house', moreVoices: 'Read more voices →',
+      guidesLead: 'Meet the people who guide each therapy.', guidesLink: 'Meet the team →',
+    },
+    quote: '"I arrived carrying a whole week. I left without it. The room itself felt patient."', quoteBy: 'Marisol G. · Member since 2024',
+    therapies: {
+      title: 'Therapies · Plenitud Center', description: 'Body, energy and spiritual therapies at Plenitud Center.',
+      h1: 'Body, energy, spirit.', lead: 'Five ways to come back to your body and your personal space, grouped by what they work on first.',
+      prev: (cat) => `Previous ${cat} therapies`, next: (cat) => `More ${cat} therapies`,
+      note: 'Wear comfortable clothes. What exactly to bring depends on each therapy — you will find it on its own page.',
+      price: 'Price', duration: 'Duration', schedule: 'Hours', reserveThis: 'Book', expect: 'What to expect', back: '← See all therapies',
+    },
+    products: {
+      title: 'Products · Plenitud Center', description: 'Incense, candles, resins and ritual tools from Plenitud Center.',
+      eyebrow: 'Products', h1: 'For your practice at home.', lead: 'To buy, message us on WhatsApp from each product page — there is no online payment yet.',
+      search: 'Search products', searchPh: 'e.g. candle, incense, copal', empty: 'No products match that search.',
+      eyebrowOne: 'Product', choose: 'Choose a', orderWa: 'Order on WhatsApp', askMail: 'Ask by email', subject: 'Question about', back: '← See all products',
+    },
+    guides: {
+      title: 'Guides · Plenitud Center', description: 'The team behind the therapies at Plenitud Center.', eyebrow: 'Guides',
+      h1: 'People who hold the space, with kindness.', lead: 'Our team is small by choice. Each therapy is guided by someone who has spent a long time learning to listen: first to themselves, then to others.',
+    },
+    voices: { title: 'Voices · Plenitud Center', description: 'Testimonials from Plenitud Center.', h1: 'Voices from the house' },
+    visit: {
+      title: 'Visit · Plenitud Center', description: 'Address, hours and contact for Plenitud Center.', eyebrow: 'Visit', h1: 'How to get here',
+      address: 'Calle de la Calma 14, studio courtyard, second floor.', contact: 'Contact', contactLead: 'By WhatsApp or phone, during the same hours:',
+      call: 'Call', callTo: '', reserve: 'Book a therapy', spaceAlt: 'Large, bright room with tall windows and a wooden floor',
+    },
+    built: 'Built',
+  },
+};
+
+// The language being generated. build() sets both before each pass.
+let LANG = 'es';
+let L = UI.es;
+
+// Catalog text in the current language: the item's `en` object overrides the Spanish field.
+const tr = (item, field) => (LANG !== 'es' && item.en && item.en[field] != null ? item.en[field] : item[field]);
+const imageOf = (item) => item.image && { file: item.image.file, alt: tr(item, 'imageAlt') ?? item.image.alt };
+const catName = (key) => tr(categories[key], 'name');
+// Links inside the current language use `prefix`; shared files (CSS, JS, media) sit at the real root.
+const asset = (prefix) => prefix + L.toRoot;
+
 // ---------- shared partials ----------
 
-function headExtra(prefix) {
+function headExtra(prefix, pagePath) {
+  const a = asset(prefix);
   return `<script>
   (function () {
     var d = document.documentElement, s = null;
@@ -35,39 +153,40 @@ function headExtra(prefix) {
       : 'light';
   })();
 </script>
-<link rel="preload" href="${prefix}design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="${prefix}design-system/colors_and_type.css" />
-<link rel="stylesheet" href="${prefix}design-system/components.css" />
-<link rel="stylesheet" href="${prefix}site.css" />`;
+<link rel="alternate" hreflang="es" href="${SITE_URL}${pagePath}" />
+<link rel="alternate" hreflang="en" href="${SITE_URL}en/${pagePath}" />
+<link rel="alternate" hreflang="x-default" href="${SITE_URL}${pagePath}" />
+<link rel="preload" href="${a}design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="${a}design-system/colors_and_type.css" />
+<link rel="stylesheet" href="${a}design-system/components.css" />
+<link rel="stylesheet" href="${a}site.css" />`;
 }
 
-const NAV_ITEMS = [
-  { key: 'terapias', label: 'Terapias', href: 'terapias/' },
-  { key: 'productos', label: 'Productos', href: 'productos/' },
-  { key: 'guias', label: 'Guías', href: 'guias/' },
-  { key: 'voces', label: 'Voces', href: 'voces/' },
-  { key: 'visita', label: 'Visita', href: 'visita/' },
-];
+const NAV_KEYS = ['terapias', 'productos', 'guias', 'voces', 'visita'];
 
-function nav(prefix, active) {
+function nav(prefix, active, pagePath) {
   const home = prefix || './';
-  const items = NAV_ITEMS.map((it) => {
-    const current = it.key === active ? ' aria-current="page"' : '';
-    return `<li><a class="nav__link" href="${prefix}${it.href}"${current}>${it.label}</a></li>`;
+  const items = NAV_KEYS.map((key) => {
+    const current = key === active ? ' aria-current="page"' : '';
+    return `<li><a class="nav__link" href="${prefix}${key}/"${current}>${L.nav[key]}</a></li>`;
   }).join('\n        ');
+  // Same page in the other language: from es add "en/", from en drop it.
+  const other = UI[L.switchLang];
+  const switchHref = `${asset(prefix)}${other.dir}${pagePath}` || './';
   return `<header class="nav">
   <div class="nav__bar">
-    <a class="nav__brand" href="${home}" aria-label="Plenitud Center, inicio">
-      <img src="${prefix}design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
+    <a class="nav__brand" href="${home}" aria-label="${L.homeLabel}">
+      <img src="${asset(prefix)}design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
       <span>Plenitud</span>
     </a>
     <button class="btn btn--ghost nav__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
-      <span class="icon icon--menu" aria-hidden="true"></span><span>Menú</span>
+      <span class="icon icon--menu" aria-hidden="true"></span><span>${L.menu}</span>
     </button>
-    <nav aria-label="Principal" class="nav__nav">
+    <nav aria-label="${L.mainNav}" class="nav__nav">
       <ul class="nav__list" id="menu-principal">
         ${items}
-        <li><button class="btn btn--primary" type="button" data-reserve>Reservar</button></li>
+        <li><a class="nav__link nav__lang" href="${switchHref}" lang="${L.switchLang}" hreflang="${L.switchLang}">${L.switchLabel}</a></li>
+        <li><button class="btn btn--primary" type="button" data-reserve>${L.reserve}</button></li>
       </ul>
     </nav>
   </div>
@@ -80,37 +199,34 @@ function footerPartial(prefix) {
     <div class="footer__grid">
       <div>
         <p class="footer__word">Plenitud</p>
-        <p class="footer__tag">Un lugar para volver a ti.</p>
+        <p class="footer__tag">${L.tagline}</p>
         <!-- PLACEHOLDER: dirección de ejemplo, confirmar dirección real -->
-        <address class="footer__muted">Calle de la Calma 14<br />Patio del estudio, segundo piso<br />Abierto de martes a domingo</address>
+        <address class="footer__muted">${L.address}<br />${L.openHours}</address>
       </div>
       <nav aria-labelledby="f-terapias">
-        <h2 class="footer__heading" id="f-terapias">Terapias</h2>
-        <ul class="footer__links" role="list"><li><a href="${prefix}terapias/">Ver todas</a></li><li><a href="${prefix}productos/">Productos</a></li></ul>
+        <h2 class="footer__heading" id="f-terapias">${L.fTherapies}</h2>
+        <ul class="footer__links" role="list"><li><a href="${prefix}terapias/">${L.fSeeAll}</a></li><li><a href="${prefix}productos/">${L.nav.productos}</a></li></ul>
       </nav>
       <nav aria-labelledby="f-leer">
-        <h2 class="footer__heading" id="f-leer">Leer</h2>
-        <ul class="footer__links" role="list"><li><a href="${prefix}voces/">Voces</a></li><li><a href="${prefix}guias/">Guías</a></li></ul>
+        <h2 class="footer__heading" id="f-leer">${L.fRead}</h2>
+        <ul class="footer__links" role="list"><li><a href="${prefix}voces/">${L.nav.voces}</a></li><li><a href="${prefix}guias/">${L.nav.guias}</a></li></ul>
       </nav>
       <div>
-        <h2 class="footer__heading" id="f-contacto">Contacto</h2>
+        <h2 class="footer__heading" id="f-contacto">${L.fContact}</h2>
         <ul class="footer__links" role="list">
 ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.display}</a></li>`).join('\n')}
           <!-- PLACEHOLDER: correo de ejemplo, confirmar correo real -->
           <li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li>
         </ul>
-        <p class="footer__muted footer__hours">${ATTENTION_HOURS}</p>
+        <p class="footer__muted footer__hours">${L.attention}</p>
       </div>
     </div>
     <div class="footer__bottom">
       <p class="footer__muted">© Plenitud Center · 2026</p>
       <div class="field field--inline">
-        <label class="field__label" for="theme">Apariencia</label>
+        <label class="field__label" for="theme">${L.appearance}</label>
         <select class="select" id="theme">
-          <option value="auto">Automática</option>
-          <option value="light">Clara</option>
-          <option value="dark">Oscura</option>
-          <option value="high-contrast">Alto contraste</option>
+${['auto', 'light', 'dark', 'high-contrast'].map((v, i) => `          <option value="${v}">${L.themes[i]}</option>`).join('\n')}
         </select>
       </div>
     </div>
@@ -119,53 +235,54 @@ ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.disp
 }
 
 function reserveDialog() {
-  const choices = terapias.map((t, i) => `        <label class="choice"><input type="radio" name="session" value="${t.slug}"${i === 0 ? ' checked' : ''} /><span class="choice__box"><span class="choice__title">${esc(t.name)}</span><span class="choice__meta">${esc(categories[t.category].name)}</span><span class="choice__check" aria-hidden="true"></span></span></label>`).join('\n');
+  const D = L.dlg;
+  const choices = terapias.map((t, i) => `        <label class="choice"><input type="radio" name="session" value="${t.slug}"${i === 0 ? ' checked' : ''} /><span class="choice__box"><span class="choice__title">${esc(tr(t, 'name'))}</span><span class="choice__meta">${esc(catName(t.category))}</span><span class="choice__check" aria-hidden="true"></span></span></label>`).join('\n');
   return `<dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
   <form class="dialog__panel" id="reserve-form" novalidate>
-    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Cerrar"><span class="icon icon--close" aria-hidden="true"></span></button>
+    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="${D.close}"><span class="icon icon--close" aria-hidden="true"></span></button>
 
     <div data-step="1">
-      <p class="dialog__step">Paso 1 de 2</p>
-      <h2 class="dialog__title" id="reserve-t1" tabindex="-1">¿Qué terapia te llama?</h2>
-      <p class="dialog__lead">Elige una para empezar. Puedes cambiar de opinión cuando quieras.</p>
+      <p class="dialog__step">${D.step1}</p>
+      <h2 class="dialog__title" id="reserve-t1" tabindex="-1">${D.t1}</h2>
+      <p class="dialog__lead">${D.lead1}</p>
       <fieldset class="choice-group">
-        <legend class="sr-only">Terapia</legend>
+        <legend class="sr-only">${D.legend}</legend>
 ${choices}
       </fieldset>
       <div class="dialog__actions">
-        <button class="btn btn--ghost" type="button" data-close>Cancelar</button>
-        <button class="btn btn--primary" type="button" data-next>Continuar</button>
+        <button class="btn btn--ghost" type="button" data-close>${D.cancel}</button>
+        <button class="btn btn--primary" type="button" data-next>${D.next}</button>
       </div>
     </div>
 
     <div data-step="2" hidden>
-      <p class="dialog__step">Paso 2 de 2</p>
-      <h2 class="dialog__title" id="reserve-t2" tabindex="-1">¿Dónde te escribimos?</h2>
-      <p class="dialog__lead">Recibirás una nota breve con la dirección y qué traer.</p>
+      <p class="dialog__step">${D.step2}</p>
+      <h2 class="dialog__title" id="reserve-t2" tabindex="-1">${D.t2}</h2>
+      <p class="dialog__lead">${D.lead2}</p>
       <p class="alert alert--danger" id="form-status" role="alert" hidden></p>
       <div class="stack" style="--stack: var(--space-5)">
         <div class="field" data-field="name">
-          <label class="field__label" for="f-name">Nombre <span class="field__req">(obligatorio)</span></label>
+          <label class="field__label" for="f-name">${D.name} <span class="field__req">${D.req}</span></label>
           <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
-          <p class="field__error" id="f-name-err">Escribe tu nombre.</p>
+          <p class="field__error" id="f-name-err">${D.nameErr}</p>
         </div>
         <div class="field" data-field="email">
-          <label class="field__label" for="f-email">Correo electrónico <span class="field__req">(obligatorio)</span></label>
-          <p class="field__hint" id="f-email-hint">Ejemplo: nombre@correo.com</p>
+          <label class="field__label" for="f-email">${D.email} <span class="field__req">${D.req}</span></label>
+          <p class="field__hint" id="f-email-hint">${D.emailHint}</p>
           <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-hint f-email-err" />
-          <p class="field__error" id="f-email-err">Escribe un correo válido, por ejemplo nombre@correo.com.</p>
+          <p class="field__error" id="f-email-err">${D.emailErr}</p>
         </div>
       </div>
       <div class="dialog__actions">
-        <button class="btn btn--ghost" type="button" data-back>Atrás</button>
-        <button class="btn btn--primary" type="submit">Confirmar reserva</button>
+        <button class="btn btn--ghost" type="button" data-back>${D.back}</button>
+        <button class="btn btn--primary" type="submit">${D.confirm}</button>
       </div>
     </div>
 
     <div data-step="3" hidden>
-      <h2 class="dialog__title" id="reserve-t3" tabindex="-1">Listo, te esperamos.</h2>
+      <h2 class="dialog__title" id="reserve-t3" tabindex="-1">${D.t3}</h2>
       <p class="alert alert--success" role="status" style="margin-top: var(--space-5)"><span class="icon icon--check" aria-hidden="true"></span><span class="alert__body" id="reserve-summary"></span></p>
-      <div class="dialog__actions"><button class="btn btn--primary" type="button" data-close>Cerrar</button></div>
+      <div class="dialog__actions"><button class="btn btn--primary" type="button" data-close>${D.close}</button></div>
     </div>
   </form>
 </dialog>`;
@@ -177,18 +294,18 @@ ${choices}
 const money = (n) => `$${n.toLocaleString('es-MX')} MXN`;
 
 function priceBlock(price, note) {
-  if (price == null) return `<p class="price price--pending">Precio por confirmar</p>`;
+  if (price == null) return `<p class="price price--pending">${L.pricePending}</p>`;
   return `<p class="price">${money(price)}${note ? ` <span class="price__note">${esc(note)}</span>` : ''}</p>`;
 }
 
 function cardMedia(image, prefix, ratio = 'square') {
   if (!image) return `<div class="card__media card__media--${ratio} card__media--empty" aria-hidden="true"></div>`;
-  return `<img class="card__media card__media--${ratio}" src="${prefix}${image.file}" alt="${esc(image.alt)}" loading="lazy" />`;
+  return `<img class="card__media card__media--${ratio}" src="${asset(prefix)}${image.file}" alt="${esc(image.alt)}" loading="lazy" />`;
 }
 
 function detailMedia(image, prefix) {
   if (!image) return `<div class="detail__media detail__media--empty" aria-hidden="true"></div>`;
-  return `<figure class="detail__media"><img src="${prefix}${image.file}" alt="${esc(image.alt)}" /></figure>`;
+  return `<figure class="detail__media"><img src="${asset(prefix)}${image.file}" alt="${esc(image.alt)}" /></figure>`;
 }
 
 // Reception lines (WhatsApp and calls). `intl` is the wa.me / tel: form: 52 + 10 digits.
@@ -196,58 +313,61 @@ const CONTACTS = [
   { display: '33 3599 2034', intl: '523335992034' },
   { display: '33 2490 9550', intl: '523324909550' },
 ];
-const ATTENTION_HOURS = 'Atención de 9:00 a 16:00';
 // Same message shape as site.js builds when the visitor picks another variant
 function whatsappLink(product, variant, price, number = CONTACTS[0].intl) {
-  const text = `Hola, quiero pedir: ${product}${variant ? ` (${variant})` : ''}${price ? ` · ${price}` : ''}. ¿Está disponible?`;
-  return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+  return `https://wa.me/${number}?text=${encodeURIComponent(L.waOrder(product, variant, price))}`;
 }
-const waGeneral = (c) => `https://wa.me/${c.intl}?text=${encodeURIComponent('Hola, quisiera información sobre Plenitud Center.')}`;
+const waGeneral = (c) => `https://wa.me/${c.intl}?text=${encodeURIComponent(L.waHello)}`;
 
 /* Quiet line under a call to action: hours + both reception lines on WhatsApp.
    `attrs(c)` returns each link's attributes (product pages add the data site.js needs). */
 function contactNote(attrs = (c) => `href="${waGeneral(c)}"`) {
-  const links = CONTACTS.map((c) => `<a ${attrs(c)}>${c.display}</a>`).join(' o ');
-  return `<p class="caption contact-note">${ATTENTION_HOURS} · WhatsApp ${links}</p>`;
+  const links = CONTACTS.map((c) => `<a ${attrs(c)}>${c.display}</a>`).join(` ${L.or} `);
+  return `<p class="caption contact-note">${L.attention} · WhatsApp ${links}</p>`;
 }
 
 const swatch = (color) => `<span class="swatch" style="--swatch: ${esc(color)}" aria-hidden="true"></span>`;
+
+// Variants keep their Spanish names as keys (swatches); `en.variants` lists the
+// English names in the same order.
+const variantList = (p) => p.variants && p.variants.map((key, i) => ({ key, name: tr(p, 'variants')[i] }));
 
 /* Cards summarise variants in one line (a few swatches + a count, or up to three
    names); the full list lives on the product page. */
 const MAX_CARD_SWATCHES = 5;
 function variantSummary(p) {
-  if (!p.variants) return '';
-  const label = p.variantLabel || 'opciones';
+  const vs = variantList(p);
+  if (!vs) return '';
+  const label = tr(p, 'variantLabel') || L.options;
   if (p.swatches) {
-    const shown = p.variants.slice(0, MAX_CARD_SWATCHES).map((v) => swatch(p.swatches[v])).join('');
-    const more = p.variants.length - MAX_CARD_SWATCHES;
-    return `<p class="variants"><span class="swatches">${shown}${more > 0 ? `<span class="swatches__more" aria-hidden="true">+${more}</span>` : ''}</span><span>${p.variants.length} ${esc(label)}</span></p>`;
+    const shown = vs.slice(0, MAX_CARD_SWATCHES).map((v) => swatch(p.swatches[v.key])).join('');
+    const more = vs.length - MAX_CARD_SWATCHES;
+    return `<p class="variants"><span class="swatches">${shown}${more > 0 ? `<span class="swatches__more" aria-hidden="true">+${more}</span>` : ''}</span><span>${vs.length} ${esc(label)}</span></p>`;
   }
-  if (p.variants.length <= 3) return `<p class="variants"><span>${p.variants.map(esc).join(' · ')}</span></p>`;
-  return `<p class="variants"><span>${p.variants.length} ${esc(label)}</span></p>`;
+  if (vs.length <= 3) return `<p class="variants"><span>${vs.map((v) => esc(v.name)).join(' · ')}</span></p>`;
+  return `<p class="variants"><span>${vs.length} ${esc(label)}</span></p>`;
 }
 
 const GUIAS = [
-  { name: 'Ana Lucía Ríos', focus: 'Masaje corporal', schedule: 'Martes a viernes', image: { file: 'media/guia-corporal.jpg', alt: 'Retrato de Ana Lucía Ríos sonriendo con luz natural' } },
-  { name: 'Valeria Montes', focus: 'Reiki, flores de Bach y biomagnetismo', schedule: 'Miércoles a sábado', image: { file: 'media/guia-energetica.jpg', alt: 'Retrato de Valeria Montes con collar de cuentas en un estudio luminoso' } },
-  { name: 'Tomás Ibarra', focus: 'Limpias y acompañamiento espiritual', schedule: 'Jueves a domingo', image: { file: 'media/guia-espiritual.jpg', alt: 'Retrato de Tomás Ibarra sonriendo al aire libre' } },
+  { name: 'Ana Lucía Ríos', focus: 'Masaje corporal', schedule: 'Martes a viernes', en: { focus: 'Body massage', schedule: 'Tuesday to Friday', imageAlt: 'Portrait of Ana Lucía Ríos smiling in natural light' }, image: { file: 'media/guia-corporal.jpg', alt: 'Retrato de Ana Lucía Ríos sonriendo con luz natural' } },
+  { name: 'Valeria Montes', focus: 'Reiki, flores de Bach y biomagnetismo', schedule: 'Miércoles a sábado', en: { focus: 'Reiki, Bach flowers and biomagnetism', schedule: 'Wednesday to Saturday', imageAlt: 'Portrait of Valeria Montes wearing a bead necklace in a bright studio' }, image: { file: 'media/guia-energetica.jpg', alt: 'Retrato de Valeria Montes con collar de cuentas en un estudio luminoso' } },
+  { name: 'Tomás Ibarra', focus: 'Limpias y acompañamiento espiritual', schedule: 'Jueves a domingo', en: { focus: 'Limpias and spiritual guidance', schedule: 'Thursday to Sunday', imageAlt: 'Portrait of Tomás Ibarra smiling outdoors' }, image: { file: 'media/guia-espiritual.jpg', alt: 'Retrato de Tomás Ibarra sonriendo al aire libre' } },
 ];
 
-function layout({ prefix, active, title, description, bodyHtml, mainId = 'contenido' }) {
+function layout({ prefix, active, pagePath, title, description, bodyHtml, mainId = 'contenido' }) {
   return `<!doctype html>
-<html lang="es" data-theme="light">
+<html lang="${L.htmlLang}" data-theme="light">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}" />
-${headExtra(prefix)}
+${headExtra(prefix, pagePath)}
 </head>
 <body>
-<a class="skip-link" href="#${mainId}">Saltar al contenido</a>
+<a class="skip-link" href="#${mainId}">${L.skip}</a>
 
-${nav(prefix, active)}
+${nav(prefix, active, pagePath)}
 
 <main id="${mainId}" tabindex="-1">
 ${bodyHtml}
@@ -257,7 +377,7 @@ ${footerPartial(prefix)}
 
 ${reserveDialog()}
 
-<script src="${prefix}site.js"></script>
+<script src="${asset(prefix)}site.js"></script>
 </body>
 </html>
 `;
@@ -266,6 +386,7 @@ ${reserveDialog()}
 // ---------- page bodies ----------
 
 function homeBody(prefix) {
+  const H = L.home;
   const featured = [
     terapias.find((t) => t.category === 'corporal'),
     terapias.find((t) => t.category === 'energetica'),
@@ -274,11 +395,11 @@ function homeBody(prefix) {
 
   const productTiles = productos.filter((p) => p.image).slice(0, 4).map((p) => `        <li>
           <article class="card card--interactive card--compact">
-            ${cardMedia(p.image, prefix)}
-            <h3 class="card__title card__title--sm">${esc(p.name)}</h3>
+            ${cardMedia(imageOf(p), prefix)}
+            <h3 class="card__title card__title--sm">${esc(tr(p, 'name'))}</h3>
             <div class="card__footer">
               ${priceBlock(p.price)}
-              <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">Ver <span class="sr-only">${esc(p.name)}</span></a>
+              <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">${L.see} <span class="sr-only">${esc(tr(p, 'name'))}</span></a>
             </div>
           </article>
         </li>`).join('\n');
@@ -287,56 +408,55 @@ function homeBody(prefix) {
 
   return `  <section class="hero" id="inicio" aria-labelledby="hero-title">
     <div class="container hero__inner">
-      <img class="hero__emblem" src="${prefix}design-system/assets/logo-emblem.png" alt="" width="96" height="96" />
+      <img class="hero__emblem" src="${asset(prefix)}design-system/assets/logo-emblem.png" alt="" width="96" height="96" />
       <p class="label eyebrow">Plenitud · Center</p>
       <!-- PLACEHOLDER: tagline de ejemplo, confirmar si sigue aplicando al centro de terapias holísticas -->
-      <h1 class="display-hero" id="hero-title">Un lugar para volver <em>a ti.</em></h1>
-      <p class="lead">Un espacio de terapias corporales, energéticas y espirituales, y de productos para sostener esa práctica en casa. Llega como estás.</p>
+      <h1 class="display-hero" id="hero-title">${H.heroTitle}</h1>
+      <p class="lead">${H.heroLead}</p>
       <div class="hero__actions">
-        <button class="btn btn--primary btn--lg" type="button" data-reserve>Reservar una terapia</button>
-        <a class="btn btn--secondary btn--lg" href="${prefix}terapias/">Ver terapias</a>
+        <button class="btn btn--primary btn--lg" type="button" data-reserve>${H.heroReserve}</button>
+        <a class="btn btn--secondary btn--lg" href="${prefix}terapias/">${H.heroSee}</a>
       </div>
-      <!-- PLACEHOLDER: horario de ejemplo, confirmar horario real -->
-      <p class="caption">Abierto de martes a domingo · del amanecer al anochecer</p>
+      <p class="caption">${L.openHours}</p>
     </div>
   </section>
 
   <section class="section" id="terapias" aria-labelledby="terapias-title">
     <div class="container">
       <header class="section__head">
-        <p class="label eyebrow">Lo que ofrecemos</p>
-        <h2 class="display-h2" id="terapias-title">Cinco caminos, tres familias.</h2>
+        <p class="label eyebrow">${H.offerEyebrow}</p>
+        <h2 class="display-h2" id="terapias-title">${H.offerTitle}</h2>
       </header>
       <ul class="grid grid--3" role="list">
 ${cards}
       </ul>
-      <p class="section__more"><a class="btn btn--secondary btn--lg" href="${prefix}terapias/">Ver todas las terapias</a></p>
+      <p class="section__more"><a class="btn btn--secondary btn--lg" href="${prefix}terapias/">${H.seeAllTherapies}</a></p>
     </div>
   </section>
 
   <section class="section section--sage" id="productos" aria-labelledby="productos-title">
     <div class="container">
       <header class="section__head">
-        <p class="label eyebrow">Para llevar</p>
-        <h2 class="display-h2" id="productos-title">Lo que sostiene la práctica en casa.</h2>
-        <p class="lead">Incienso, velas, resinas y herramientas rituales para seguir el ritmo entre sesión y sesión.</p>
+        <p class="label eyebrow">${H.takeEyebrow}</p>
+        <h2 class="display-h2" id="productos-title">${H.takeTitle}</h2>
+        <p class="lead">${H.takeLead}</p>
       </header>
       <ul class="grid grid--4" role="list">
 ${productTiles}
       </ul>
-      <p class="section__more"><a class="btn btn--secondary btn--lg" href="${prefix}productos/">Ver productos</a></p>
+      <p class="section__more"><a class="btn btn--secondary btn--lg" href="${prefix}productos/">${H.seeProducts}</a></p>
     </div>
   </section>
 
   <section class="section section--quote" id="testimonio" aria-labelledby="voces-title">
     <div class="container container--narrow">
-      <h2 class="label eyebrow" id="voces-title">Una voz de la casa</h2>
+      <h2 class="label eyebrow" id="voces-title">${H.voiceEyebrow}</h2>
       <!-- PLACEHOLDER: testimonio de ejemplo, NO es un testimonio real -->
       <figure class="quote">
-        <blockquote><p class="display-quote">"Llegué cargando una semana. Salí sin ella. La sala misma se sentía paciente."</p></blockquote>
-        <figcaption class="caption">Marisol G. · Miembro desde 2024</figcaption>
+        <blockquote><p class="display-quote">${L.quote}</p></blockquote>
+        <figcaption class="caption">${L.quoteBy}</figcaption>
       </figure>
-      <p class="caption" style="margin-top: var(--space-6)"><a href="${prefix}voces/">Leer más voces →</a></p>
+      <p class="caption" style="margin-top: var(--space-6)"><a href="${prefix}voces/">${H.moreVoices}</a></p>
     </div>
   </section>
 
@@ -344,10 +464,10 @@ ${productTiles}
     <div class="container">
       <header class="section__head section__head--split">
         <div>
-          <p class="label eyebrow">Guías</p>
-          <h2 class="display-h2" id="guias-teaser-title">Personas que sostienen el espacio, con amabilidad.</h2>
+          <p class="label eyebrow">${L.guides.eyebrow}</p>
+          <h2 class="display-h2" id="guias-teaser-title">${L.guides.h1}</h2>
         </div>
-        <p class="lead">Conoce a quienes guían cada terapia. <a href="${prefix}guias/">Ver el equipo →</a></p>
+        <p class="lead">${H.guidesLead} <a href="${prefix}guias/">${H.guidesLink}</a></p>
       </header>
       <ul class="grid grid--3" role="list">
 ${guiaCards(prefix, 'h3')}
@@ -357,29 +477,31 @@ ${guiaCards(prefix, 'h3')}
 }
 
 function guiaCards(prefix, heading) {
-  return GUIAS.map((g) => `        <li><article class="card">${cardMedia(g.image, prefix, 'portrait')}<${heading} class="card__title card__title--sm">${esc(g.name)}</${heading}><p class="card__body">${esc(g.focus)}</p><p class="card__meta">${esc(g.schedule)}</p></article></li>`).join('\n');
+  return GUIAS.map((g) => `        <li><article class="card">${cardMedia(imageOf(g), prefix, 'portrait')}<${heading} class="card__title card__title--sm">${esc(g.name)}</${heading}><p class="card__body">${esc(tr(g, 'focus'))}</p><p class="card__meta">${esc(tr(g, 'schedule'))}</p></article></li>`).join('\n');
 }
 
 // One therapy card, shared by the home page and the catalog. The eyebrow names the
 // category only where cards of different categories sit side by side.
 function terapiaCard(t, prefix, heading, showCategory = false) {
+  const name = tr(t, 'name');
   return `          <li>
             <article class="card card--interactive">
-              ${cardMedia(t.image, prefix, 'wide')}
-              ${showCategory ? `<p class="card__eyebrow">${esc(categories[t.category].name)}</p>` : ''}
-              <${heading} class="card__title card__title--sm">${esc(t.name)}</${heading}>
-              <p class="card__body">${esc(t.summary)}</p>
+              ${cardMedia(imageOf(t), prefix, 'wide')}
+              ${showCategory ? `<p class="card__eyebrow">${esc(catName(t.category))}</p>` : ''}
+              <${heading} class="card__title card__title--sm">${esc(name)}</${heading}>
+              <p class="card__body">${esc(tr(t, 'summary'))}</p>
               <div class="card__footer">
                 ${priceBlock(t.price, t.duration)}
-                <a class="card__action btn btn--ghost" href="${prefix}terapias/${t.slug}/">Ver más <span class="sr-only">sobre ${esc(t.name)}</span></a>
+                <a class="card__action btn btn--ghost" href="${prefix}terapias/${t.slug}/">${L.seeMore} <span class="sr-only">${L.seeMoreAbout} ${esc(name)}</span></a>
               </div>
             </article>
           </li>`;
 }
 
 function terapiasIndexBody(prefix) {
+  const T = L.therapies;
   const byCategory = Object.keys(categories).map((catKey) => {
-    const cat = categories[catKey];
+    const name = catName(catKey);
     const items = terapias.filter((t) => t.category === catKey);
     const cards = items.map((t) => terapiaCard(t, prefix, 'h3')).join('\n');
     // Each group is a horizontal carousel: one card plus a peek on phones, two on
@@ -388,14 +510,14 @@ function terapiasIndexBody(prefix) {
     const single = items.length === 1;
     const controls = single ? '' : `
           <div class="carousel__controls" hidden>
-            <button class="btn btn--secondary carousel__btn" type="button" data-dir="-1" aria-label="Terapias anteriores de ${esc(cat.name)}"><span aria-hidden="true">←</span></button>
-            <button class="btn btn--secondary carousel__btn" type="button" data-dir="1" aria-label="Más terapias de ${esc(cat.name)}"><span aria-hidden="true">→</span></button>
+            <button class="btn btn--secondary carousel__btn" type="button" data-dir="-1" aria-label="${esc(T.prev(name))}"><span aria-hidden="true">←</span></button>
+            <button class="btn btn--secondary carousel__btn" type="button" data-dir="1" aria-label="${esc(T.next(name))}"><span aria-hidden="true">→</span></button>
           </div>`;
     return `      <section class="category carousel${single ? ' carousel--single' : ''}" aria-labelledby="cat-${catKey}">
         <header class="category__head">
           <div class="category__text">
-            <h2 class="display-h2" id="cat-${catKey}">${esc(cat.name)}</h2>
-            <p class="category__summary">${esc(cat.summary)}</p>
+            <h2 class="display-h2" id="cat-${catKey}">${esc(name)}</h2>
+            <p class="category__summary">${esc(tr(categories[catKey], 'summary'))}</p>
           </div>${controls}
         </header>
         <ul class="carousel__track" role="list">
@@ -407,34 +529,35 @@ ${cards}
   return `  <section class="section" aria-labelledby="terapias-h1">
     <div class="container">
       <header class="section__head">
-        <p class="label eyebrow">Terapias</p>
-        <h1 class="display-h1" id="terapias-h1">Corporal, energética, espiritual.</h1>
-        <p class="lead">Cinco formas de volver al cuerpo y al espacio personal, agrupadas por lo que trabajan primero.</p>
+        <p class="label eyebrow">${L.nav.terapias}</p>
+        <h1 class="display-h1" id="terapias-h1">${T.h1}</h1>
+        <p class="lead">${T.lead}</p>
       </header>
 ${byCategory}
-      <p class="small note">Trae ropa cómoda. Qué traer exactamente depende de cada terapia — lo encuentras en su propia página.</p>
+      <p class="small note">${T.note}</p>
     </div>
   </section>`;
 }
 
 function terapiaDetailBody(prefix, t) {
-  const cat = categories[t.category];
-  const expectItems = t.expect.map((e) => `          <li>${esc(e)}</li>`).join('\n');
+  const T = L.therapies;
+  const name = tr(t, 'name');
+  const expectItems = tr(t, 'expect').map((e) => `          <li>${esc(e)}</li>`).join('\n');
   return `  <section class="section" aria-labelledby="t-h1">
     <div class="container detail">
-      ${detailMedia(t.image, prefix)}
+      ${detailMedia(imageOf(t), prefix)}
       <div class="detail__body">
-        <p class="label eyebrow">${esc(cat.name)}</p>
-        <h1 class="display-h1" id="t-h1">${esc(t.name)}</h1>
-        <p class="lead">${esc(t.body)}</p>
-        ${facts([['Precio', t.price != null ? money(t.price) : null], ['Duración', t.duration], ['Horario', t.schedule]])}
-        <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve data-session="${esc(t.slug)}">Reservar ${esc(t.name)}</button></p>
+        <p class="label eyebrow">${esc(catName(t.category))}</p>
+        <h1 class="display-h1" id="t-h1">${esc(name)}</h1>
+        <p class="lead">${esc(tr(t, 'body'))}</p>
+        ${facts([[T.price, t.price != null ? money(t.price) : null], [T.duration, t.duration], [T.schedule, tr(t, 'schedule')]])}
+        <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve data-session="${esc(t.slug)}">${T.reserveThis} ${esc(name)}</button></p>
         ${contactNote()}
-        <h2 class="h4">Qué esperar</h2>
+        <h2 class="h4">${T.expect}</h2>
         <ol class="body detail__list">
 ${expectItems}
         </ol>
-        <p class="caption"><a href="${prefix}terapias/">← Ver todas las terapias</a></p>
+        <p class="caption"><a href="${prefix}terapias/">${T.back}</a></p>
       </div>
     </div>
   </section>`;
@@ -446,15 +569,16 @@ function facts(rows) {
 }
 
 function productosIndexBody(prefix) {
-  const cards = productos.map((p) => `        <li data-name="${esc(p.name.toLowerCase())}">
+  const P = L.products;
+  const cards = productos.map((p) => `        <li data-name="${esc(tr(p, 'name').toLowerCase())}">
           <article class="card card--interactive">
-            ${cardMedia(p.image, prefix)}
-            <h2 class="card__title card__title--sm">${esc(p.name)}</h2>
-            <p class="card__body">${esc(p.summary)}</p>
+            ${cardMedia(imageOf(p), prefix)}
+            <h2 class="card__title card__title--sm">${esc(tr(p, 'name'))}</h2>
+            <p class="card__body">${esc(tr(p, 'summary'))}</p>
             ${variantSummary(p)}
             <div class="card__footer">
-              ${priceBlock(p.price, p.priceNote)}
-              <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">Ver <span class="sr-only">${esc(p.name)}</span></a>
+              ${priceBlock(p.price, tr(p, 'priceNote'))}
+              <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">${L.see} <span class="sr-only">${esc(tr(p, 'name'))}</span></a>
             </div>
           </article>
         </li>`).join('\n');
@@ -462,67 +586,72 @@ function productosIndexBody(prefix) {
   return `  <section class="section" aria-labelledby="productos-h1">
     <div class="container">
       <header class="section__head">
-        <p class="label eyebrow">Productos</p>
-        <h1 class="display-h1" id="productos-h1">Para la práctica en casa.</h1>
-        <p class="lead">Catálogo informativo: para comprar, escribe directamente — todavía no hay pago en línea.</p>
+        <p class="label eyebrow">${P.eyebrow}</p>
+        <h1 class="display-h1" id="productos-h1">${P.h1}</h1>
+        <p class="lead">${P.lead}</p>
       </header>
       <div class="field" style="max-width: 24rem; margin-bottom: var(--space-7)">
-        <label class="field__label" for="product-filter">Buscar producto</label>
-        <input class="input" id="product-filter" type="search" placeholder="Ej. vela, incienso, copal" autocomplete="off" />
+        <label class="field__label" for="product-filter">${P.search}</label>
+        <input class="input" id="product-filter" type="search" placeholder="${P.searchPh}" autocomplete="off" />
       </div>
       <ul class="grid grid--3" role="list" id="product-grid">
 ${cards}
       </ul>
-      <p class="small" id="product-empty" hidden style="margin-top: var(--space-6)">No hay productos que coincidan con esa búsqueda.</p>
+      <p class="small" id="product-empty" hidden style="margin-top: var(--space-6)">${P.empty}</p>
     </div>
   </section>`;
 }
 
 function productoDetailBody(prefix, p) {
-  const label = p.variantLabel || 'opciones';
-  const one = p.variantName || 'opción';
+  const P = L.products;
+  const name = tr(p, 'name');
+  const vs = variantList(p);
+  const label = tr(p, 'variantLabel') || L.options;
+  const one = tr(p, 'variantName') || L.option;
   // Native radios; site.js copies the choice into the WhatsApp message. The first
   // option starts selected so the link always names a concrete variant.
-  const variants = p.variants
+  const variants = vs
     ? `<fieldset class="variant-picker">
-          <legend class="h4">Elige ${esc(one)} <span class="variant-picker__count">(${p.variants.length} ${esc(label)})</span></legend>
-          <div class="variant-picker__options">${p.variants.map((v, i) => `
-            <label class="variant-chip"><input type="radio" name="variant" value="${esc(v)}"${i === 0 ? ' checked' : ''} /><span class="variant-chip__box">${p.swatches ? swatch(p.swatches[v]) : ''}${esc(v)}</span></label>`).join('')}
+          <legend class="h4">${P.choose} ${esc(one)} <span class="variant-picker__count">(${vs.length} ${esc(label)})</span></legend>
+          <div class="variant-picker__options">${vs.map((v, i) => `
+            <label class="variant-chip"><input type="radio" name="variant" value="${esc(v.name)}"${i === 0 ? ' checked' : ''} /><span class="variant-chip__box">${p.swatches ? swatch(p.swatches[v.key]) : ''}${esc(v.name)}</span></label>`).join('')}
           </div>
         </fieldset>`
     : '';
-  const subject = encodeURIComponent(`Pregunta sobre ${p.name}`);
-  const priceText = p.price != null ? `${money(p.price)}${p.priceNote ? ` ${p.priceNote}` : ''}` : '';
-  const orderAttrs = (c) => `data-whatsapp data-product="${esc(p.name)}" data-variant-name="${esc(one)}" data-price="${esc(priceText)}" href="${whatsappLink(p.name, p.variants ? `${one}: ${p.variants[0]}` : '', priceText, c.intl)}"`;
+  const subject = encodeURIComponent(`${P.subject} ${name}`);
+  const note = tr(p, 'priceNote');
+  const priceText = p.price != null ? `${money(p.price)}${note ? ` ${note}` : ''}` : '';
+  const orderAttrs = (c) => `data-whatsapp data-product="${esc(name)}" data-variant-name="${esc(one)}" data-price="${esc(priceText)}" href="${whatsappLink(name, vs ? `${one}: ${vs[0].name}` : '', priceText, c.intl)}"`;
   return `  <section class="section" aria-labelledby="p-h1">
     <div class="container detail">
-      ${detailMedia(p.image, prefix)}
+      ${detailMedia(imageOf(p), prefix)}
       <div class="detail__body">
-        <p class="label eyebrow">Producto</p>
-        <h1 class="display-h1" id="p-h1">${esc(p.name)}</h1>
-        <p class="lead">${esc(p.summary)}</p>
-        ${priceBlock(p.price, p.priceNote).replace('class="price', 'class="price price--lg')}
+        <p class="label eyebrow">${P.eyebrowOne}</p>
+        <h1 class="display-h1" id="p-h1">${esc(name)}</h1>
+        <p class="lead">${esc(tr(p, 'summary'))}</p>
+        ${priceBlock(p.price, note).replace('class="price', 'class="price price--lg')}
         ${variants}
         <div class="detail__cta buy">
-          <a class="btn btn--primary btn--lg" ${orderAttrs(CONTACTS[0])}>Pedir por WhatsApp</a>
-          <a class="btn btn--ghost" href="mailto:hola@plenitud.center?subject=${subject}">Preguntar por correo</a>
+          <a class="btn btn--primary btn--lg" ${orderAttrs(CONTACTS[0])}>${P.orderWa}</a>
+          <a class="btn btn--ghost" href="mailto:hola@plenitud.center?subject=${subject}">${P.askMail}</a>
         </div>
         ${contactNote(orderAttrs)}
-        <p class="caption"><a href="${prefix}productos/">← Ver todos los productos</a></p>
+        <p class="caption"><a href="${prefix}productos/">${P.back}</a></p>
       </div>
     </div>
   </section>`;
 }
 
 function guiasBody(prefix) {
+  const G = L.guides;
   return `  <section class="section" aria-labelledby="guias-h1">
     <div class="container">
       <header class="section__head section__head--split">
         <div>
-          <p class="label eyebrow">Guías</p>
-          <h1 class="display-h1" id="guias-h1">Personas que sostienen el espacio, con amabilidad.</h1>
+          <p class="label eyebrow">${G.eyebrow}</p>
+          <h1 class="display-h1" id="guias-h1">${G.h1}</h1>
         </div>
-        <p class="lead">Nuestro equipo es pequeño por decisión. Cada terapia la guía alguien que ha dedicado mucho tiempo a aprender a escuchar: primero a sí mismo, luego a los demás.</p>
+        <p class="lead">${G.lead}</p>
       </header>
       <ul class="grid grid--3" role="list">
 ${guiaCards(prefix, 'h2')}
@@ -534,35 +663,36 @@ ${guiaCards(prefix, 'h2')}
 function vocesBody() {
   return `  <section class="section section--quote" aria-labelledby="voces-h1">
     <div class="container container--narrow">
-      <h1 class="display-h1" id="voces-h1">Voces de la casa</h1>
+      <h1 class="display-h1" id="voces-h1">${L.voices.h1}</h1>
       <!-- PLACEHOLDER: testimonio de ejemplo, NO es un testimonio real -->
       <figure class="quote" style="margin-top: var(--space-8)">
-        <blockquote><p class="display-quote">"Llegué cargando una semana. Salí sin ella. La sala misma se sentía paciente."</p></blockquote>
-        <figcaption class="caption">Marisol G. · Miembro desde 2024</figcaption>
+        <blockquote><p class="display-quote">${L.quote}</p></blockquote>
+        <figcaption class="caption">${L.quoteBy}</figcaption>
       </figure>
     </div>
   </section>`;
 }
 
 function visitaBody(prefix) {
-  const espacio = { file: 'media/espacio.jpg', alt: 'Sala amplia y luminosa con grandes ventanales y piso de madera', credit: 'Unsplash' };
+  const V = L.visit;
+  const espacio = { file: 'media/espacio.jpg', alt: V.spaceAlt };
   return `  <section class="section" aria-labelledby="visita-h1">
     <div class="container detail">
       ${detailMedia(espacio, prefix)}
       <div class="detail__body">
-        <p class="label eyebrow">Visita</p>
-        <h1 class="display-h1" id="visita-h1">Cómo llegar</h1>
-        <!-- PLACEHOLDER: dirección y horario de ejemplo. Pendiente: dirección exacta, horario por día, política de cancelación, mapa y canal de contacto real -->
-        <p class="lead">Calle de la Calma 14, patio del estudio, segundo piso.</p>
-        <p class="body">Abierto de martes a domingo, del amanecer al anochecer.</p>
-        <h2 class="h4">Contacto</h2>
-        <p class="body">${ATTENTION_HOURS}, por WhatsApp o llamada:</p>
+        <p class="label eyebrow">${V.eyebrow}</p>
+        <h1 class="display-h1" id="visita-h1">${V.h1}</h1>
+        <!-- PLACEHOLDER: dirección de ejemplo. Pendiente: dirección exacta, política de cancelación y mapa -->
+        <p class="lead">${V.address}</p>
+        <p class="body">${L.openHours}.</p>
+        <h2 class="h4">${V.contact}</h2>
+        <p class="body">${V.contactLead}</p>
         <ul class="body contact-list" role="list">
-${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.display}</a> · <a href="tel:+${c.intl}">Llamar <span class="sr-only">al ${c.display}</span></a></li>`).join('\n')}
+${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.display}</a> · <a href="tel:+${c.intl}">${V.call} <span class="sr-only">${V.callTo} ${c.display}</span></a></li>`).join('\n')}
           <!-- PLACEHOLDER: correo de ejemplo -->
           <li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li>
         </ul>
-        <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve>Reservar una terapia</button></p>
+        <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve>${V.reserve}</button></p>
       </div>
     </div>
   </section>`;
@@ -570,64 +700,26 @@ ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.disp
 
 // ---------- write everything ----------
 
-write('index.html', layout({
-  prefix: prefixFor(0), active: null,
-  title: 'Plenitud Center · Un lugar para volver a ti',
-  description: 'Plenitud Center: terapias corporales, energéticas y espirituales, y productos para la práctica en casa.',
-  bodyHtml: homeBody(prefixFor(0)),
-}));
+function build(lang) {
+  LANG = lang;
+  L = UI[lang];
+  const out = (p) => `${L.dir}${p}index.html`;
+  const page = (pagePath, depth, opts) => write(out(pagePath), layout({ prefix: prefixFor(depth), pagePath, ...opts }));
 
-write('terapias/index.html', layout({
-  prefix: prefixFor(1), active: 'terapias',
-  title: 'Terapias · Plenitud Center',
-  description: 'Terapias corporales, energéticas y espirituales en Plenitud Center.',
-  bodyHtml: terapiasIndexBody(prefixFor(1)),
-}));
+  page('', 0, { active: null, title: L.home.title, description: L.home.description, bodyHtml: homeBody(prefixFor(0)) });
+  page('terapias/', 1, { active: 'terapias', title: L.therapies.title, description: L.therapies.description, bodyHtml: terapiasIndexBody(prefixFor(1)) });
+  for (const t of terapias) {
+    page(`terapias/${t.slug}/`, 2, { active: 'terapias', title: `${tr(t, 'name')} · Plenitud Center`, description: tr(t, 'summary'), bodyHtml: terapiaDetailBody(prefixFor(2), t) });
+  }
+  page('productos/', 1, { active: 'productos', title: L.products.title, description: L.products.description, bodyHtml: productosIndexBody(prefixFor(1)) });
+  for (const p of productos) {
+    page(`productos/${p.slug}/`, 2, { active: 'productos', title: `${tr(p, 'name')} · Plenitud Center`, description: tr(p, 'summary'), bodyHtml: productoDetailBody(prefixFor(2), p) });
+  }
+  page('guias/', 1, { active: 'guias', title: L.guides.title, description: L.guides.description, bodyHtml: guiasBody(prefixFor(1)) });
+  page('voces/', 1, { active: 'voces', title: L.voices.title, description: L.voices.description, bodyHtml: vocesBody() });
+  page('visita/', 1, { active: 'visita', title: L.visit.title, description: L.visit.description, bodyHtml: visitaBody(prefixFor(1)) });
 
-for (const t of terapias) {
-  write(`terapias/${t.slug}/index.html`, layout({
-    prefix: prefixFor(2), active: 'terapias',
-    title: `${t.name} · Plenitud Center`,
-    description: t.summary,
-    bodyHtml: terapiaDetailBody(prefixFor(2), t),
-  }));
+  console.log(`${L.built} (${lang}): 1 inicio, 1 terapias/ + ${terapias.length}, 1 productos/ + ${productos.length}, guías, voces, visita.`);
 }
 
-write('productos/index.html', layout({
-  prefix: prefixFor(1), active: 'productos',
-  title: 'Productos · Plenitud Center',
-  description: 'Incienso, velas, resinas y herramientas rituales de Plenitud Center.',
-  bodyHtml: productosIndexBody(prefixFor(1)),
-}));
-
-for (const p of productos) {
-  write(`productos/${p.slug}/index.html`, layout({
-    prefix: prefixFor(2), active: 'productos',
-    title: `${p.name} · Plenitud Center`,
-    description: p.summary,
-    bodyHtml: productoDetailBody(prefixFor(2), p),
-  }));
-}
-
-write('guias/index.html', layout({
-  prefix: prefixFor(1), active: 'guias',
-  title: 'Guías · Plenitud Center',
-  description: 'El equipo que sostiene las terapias de Plenitud Center.',
-  bodyHtml: guiasBody(prefixFor(1)),
-}));
-
-write('voces/index.html', layout({
-  prefix: prefixFor(1), active: 'voces',
-  title: 'Voces · Plenitud Center',
-  description: 'Testimonios de Plenitud Center.',
-  bodyHtml: vocesBody(),
-}));
-
-write('visita/index.html', layout({
-  prefix: prefixFor(1), active: 'visita',
-  title: 'Visita · Plenitud Center',
-  description: 'Dirección, horario y contacto de Plenitud Center.',
-  bodyHtml: visitaBody(prefixFor(1)),
-}));
-
-console.log(`Generado: 1 inicio, 1 terapias/ + ${terapias.length} detalle, 1 productos/ + ${productos.length} detalle, guías, voces, visita.`);
+for (const lang of Object.keys(UI)) build(lang);

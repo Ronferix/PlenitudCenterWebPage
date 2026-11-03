@@ -18,7 +18,20 @@
       },
       "priceNote": "paquete de 20 varitas",
       "variantLabel": "aromas",
-      "variantName": "aroma"
+      "variantName": "aroma",
+      "en": {
+        "name": "Incense sticks",
+        "summary": "Incense sticks in three scents.",
+        "variants": [
+          "Nag Champa",
+          "Copal",
+          "Cinnamon"
+        ],
+        "variantLabel": "scents",
+        "variantName": "scent",
+        "priceNote": "pack of 20 sticks",
+        "imageAlt": "Bundles of colorful incense sticks"
+      }
     },
     {
       "slug": "clorofila",
@@ -32,7 +45,13 @@
         "alt": "Bebida verde vertida en un vaso de vidrio",
         "credit": "Unsplash"
       },
-      "priceNote": "frasco de 500 ml"
+      "priceNote": "frasco de 500 ml",
+      "en": {
+        "name": "Chlorophyll",
+        "summary": "Liquid chlorophyll supplement.",
+        "priceNote": "500 ml bottle",
+        "imageAlt": "Green drink being poured into a glass"
+      }
     },
     {
       "slug": "velas-de-color",
@@ -69,7 +88,26 @@
         "Verde": "#3f7d3a",
         "Azul": "#2f5d9e"
       },
-      "variantName": "color"
+      "variantName": "color",
+      "en": {
+        "name": "Colored candles",
+        "summary": "Ritual candles in nine colors.",
+        "variants": [
+          "Red",
+          "Pink",
+          "Orange",
+          "Purple",
+          "White",
+          "Silver",
+          "Gold",
+          "Green",
+          "Blue"
+        ],
+        "variantLabel": "colors",
+        "variantName": "color",
+        "priceNote": "per candle",
+        "imageAlt": "Lit colored candles"
+      }
     },
     {
       "slug": "copal-resina",
@@ -83,7 +121,13 @@
         "alt": "Trozos de resina ámbar sobre gránulos",
         "credit": "Unsplash"
       },
-      "priceNote": "bolsa de 100 g"
+      "priceNote": "bolsa de 100 g",
+      "en": {
+        "name": "Copal resin",
+        "summary": "Copal resin to burn on charcoal.",
+        "priceNote": "100 g bag",
+        "imageAlt": "Amber resin pieces on granules"
+      }
     },
     {
       "slug": "carbon-compactado",
@@ -97,7 +141,13 @@
         "alt": "Cuenco metálico con brasas que desprenden humo",
         "credit": "Unsplash"
       },
-      "priceNote": "tubo de 10 pastillas"
+      "priceNote": "tubo de 10 pastillas",
+      "en": {
+        "name": "Charcoal tablets",
+        "summary": "Charcoal for burning resins and loose incense.",
+        "priceNote": "tube of 10 tablets",
+        "imageAlt": "Metal bowl with smoking embers"
+      }
     },
     {
       "slug": "base-metalica-vela",
@@ -110,6 +160,11 @@
         "file": "media/base-metalica-vela.jpg",
         "alt": "Vela encendida sobre una base de latón",
         "credit": "Unsplash"
+      },
+      "en": {
+        "name": "Metal candle base",
+        "summary": "A base that holds the candle and protects the surface while it burns.",
+        "imageAlt": "Lit candle on a brass base"
       }
     },
     {
@@ -123,6 +178,11 @@
         "file": "media/portaincienso.jpg",
         "alt": "Varilla de incienso encendida en un soporte",
         "credit": "Unsplash"
+      },
+      "en": {
+        "name": "Incense holder",
+        "summary": "Holder for burning incense sticks.",
+        "imageAlt": "Lit incense stick in a holder"
       }
     },
     {
@@ -136,13 +196,18 @@
         "file": "media/portaincienso-compartimiento.jpg",
         "alt": "Incienso humeando sobre un soporte en forma de loto",
         "credit": "Unsplash"
+      },
+      "en": {
+        "name": "Incense holder with compartment",
+        "summary": "Incense holder with space to store spare sticks.",
+        "imageAlt": "Incense smoking on a lotus-shaped holder"
       }
     },
     {
       "slug": "ozono",
-      "name": "Ozono",
+      "name": "Aceite ozonizado",
       "draft": true,
-      "summary": "Pendiente de confirmar: ¿producto, equipo o terapia?",
+      "summary": "Aceite ozonizado para el cuidado diario de la piel.",
       "variants": null,
       "price": 260,
       "image": {
@@ -150,7 +215,13 @@
         "alt": "Burbujas de aire bajo el agua",
         "credit": "Unsplash"
       },
-      "priceNote": "frasco de 250 ml"
+      "priceNote": "frasco de 250 ml",
+      "en": {
+        "name": "Ozonated oil",
+        "summary": "Ozonated oil for daily skin care.",
+        "priceNote": "250 ml bottle",
+        "imageAlt": "Air bubbles under water"
+      }
     }
   ]
 }
