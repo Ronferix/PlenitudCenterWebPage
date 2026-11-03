@@ -29,6 +29,48 @@
     ['(prefers-color-scheme: dark)', '(prefers-contrast: more)'].forEach(function (q) { window.matchMedia(q).addEventListener('change', function () { if (sel.value === 'auto') apply(); }); });
   }
 
+  /* ---------- Carousels (therapy groups) ----------
+     The track scrolls natively; JS only adds the arrows, and only when the row overflows.
+     aria-disabled (not disabled) at the ends so a focused arrow keeps focus. */
+  $$('.carousel').forEach(function (c) {
+    var track = $('.carousel__track', c), ctr = $('.carousel__controls', c);
+    if (!track || !ctr) return;
+    var prev = $('[data-dir="-1"]', ctr), next = $('[data-dir="1"]', ctr);
+    var update = function () {
+      var max = track.scrollWidth - track.clientWidth;
+      ctr.hidden = max <= 1;
+      prev.setAttribute('aria-disabled', String(track.scrollLeft <= 1));
+      next.setAttribute('aria-disabled', String(track.scrollLeft >= max - 1));
+    };
+    var step = function (dir) {
+      var li = track.firstElementChild;
+      var w = li ? li.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0) : track.clientWidth;
+      track.scrollBy({ left: dir * w });   /* smoothness comes from CSS, which drops it under reduced motion */
+    };
+    [prev, next].forEach(function (b) {
+      b.addEventListener('click', function () { if (b.getAttribute('aria-disabled') !== 'true') step(Number(b.dataset.dir)); });
+    });
+    track.addEventListener('scroll', update, { passive: true });
+    if ('ResizeObserver' in window) new ResizeObserver(update).observe(track);   /* catches layout changes a window resize misses */
+    else window.addEventListener('resize', update);
+    update();
+  });
+
+  /* ---------- WhatsApp order link follows the chosen variant ---------- */
+  var wa = $('[data-whatsapp]');
+  if (wa) {
+    var base = wa.href.split('?')[0];
+    var setMessage = function () {
+      var picked = $('input[name=variant]:checked');
+      var text = 'Hola, quiero pedir: ' + wa.dataset.product +
+        (picked ? ' (' + wa.dataset.variantName + ': ' + picked.value + ')' : '') +
+        (wa.dataset.price ? ' · ' + wa.dataset.price : '') + '. ¿Está disponible?';
+      wa.href = base + '?text=' + encodeURIComponent(text);
+    };
+    $$('input[name=variant]').forEach(function (r) { r.addEventListener('change', setMessage); });
+    setMessage();
+  }
+
   /* ---------- Booking dialog (native <dialog>) ---------- */
   var dlg = $('#reserve'), form = $('#reserve-form');
   if (!dlg || typeof dlg.showModal !== 'function') return;

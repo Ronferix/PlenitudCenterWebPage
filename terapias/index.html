@@ -54,12 +54,14 @@
         <h1 class="display-h1" id="terapias-h1">Corporal, energética, espiritual.</h1>
         <p class="lead">Cinco formas de volver al cuerpo y al espacio personal, agrupadas por lo que trabajan primero.</p>
       </header>
-      <section class="category" aria-labelledby="cat-corporal">
+      <section class="category carousel carousel--single" aria-labelledby="cat-corporal">
         <header class="category__head">
-          <h2 class="display-h2" id="cat-corporal">Corporal</h2>
-          <p class="category__summary">Trabajo directo sobre el cuerpo: manos, presión, movimiento.</p>
+          <div class="category__text">
+            <h2 class="display-h2" id="cat-corporal">Corporal</h2>
+            <p class="category__summary">Trabajo directo sobre el cuerpo: manos, presión, movimiento.</p>
+          </div>
         </header>
-        <ul class="grid grid--3" role="list">
+        <ul class="carousel__track" role="list">
           <li>
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="../media/masaje-corporal.jpg" alt="Manos dando un masaje en la espalda" loading="lazy" />
@@ -74,12 +76,18 @@
           </li>
         </ul>
       </section>
-      <section class="category" aria-labelledby="cat-energetica">
+      <section class="category carousel" aria-labelledby="cat-energetica">
         <header class="category__head">
-          <h2 class="display-h2" id="cat-energetica">Energética</h2>
-          <p class="category__summary">Equilibrio del campo energético: Reiki, imanes, esencias florales.</p>
+          <div class="category__text">
+            <h2 class="display-h2" id="cat-energetica">Energética</h2>
+            <p class="category__summary">Equilibrio del campo energético: Reiki, imanes, esencias florales.</p>
+          </div>
+          <div class="carousel__controls" hidden>
+            <button class="btn btn--secondary carousel__btn" type="button" data-dir="-1" aria-label="Terapias anteriores de Energética"><span aria-hidden="true">←</span></button>
+            <button class="btn btn--secondary carousel__btn" type="button" data-dir="1" aria-label="Más terapias de Energética"><span aria-hidden="true">→</span></button>
+          </div>
         </header>
-        <ul class="grid grid--3" role="list">
+        <ul class="carousel__track" role="list">
           <li>
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="../media/reiki.jpg" alt="Manos abiertas con las palmas hacia arriba" loading="lazy" />
@@ -118,12 +126,14 @@
           </li>
         </ul>
       </section>
-      <section class="category" aria-labelledby="cat-espiritual">
+      <section class="category carousel carousel--single" aria-labelledby="cat-espiritual">
         <header class="category__head">
-          <h2 class="display-h2" id="cat-espiritual">Espiritual</h2>
-          <p class="category__summary">Limpieza y acompañamiento del espacio personal y ritual.</p>
+          <div class="category__text">
+            <h2 class="display-h2" id="cat-espiritual">Espiritual</h2>
+            <p class="category__summary">Limpieza y acompañamiento del espacio personal y ritual.</p>
+          </div>
         </header>
-        <ul class="grid grid--3" role="list">
+        <ul class="carousel__track" role="list">
           <li>
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="../media/limpia.jpg" alt="Atado de salvia blanca en un cuenco de cerámica" loading="lazy" />

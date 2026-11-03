@@ -187,6 +187,14 @@ function detailMedia(image, prefix) {
   return `<figure class="detail__media"><img src="${prefix}${image.file}" alt="${esc(image.alt)}" /></figure>`;
 }
 
+// PLACEHOLDER: número de WhatsApp de ejemplo (formato internacional, sin "+" ni espacios). Reemplazar por el número real.
+const WHATSAPP = '5210000000000';
+// Same message shape as site.js builds when the visitor picks another variant
+function whatsappLink(product, variant, price) {
+  const text = `Hola, quiero pedir: ${product}${variant ? ` (${variant})` : ''}${price ? ` · ${price}` : ''}. ¿Está disponible?`;
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+}
+
 const swatch = (color) => `<span class="swatch" style="--swatch: ${esc(color)}" aria-hidden="true"></span>`;
 
 /* Cards summarise variants in one line (a few swatches + a count, or up to three
@@ -358,12 +366,23 @@ function terapiasIndexBody(prefix) {
     const cat = categories[catKey];
     const items = terapias.filter((t) => t.category === catKey);
     const cards = items.map((t) => terapiaCard(t, prefix, 'h3')).join('\n');
-    return `      <section class="category" aria-labelledby="cat-${catKey}">
+    // Each group is a horizontal carousel: one card plus a peek on phones, two on
+    // tablets, three on desktop. A group with a single therapy shows it as one wide
+    // card instead. Arrows appear (site.js) only when the row actually overflows.
+    const single = items.length === 1;
+    const controls = single ? '' : `
+          <div class="carousel__controls" hidden>
+            <button class="btn btn--secondary carousel__btn" type="button" data-dir="-1" aria-label="Terapias anteriores de ${esc(cat.name)}"><span aria-hidden="true">←</span></button>
+            <button class="btn btn--secondary carousel__btn" type="button" data-dir="1" aria-label="Más terapias de ${esc(cat.name)}"><span aria-hidden="true">→</span></button>
+          </div>`;
+    return `      <section class="category carousel${single ? ' carousel--single' : ''}" aria-labelledby="cat-${catKey}">
         <header class="category__head">
-          <h2 class="display-h2" id="cat-${catKey}">${esc(cat.name)}</h2>
-          <p class="category__summary">${esc(cat.summary)}</p>
+          <div class="category__text">
+            <h2 class="display-h2" id="cat-${catKey}">${esc(cat.name)}</h2>
+            <p class="category__summary">${esc(cat.summary)}</p>
+          </div>${controls}
         </header>
-        <ul class="grid grid--3" role="list">
+        <ul class="carousel__track" role="list">
 ${cards}
         </ul>
       </section>`;
@@ -444,11 +463,19 @@ ${cards}
 
 function productoDetailBody(prefix, p) {
   const label = p.variantLabel || 'opciones';
+  const one = p.variantName || 'opción';
+  // Native radios; site.js copies the choice into the WhatsApp message. The first
+  // option starts selected so the link always names a concrete variant.
   const variants = p.variants
-    ? `<h2 class="h4">${p.variants.length} ${esc(label)} disponibles</h2>
-        <ul class="variant-list" role="list">${p.variants.map((v) => `<li class="tag">${p.swatches ? swatch(p.swatches[v]) : ''}${esc(v)}</li>`).join('')}</ul>`
+    ? `<fieldset class="variant-picker">
+          <legend class="h4">Elige ${esc(one)} <span class="variant-picker__count">(${p.variants.length} ${esc(label)})</span></legend>
+          <div class="variant-picker__options">${p.variants.map((v, i) => `
+            <label class="variant-chip"><input type="radio" name="variant" value="${esc(v)}"${i === 0 ? ' checked' : ''} /><span class="variant-chip__box">${p.swatches ? swatch(p.swatches[v]) : ''}${esc(v)}</span></label>`).join('')}
+          </div>
+        </fieldset>`
     : '';
   const subject = encodeURIComponent(`Pregunta sobre ${p.name}`);
+  const priceText = p.price != null ? `${money(p.price)}${p.priceNote ? ` ${p.priceNote}` : ''}` : '';
   return `  <section class="section" aria-labelledby="p-h1">
     <div class="container detail">
       ${detailMedia(p.image, prefix)}
@@ -458,7 +485,10 @@ function productoDetailBody(prefix, p) {
         <p class="lead">${esc(p.summary)}</p>
         ${priceBlock(p.price, p.priceNote).replace('class="price', 'class="price price--lg')}
         ${variants}
-        <p class="detail__cta"><a class="btn btn--primary btn--lg" href="mailto:hola@plenitud.center?subject=${subject}">Preguntar por este producto</a></p>
+        <div class="detail__cta buy">
+          <a class="btn btn--primary btn--lg" data-whatsapp data-product="${esc(p.name)}" data-variant-name="${esc(one)}" data-price="${esc(priceText)}" href="${whatsappLink(p.name, p.variants ? `${one}: ${p.variants[0]}` : '', priceText)}">Pedir por WhatsApp</a>
+          <a class="btn btn--ghost" href="mailto:hola@plenitud.center?subject=${subject}">Preguntar por correo</a>
+        </div>
         <p class="caption"><a href="${prefix}productos/">← Ver todos los productos</a></p>
       </div>
     </div>

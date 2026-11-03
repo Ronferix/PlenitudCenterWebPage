@@ -55,9 +55,18 @@
         <h1 class="display-h1" id="p-h1">Inciensos</h1>
         <p class="lead">Varillas de incienso en tres aromas.</p>
         <p class="price price--lg">$45 MXN <span class="price__note">paquete de 20 varitas</span></p>
-        <h2 class="h4">3 aromas disponibles</h2>
-        <ul class="variant-list" role="list"><li class="tag">Nag Champa</li><li class="tag">Copal</li><li class="tag">Canela</li></ul>
-        <p class="detail__cta"><a class="btn btn--primary btn--lg" href="mailto:hola@plenitud.center?subject=Pregunta%20sobre%20Inciensos">Preguntar por este producto</a></p>
+        <fieldset class="variant-picker">
+          <legend class="h4">Elige aroma <span class="variant-picker__count">(3 aromas)</span></legend>
+          <div class="variant-picker__options">
+            <label class="variant-chip"><input type="radio" name="variant" value="Nag Champa" checked /><span class="variant-chip__box">Nag Champa</span></label>
+            <label class="variant-chip"><input type="radio" name="variant" value="Copal" /><span class="variant-chip__box">Copal</span></label>
+            <label class="variant-chip"><input type="radio" name="variant" value="Canela" /><span class="variant-chip__box">Canela</span></label>
+          </div>
+        </fieldset>
+        <div class="detail__cta buy">
+          <a class="btn btn--primary btn--lg" data-whatsapp data-product="Inciensos" data-variant-name="aroma" data-price="$45 MXN paquete de 20 varitas" href="https://wa.me/5210000000000?text=Hola%2C%20quiero%20pedir%3A%20Inciensos%20(aroma%3A%20Nag%20Champa)%20%C2%B7%20%2445%20MXN%20paquete%20de%2020%20varitas.%20%C2%BFEst%C3%A1%20disponible%3F">Pedir por WhatsApp</a>
+          <a class="btn btn--ghost" href="mailto:hola@plenitud.center?subject=Pregunta%20sobre%20Inciensos">Preguntar por correo</a>
+        </div>
         <p class="caption"><a href="../../productos/">← Ver todos los productos</a></p>
       </div>
     </div>

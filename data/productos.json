@@ -17,7 +17,8 @@
         "credit": "Unsplash"
       },
       "priceNote": "paquete de 20 varitas",
-      "variantLabel": "aromas"
+      "variantLabel": "aromas",
+      "variantName": "aroma"
     },
     {
       "slug": "clorofila",
@@ -67,7 +68,8 @@
         "Dorada": "#c9a227",
         "Verde": "#3f7d3a",
         "Azul": "#2f5d9e"
-      }
+      },
+      "variantName": "color"
     },
     {
       "slug": "copal-resina",
