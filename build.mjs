@@ -37,8 +37,9 @@ const UI = {
     openHours: 'Abierto de 9:00 a 16:00', attention: 'Atención de 9:00 a 16:00',
     fTherapies: 'Terapias', fSeeAll: 'Ver todas', fRead: 'Leer', fContact: 'Contacto',
     appearance: 'Apariencia', themes: ['Automática', 'Clara', 'Oscura', 'Alto contraste'],
-    dlg: { close: 'Cerrar', step1: 'Paso 1 de 2', step2: 'Paso 2 de 2', t1: '¿Qué terapia te llama?', lead1: 'Elige una para empezar. Puedes cambiar de opinión cuando quieras.', legend: 'Terapia', cancel: 'Cancelar', next: 'Continuar', t2: '¿Dónde te escribimos?', lead2: 'Recibirás una nota breve con la dirección y qué traer.', name: 'Nombre', req: '(obligatorio)', nameErr: 'Escribe tu nombre.', email: 'Correo electrónico', emailHint: 'Ejemplo: nombre@correo.com', emailErr: 'Escribe un correo válido, por ejemplo nombre@correo.com.', back: 'Atrás', confirm: 'Confirmar reserva', t3: 'Listo, te esperamos.' },
-    pricePending: 'Precio por confirmar', or: 'o', options: 'opciones', option: 'opción',
+    dlg: { close: 'Cerrar', step1: 'Paso 1 de 2', step2: 'Paso 2 de 2', t1: '¿Qué terapia te llama?', lead1: 'Elige una para empezar. Puedes cambiar de opinión cuando quieras.', legend: 'Terapia', cancel: 'Cancelar', next: 'Continuar', t2: '¿A nombre de quién?', lead2: 'Con estos datos armamos tu mensaje de WhatsApp.', name: 'Nombre', req: '(obligatorio)', nameErr: 'Escribe tu nombre.', pref: 'Día y hora que prefieres', optional: '(opcional)', prefHint: 'Ejemplo: jueves por la mañana', back: 'Atrás', prepare: 'Preparar mensaje', t3: 'Tu mensaje está listo.', lead3: 'Al tocar el botón se abre WhatsApp con este texto; solo envíalo y te confirmamos el horario.', send: 'Enviar por WhatsApp' },
+    cart: { open: 'Pedido', title: 'Tu pedido', lead: 'Al enviarlo se abre WhatsApp con tu lista; ahí confirmamos disponibilidad y entrega.', empty: 'Tu pedido está vacío. Agrega productos desde la página de cada uno.', clear: 'Vaciar pedido', send: 'Enviar pedido por WhatsApp', add: 'Agregar al pedido' },
+    pricePending: 'Precio por confirmar', or: 'o', alsoAt: 'también por', options: 'opciones', option: 'opción',
     waOrder: (prod, variant, price) => `Hola, quiero pedir: ${prod}${variant ? ` (${variant})` : ''}${price ? ` · ${price}` : ''}. ¿Está disponible?`,
     waHello: 'Hola, quisiera información sobre Plenitud Center.',
     seeMore: 'Ver más', seeMoreAbout: 'sobre', see: 'Ver',
@@ -61,9 +62,9 @@ const UI = {
     },
     products: {
       title: 'Productos · Plenitud Center', description: 'Incienso, velas, resinas y herramientas rituales de Plenitud Center.',
-      eyebrow: 'Productos', h1: 'Para la práctica en casa.', lead: 'Para comprar, escríbenos por WhatsApp desde la página de cada producto — todavía no hay pago en línea.',
+      eyebrow: 'Productos', h1: 'Para la práctica en casa.', lead: 'Arma tu pedido y envíalo por WhatsApp — todavía no hay pago en línea.',
       search: 'Buscar producto', searchPh: 'Ej. vela, incienso, copal', empty: 'No hay productos que coincidan con esa búsqueda.',
-      eyebrowOne: 'Producto', choose: 'Elige', orderWa: 'Pedir por WhatsApp', askMail: 'Preguntar por correo', subject: 'Pregunta sobre', back: '← Ver todos los productos',
+      eyebrowOne: 'Producto', choose: 'Elige', orderWa: 'Pedir por WhatsApp', back: '← Ver todos los productos',
     },
     guides: {
       title: 'Guías · Plenitud Center', description: 'El equipo que sostiene las terapias de Plenitud Center.', eyebrow: 'Guías',
@@ -85,8 +86,9 @@ const UI = {
     openHours: 'Open 9 a.m. to 4 p.m.', attention: 'We answer 9 a.m. to 4 p.m.',
     fTherapies: 'Therapies', fSeeAll: 'See all', fRead: 'Read', fContact: 'Contact',
     appearance: 'Appearance', themes: ['Automatic', 'Light', 'Dark', 'High contrast'],
-    dlg: { close: 'Close', step1: 'Step 1 of 2', step2: 'Step 2 of 2', t1: 'Which therapy calls you?', lead1: 'Pick one to start. You can change your mind at any time.', legend: 'Therapy', cancel: 'Cancel', next: 'Continue', t2: 'Where should we write to you?', lead2: 'You will get a short note with the address and what to bring.', name: 'Name', req: '(required)', nameErr: 'Enter your name.', email: 'Email', emailHint: 'Example: name@email.com', emailErr: 'Enter a valid email, for example name@email.com.', back: 'Back', confirm: 'Confirm booking', t3: 'All set, see you soon.' },
-    pricePending: 'Price to be confirmed', or: 'or', options: 'options', option: 'option',
+    dlg: { close: 'Close', step1: 'Step 1 of 2', step2: 'Step 2 of 2', t1: 'Which therapy calls you?', lead1: 'Pick one to start. You can change your mind at any time.', legend: 'Therapy', cancel: 'Cancel', next: 'Continue', t2: 'Who is the booking for?', lead2: 'We use this to write your WhatsApp message.', name: 'Name', req: '(required)', nameErr: 'Enter your name.', pref: 'Preferred day and time', optional: '(optional)', prefHint: 'Example: Thursday morning', back: 'Back', prepare: 'Prepare message', t3: 'Your message is ready.', lead3: 'The button opens WhatsApp with this text; just send it and we will confirm the time.', send: 'Send on WhatsApp' },
+    cart: { open: 'Order', title: 'Your order', lead: 'Sending it opens WhatsApp with your list; we confirm availability and delivery there.', empty: 'Your order is empty. Add products from each product page.', clear: 'Empty order', send: 'Send order on WhatsApp', add: 'Add to order' },
+    pricePending: 'Price to be confirmed', or: 'or', alsoAt: 'also on', options: 'options', option: 'option',
     waOrder: (prod, variant, price) => `Hi, I would like to order: ${prod}${variant ? ` (${variant})` : ''}${price ? ` · ${price}` : ''}. Is it available?`,
     waHello: 'Hi, I would like some information about Plenitud Center.',
     seeMore: 'See more', seeMoreAbout: 'about', see: 'See',
@@ -109,9 +111,9 @@ const UI = {
     },
     products: {
       title: 'Products · Plenitud Center', description: 'Incense, candles, resins and ritual tools from Plenitud Center.',
-      eyebrow: 'Products', h1: 'For your practice at home.', lead: 'To buy, message us on WhatsApp from each product page — there is no online payment yet.',
+      eyebrow: 'Products', h1: 'For your practice at home.', lead: 'Build your order and send it on WhatsApp — there is no online payment yet.',
       search: 'Search products', searchPh: 'e.g. candle, incense, copal', empty: 'No products match that search.',
-      eyebrowOne: 'Product', choose: 'Choose a', orderWa: 'Order on WhatsApp', askMail: 'Ask by email', subject: 'Question about', back: '← See all products',
+      eyebrowOne: 'Product', choose: 'Choose a', orderWa: 'Order on WhatsApp', back: '← See all products',
     },
     guides: {
       title: 'Guides · Plenitud Center', description: 'The team behind the therapies at Plenitud Center.', eyebrow: 'Guides',
@@ -190,6 +192,8 @@ function nav(prefix, active, pagePath) {
       </ul>
     </nav>
   </div>
+  <!-- Order cart: floating, early in tab order; site.js shows it once something has been added -->
+  <button class="btn btn--secondary cart-fab" type="button" data-cart-open hidden>${L.cart.open} <span class="cart-fab__count" data-cart-count aria-hidden="true">0</span></button>
 </header>`;
 }
 
@@ -215,8 +219,6 @@ function footerPartial(prefix) {
         <h2 class="footer__heading" id="f-contacto">${L.fContact}</h2>
         <ul class="footer__links" role="list">
 ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.display}</a></li>`).join('\n')}
-          <!-- PLACEHOLDER: correo de ejemplo, confirmar correo real -->
-          <li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li>
         </ul>
         <p class="footer__muted footer__hours">${L.attention}</p>
       </div>
@@ -236,7 +238,8 @@ ${['auto', 'light', 'dark', 'high-contrast'].map((v, i) => `          <option va
 
 function reserveDialog() {
   const D = L.dlg;
-  const choices = terapias.map((t, i) => `        <label class="choice"><input type="radio" name="session" value="${t.slug}"${i === 0 ? ' checked' : ''} /><span class="choice__box"><span class="choice__title">${esc(tr(t, 'name'))}</span><span class="choice__meta">${esc(catName(t.category))}</span><span class="choice__check" aria-hidden="true"></span></span></label>`).join('\n');
+  // data-* on each radio feed the WhatsApp message site.js writes in step 3
+  const choices = terapias.map((t, i) => `        <label class="choice"><input type="radio" name="session" value="${t.slug}" data-name="${esc(tr(t, 'name'))}" data-detail="${esc([t.price != null ? money(t.price) : '', t.duration].filter(Boolean).join(' · '))}"${i === 0 ? ' checked' : ''} /><span class="choice__box"><span class="choice__title">${esc(tr(t, 'name'))}</span><span class="choice__meta">${esc(catName(t.category))}</span><span class="choice__check" aria-hidden="true"></span></span></label>`).join('\n');
   return `<dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
   <form class="dialog__panel" id="reserve-form" novalidate>
     <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="${D.close}"><span class="icon icon--close" aria-hidden="true"></span></button>
@@ -266,26 +269,58 @@ ${choices}
           <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
           <p class="field__error" id="f-name-err">${D.nameErr}</p>
         </div>
-        <div class="field" data-field="email">
-          <label class="field__label" for="f-email">${D.email} <span class="field__req">${D.req}</span></label>
-          <p class="field__hint" id="f-email-hint">${D.emailHint}</p>
-          <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-hint f-email-err" />
-          <p class="field__error" id="f-email-err">${D.emailErr}</p>
+        <div class="field" data-field="pref">
+          <label class="field__label" for="f-pref">${D.pref} <span class="field__req">${D.optional}</span></label>
+          <p class="field__hint" id="f-pref-hint">${D.prefHint}</p>
+          <input class="input" id="f-pref" name="pref" type="text" autocomplete="off" aria-describedby="f-pref-hint" />
         </div>
       </div>
       <div class="dialog__actions">
         <button class="btn btn--ghost" type="button" data-back>${D.back}</button>
-        <button class="btn btn--primary" type="submit">${D.confirm}</button>
+        <button class="btn btn--primary" type="submit">${D.prepare}</button>
       </div>
     </div>
 
     <div data-step="3" hidden>
       <h2 class="dialog__title" id="reserve-t3" tabindex="-1">${D.t3}</h2>
-      <p class="alert alert--success" role="status" style="margin-top: var(--space-5)"><span class="icon icon--check" aria-hidden="true"></span><span class="alert__body" id="reserve-summary"></span></p>
-      <div class="dialog__actions"><button class="btn btn--primary" type="button" data-close>${D.close}</button></div>
+      <p class="dialog__lead">${D.lead3}</p>
+      <p class="message-preview" id="reserve-summary"></p>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" type="button" data-close>${D.close}</button>
+        <a class="btn btn--primary" data-booking-send href="https://wa.me/${CONTACTS[0].intl}">${D.send}</a>
+      </div>
+      ${altLineNote('data-booking-send')}
     </div>
   </form>
 </dialog>`;
+}
+
+// The order list. Empty in the HTML: site.js renders the items from localStorage.
+function cartDialog() {
+  const C = L.cart;
+  return `<dialog class="dialog" id="cart" aria-labelledby="cart-title">
+  <div class="dialog__panel">
+    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="${L.dlg.close}"><span class="icon icon--close" aria-hidden="true"></span></button>
+    <h2 class="dialog__title" id="cart-title" tabindex="-1">${C.title}</h2>
+    <p class="dialog__lead">${C.lead}</p>
+    <p class="small" data-cart-empty>${C.empty}</p>
+    <ul class="cart-list" role="list" data-cart-list></ul>
+    <p class="cart-total" data-cart-total></p>
+    <p class="sr-only" role="status" data-cart-status></p>
+    <div class="dialog__actions" data-cart-actions>
+      <button class="btn btn--ghost" type="button" data-cart-clear>${C.clear}</button>
+      <a class="btn btn--primary" data-cart-send href="https://wa.me/${CONTACTS[0].intl}">${C.send}</a>
+    </div>
+    ${altLineNote('data-cart-send')}
+  </div>
+</dialog>`;
+}
+
+// "Hours · also on the second line": the second reception line gets the same message
+// as the main button (site.js fills every link carrying `attr`).
+function altLineNote(attr) {
+  const c = CONTACTS[1];
+  return `<p class="caption contact-note dialog__note">${L.attention} · ${L.alsoAt} <a ${attr} href="https://wa.me/${c.intl}">WhatsApp ${c.display}</a></p>`;
 }
 
 /* DEMO: prices, durations, guide names and photos (Unsplash) are invented so the
@@ -376,6 +411,8 @@ ${bodyHtml}
 ${footerPartial(prefix)}
 
 ${reserveDialog()}
+
+${cartDialog()}
 
 <script src="${asset(prefix)}site.js"></script>
 </body>
@@ -618,7 +655,6 @@ function productoDetailBody(prefix, p) {
           </div>
         </fieldset>`
     : '';
-  const subject = encodeURIComponent(`${P.subject} ${name}`);
   const note = tr(p, 'priceNote');
   const priceText = p.price != null ? `${money(p.price)}${note ? ` ${note}` : ''}` : '';
   const orderAttrs = (c) => `data-whatsapp data-product="${esc(name)}" data-variant-name="${esc(one)}" data-price="${esc(priceText)}" href="${whatsappLink(name, vs ? `${one}: ${vs[0].name}` : '', priceText, c.intl)}"`;
@@ -631,10 +667,13 @@ function productoDetailBody(prefix, p) {
         <p class="lead">${esc(tr(p, 'summary'))}</p>
         ${priceBlock(p.price, note).replace('class="price', 'class="price price--lg')}
         ${variants}
+        <!-- With JS: "add to order" is the main action and the direct link becomes secondary.
+             Without JS the add button stays hidden and the direct WhatsApp link still works. -->
         <div class="detail__cta buy">
-          <a class="btn btn--primary btn--lg" ${orderAttrs(CONTACTS[0])}>${P.orderWa}</a>
-          <a class="btn btn--ghost" href="mailto:hola@plenitud.center?subject=${subject}">${P.askMail}</a>
+          <button class="btn btn--primary btn--lg" type="button" data-cart-add data-slug="${esc(p.slug)}" data-name="${esc(name)}" data-variant-name="${esc(one)}" data-price="${p.price ?? ''}" data-note="${esc(note || '')}" hidden>${L.cart.add}</button>
+          <a class="btn btn--secondary btn--lg" data-order-one ${orderAttrs(CONTACTS[0])}>${P.orderWa}</a>
         </div>
+        <p class="small cart-added" role="status" data-cart-added></p>
         ${contactNote(orderAttrs)}
         <p class="caption"><a href="${prefix}productos/">${P.back}</a></p>
       </div>
@@ -689,8 +728,6 @@ function visitaBody(prefix) {
         <p class="body">${V.contactLead}</p>
         <ul class="body contact-list" role="list">
 ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.display}</a> · <a href="tel:+${c.intl}">${V.call} <span class="sr-only">${V.callTo} ${c.display}</span></a></li>`).join('\n')}
-          <!-- PLACEHOLDER: correo de ejemplo -->
-          <li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li>
         </ul>
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve>${V.reserve}</button></p>
       </div>

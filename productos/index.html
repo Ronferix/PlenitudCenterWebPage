@@ -48,6 +48,8 @@
       </ul>
     </nav>
   </div>
+  <!-- Order cart: floating, early in tab order; site.js shows it once something has been added -->
+  <button class="btn btn--secondary cart-fab" type="button" data-cart-open hidden>Pedido <span class="cart-fab__count" data-cart-count aria-hidden="true">0</span></button>
 </header>
 
 <main id="contenido" tabindex="-1">
@@ -56,7 +58,7 @@
       <header class="section__head">
         <p class="label eyebrow">Productos</p>
         <h1 class="display-h1" id="productos-h1">Para la práctica en casa.</h1>
-        <p class="lead">Para comprar, escríbenos por WhatsApp desde la página de cada producto — todavía no hay pago en línea.</p>
+        <p class="lead">Arma tu pedido y envíalo por WhatsApp — todavía no hay pago en línea.</p>
       </header>
       <div class="field" style="max-width: 24rem; margin-bottom: var(--space-7)">
         <label class="field__label" for="product-filter">Buscar producto</label>
@@ -199,8 +201,6 @@
         <ul class="footer__links" role="list">
           <li><a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">WhatsApp 33 3599 2034</a></li>
           <li><a href="https://wa.me/523324909550?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">WhatsApp 33 2490 9550</a></li>
-          <!-- PLACEHOLDER: correo de ejemplo, confirmar correo real -->
-          <li><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></li>
         </ul>
         <p class="footer__muted footer__hours">Atención de 9:00 a 16:00</p>
       </div>
@@ -230,11 +230,11 @@
       <p class="dialog__lead">Elige una para empezar. Puedes cambiar de opinión cuando quieras.</p>
       <fieldset class="choice-group">
         <legend class="sr-only">Terapia</legend>
-        <label class="choice"><input type="radio" name="session" value="masaje-corporal" checked /><span class="choice__box"><span class="choice__title">Masaje corporal</span><span class="choice__meta">Corporal</span><span class="choice__check" aria-hidden="true"></span></span></label>
-        <label class="choice"><input type="radio" name="session" value="reiki" /><span class="choice__box"><span class="choice__title">Reiki</span><span class="choice__meta">Energética</span><span class="choice__check" aria-hidden="true"></span></span></label>
-        <label class="choice"><input type="radio" name="session" value="limpia" /><span class="choice__box"><span class="choice__title">Limpia</span><span class="choice__meta">Espiritual</span><span class="choice__check" aria-hidden="true"></span></span></label>
-        <label class="choice"><input type="radio" name="session" value="flores-de-bach" /><span class="choice__box"><span class="choice__title">Flores de Bach</span><span class="choice__meta">Energética</span><span class="choice__check" aria-hidden="true"></span></span></label>
-        <label class="choice"><input type="radio" name="session" value="biomagnetismo" /><span class="choice__box"><span class="choice__title">Terapia de biomagnetismo</span><span class="choice__meta">Energética</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="masaje-corporal" data-name="Masaje corporal" data-detail="$750 MXN · 60 min" checked /><span class="choice__box"><span class="choice__title">Masaje corporal</span><span class="choice__meta">Corporal</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="reiki" data-name="Reiki" data-detail="$600 MXN · 50 min" /><span class="choice__box"><span class="choice__title">Reiki</span><span class="choice__meta">Energética</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="limpia" data-name="Limpia" data-detail="$450 MXN · 40 min" /><span class="choice__box"><span class="choice__title">Limpia</span><span class="choice__meta">Espiritual</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="flores-de-bach" data-name="Flores de Bach" data-detail="$550 MXN · 45 min" /><span class="choice__box"><span class="choice__title">Flores de Bach</span><span class="choice__meta">Energética</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="biomagnetismo" data-name="Terapia de biomagnetismo" data-detail="$700 MXN · 60 min" /><span class="choice__box"><span class="choice__title">Terapia de biomagnetismo</span><span class="choice__meta">Energética</span><span class="choice__check" aria-hidden="true"></span></span></label>
       </fieldset>
       <div class="dialog__actions">
         <button class="btn btn--ghost" type="button" data-close>Cancelar</button>
@@ -244,8 +244,8 @@
 
     <div data-step="2" hidden>
       <p class="dialog__step">Paso 2 de 2</p>
-      <h2 class="dialog__title" id="reserve-t2" tabindex="-1">¿Dónde te escribimos?</h2>
-      <p class="dialog__lead">Recibirás una nota breve con la dirección y qué traer.</p>
+      <h2 class="dialog__title" id="reserve-t2" tabindex="-1">¿A nombre de quién?</h2>
+      <p class="dialog__lead">Con estos datos armamos tu mensaje de WhatsApp.</p>
       <p class="alert alert--danger" id="form-status" role="alert" hidden></p>
       <div class="stack" style="--stack: var(--space-5)">
         <div class="field" data-field="name">
@@ -253,25 +253,46 @@
           <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
           <p class="field__error" id="f-name-err">Escribe tu nombre.</p>
         </div>
-        <div class="field" data-field="email">
-          <label class="field__label" for="f-email">Correo electrónico <span class="field__req">(obligatorio)</span></label>
-          <p class="field__hint" id="f-email-hint">Ejemplo: nombre@correo.com</p>
-          <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-hint f-email-err" />
-          <p class="field__error" id="f-email-err">Escribe un correo válido, por ejemplo nombre@correo.com.</p>
+        <div class="field" data-field="pref">
+          <label class="field__label" for="f-pref">Día y hora que prefieres <span class="field__req">(opcional)</span></label>
+          <p class="field__hint" id="f-pref-hint">Ejemplo: jueves por la mañana</p>
+          <input class="input" id="f-pref" name="pref" type="text" autocomplete="off" aria-describedby="f-pref-hint" />
         </div>
       </div>
       <div class="dialog__actions">
         <button class="btn btn--ghost" type="button" data-back>Atrás</button>
-        <button class="btn btn--primary" type="submit">Confirmar reserva</button>
+        <button class="btn btn--primary" type="submit">Preparar mensaje</button>
       </div>
     </div>
 
     <div data-step="3" hidden>
-      <h2 class="dialog__title" id="reserve-t3" tabindex="-1">Listo, te esperamos.</h2>
-      <p class="alert alert--success" role="status" style="margin-top: var(--space-5)"><span class="icon icon--check" aria-hidden="true"></span><span class="alert__body" id="reserve-summary"></span></p>
-      <div class="dialog__actions"><button class="btn btn--primary" type="button" data-close>Cerrar</button></div>
+      <h2 class="dialog__title" id="reserve-t3" tabindex="-1">Tu mensaje está listo.</h2>
+      <p class="dialog__lead">Al tocar el botón se abre WhatsApp con este texto; solo envíalo y te confirmamos el horario.</p>
+      <p class="message-preview" id="reserve-summary"></p>
+      <div class="dialog__actions">
+        <button class="btn btn--ghost" type="button" data-close>Cerrar</button>
+        <a class="btn btn--primary" data-booking-send href="https://wa.me/523335992034">Enviar por WhatsApp</a>
+      </div>
+      <p class="caption contact-note dialog__note">Atención de 9:00 a 16:00 · también por <a data-booking-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
     </div>
   </form>
+</dialog>
+
+<dialog class="dialog" id="cart" aria-labelledby="cart-title">
+  <div class="dialog__panel">
+    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Cerrar"><span class="icon icon--close" aria-hidden="true"></span></button>
+    <h2 class="dialog__title" id="cart-title" tabindex="-1">Tu pedido</h2>
+    <p class="dialog__lead">Al enviarlo se abre WhatsApp con tu lista; ahí confirmamos disponibilidad y entrega.</p>
+    <p class="small" data-cart-empty>Tu pedido está vacío. Agrega productos desde la página de cada uno.</p>
+    <ul class="cart-list" role="list" data-cart-list></ul>
+    <p class="cart-total" data-cart-total></p>
+    <p class="sr-only" role="status" data-cart-status></p>
+    <div class="dialog__actions" data-cart-actions>
+      <button class="btn btn--ghost" type="button" data-cart-clear>Vaciar pedido</button>
+      <a class="btn btn--primary" data-cart-send href="https://wa.me/523335992034">Enviar pedido por WhatsApp</a>
+    </div>
+    <p class="caption contact-note dialog__note">Atención de 9:00 a 16:00 · también por <a data-cart-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
+  </div>
 </dialog>
 
 <script src="../site.js"></script>
