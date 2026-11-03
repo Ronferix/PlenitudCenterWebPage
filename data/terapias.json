@@ -26,9 +26,9 @@
         "La sesión se adapta a las zonas que más lo necesitan ese día.",
         "Sales con tiempo para moverte despacio antes de volver a tu ritmo."
       ],
-      "duration": null,
-      "schedule": null,
-      "price": null,
+      "duration": "60 min",
+      "schedule": "Con cita, martes a domingo",
+      "price": 750,
       "image": {
         "file": "media/masaje-corporal.jpg",
         "alt": "Manos dando un masaje en la espalda",
@@ -47,9 +47,9 @@
         "La guía coloca las manos sobre distintos puntos del cuerpo.",
         "Es común salir con una sensación de calma poco habitual."
       ],
-      "duration": null,
-      "schedule": null,
-      "price": null,
+      "duration": "50 min",
+      "schedule": "Con cita, martes a domingo",
+      "price": 600,
       "image": {
         "file": "media/reiki.jpg",
         "alt": "Manos abiertas con las palmas hacia arriba",
@@ -68,9 +68,9 @@
         "El ritual se adapta a lo que la persona necesita soltar.",
         "Se cierra con unos minutos de silencio antes de volver afuera."
       ],
-      "duration": null,
-      "schedule": null,
-      "price": null,
+      "duration": "40 min",
+      "schedule": "Con cita, martes a domingo",
+      "price": 450,
       "image": {
         "file": "media/limpia.jpg",
         "alt": "Atado de salvia blanca en un cuenco de cerámica",
@@ -89,9 +89,9 @@
         "Se arma una mezcla personal para tomar en casa.",
         "El acompañamiento suele incluir una revisión a las semanas."
       ],
-      "duration": null,
-      "schedule": null,
-      "price": null,
+      "duration": "45 min",
+      "schedule": "Con cita, martes a domingo",
+      "price": 550,
       "image": {
         "file": "media/flores-de-bach.jpg",
         "alt": "Frascos goteros con flores secas en su interior",
@@ -110,9 +110,9 @@
         "Los imanes se colocan en pares, según los puntos que se revisen ese día.",
         "La sesión suele incluir varios minutos de reposo con los imanes puestos."
       ],
-      "duration": null,
-      "schedule": null,
-      "price": null,
+      "duration": "60 min",
+      "schedule": "Con cita, martes a domingo",
+      "price": 700,
       "image": {
         "file": "media/biomagnetismo.jpg",
         "alt": "Esferas magnéticas plateadas agrupadas",

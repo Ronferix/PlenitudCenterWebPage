@@ -10,12 +10,14 @@
         "Copal",
         "Canela"
       ],
-      "price": null,
+      "price": 45,
       "image": {
         "file": "media/inciensos.jpg",
         "alt": "Manojos de varillas de incienso de colores",
         "credit": "Unsplash"
-      }
+      },
+      "priceNote": "paquete de 20 varitas",
+      "variantLabel": "aromas"
     },
     {
       "slug": "clorofila",
@@ -23,12 +25,13 @@
       "draft": true,
       "summary": "Suplemento líquido de clorofila.",
       "variants": null,
-      "price": null,
+      "price": 180,
       "image": {
         "file": "media/clorofila.jpg",
         "alt": "Bebida verde vertida en un vaso de vidrio",
         "credit": "Unsplash"
-      }
+      },
+      "priceNote": "frasco de 500 ml"
     },
     {
       "slug": "velas-de-color",
@@ -46,11 +49,24 @@
         "Verde",
         "Azul"
       ],
-      "price": null,
+      "price": 35,
       "image": {
         "file": "media/velas-de-color.jpg",
         "alt": "Velas de colores encendidas",
         "credit": "Unsplash"
+      },
+      "priceNote": "por vela",
+      "variantLabel": "colores",
+      "swatches": {
+        "Rojo": "#b3261e",
+        "Rosa": "#e8a0b4",
+        "Naranja": "#e07b2a",
+        "Morado": "#6b3fa0",
+        "Blanca": "#f7f4ec",
+        "Plateada": "#c4c4c4",
+        "Dorada": "#c9a227",
+        "Verde": "#3f7d3a",
+        "Azul": "#2f5d9e"
       }
     },
     {
@@ -59,12 +75,13 @@
       "draft": true,
       "summary": "Resina de copal para quemar sobre carbón.",
       "variants": null,
-      "price": null,
+      "price": 90,
       "image": {
         "file": "media/copal-resina.jpg",
         "alt": "Trozos de resina ámbar sobre gránulos",
         "credit": "Unsplash"
-      }
+      },
+      "priceNote": "bolsa de 100 g"
     },
     {
       "slug": "carbon-compactado",
@@ -72,12 +89,13 @@
       "draft": true,
       "summary": "Carbón para encender resinas e inciensos de grano.",
       "variants": null,
-      "price": null,
+      "price": 60,
       "image": {
         "file": "media/carbon-compactado.jpg",
         "alt": "Cuenco metálico con brasas que desprenden humo",
         "credit": "Unsplash"
-      }
+      },
+      "priceNote": "tubo de 10 pastillas"
     },
     {
       "slug": "base-metalica-vela",
@@ -85,7 +103,7 @@
       "draft": true,
       "summary": "Base para sostener y proteger la superficie al quemar una vela.",
       "variants": null,
-      "price": null,
+      "price": 120,
       "image": {
         "file": "media/base-metalica-vela.jpg",
         "alt": "Vela encendida sobre una base de latón",
@@ -98,7 +116,7 @@
       "draft": true,
       "summary": "Soporte para quemar varillas de incienso.",
       "variants": null,
-      "price": null,
+      "price": 80,
       "image": {
         "file": "media/portaincienso.jpg",
         "alt": "Varilla de incienso encendida en un soporte",
@@ -111,7 +129,7 @@
       "draft": true,
       "summary": "Portaincienso con espacio para guardar varillas de repuesto.",
       "variants": null,
-      "price": null,
+      "price": 220,
       "image": {
         "file": "media/portaincienso-compartimiento.jpg",
         "alt": "Incienso humeando sobre un soporte en forma de loto",
@@ -124,12 +142,13 @@
       "draft": true,
       "summary": "Pendiente de confirmar: ¿producto, equipo o terapia?",
       "variants": null,
-      "price": null,
+      "price": 260,
       "image": {
         "file": "media/ozono.jpg",
         "alt": "Burbujas de aire bajo el agua",
         "credit": "Unsplash"
-      }
+      },
+      "priceNote": "frasco de 250 ml"
     }
   ]
 }

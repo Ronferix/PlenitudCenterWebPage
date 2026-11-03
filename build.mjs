@@ -167,29 +167,47 @@ ${choices}
 </dialog>`;
 }
 
-function draftTag() {
-  return `<span class="tag tag--warning">Contenido de ejemplo</span>`;
-}
+/* DEMO: prices, durations, guide names and photos (Unsplash) are invented so the
+   demo reads like the finished site. The JSON keeps `draft: true` on every item;
+   replace the values with the real ones before launch. No image → neutral placeholder. */
+const money = (n) => `$${n.toLocaleString('es-MX')} MXN`;
 
-/* Stock photos (Unsplash) stand in for real studio photography in this demo.
-   Cards show the photo edge to edge; detail pages caption it so nobody mistakes
-   it for the real product, space or person. No image → neutral placeholder. */
-const STOCK_NOTE = 'Foto de referencia, no es el producto real';
+function priceBlock(price, note) {
+  if (price == null) return `<p class="price price--pending">Precio por confirmar</p>`;
+  return `<p class="price">${money(price)}${note ? ` <span class="price__note">${esc(note)}</span>` : ''}</p>`;
+}
 
 function cardMedia(image, prefix, ratio = 'square') {
   if (!image) return `<div class="card__media card__media--${ratio} card__media--empty" aria-hidden="true"></div>`;
   return `<img class="card__media card__media--${ratio}" src="${prefix}${image.file}" alt="${esc(image.alt)}" loading="lazy" />`;
 }
 
-function detailMedia(image, prefix, note = STOCK_NOTE) {
+function detailMedia(image, prefix) {
   if (!image) return `<div class="detail__media detail__media--empty" aria-hidden="true"></div>`;
-  return `<figure class="detail__media"><img src="${prefix}${image.file}" alt="${esc(image.alt)}" /><figcaption class="caption">${esc(note)} · ${esc(image.credit)}</figcaption></figure>`;
+  return `<figure class="detail__media"><img src="${prefix}${image.file}" alt="${esc(image.alt)}" /></figure>`;
+}
+
+const swatch = (color) => `<span class="swatch" style="--swatch: ${esc(color)}" aria-hidden="true"></span>`;
+
+/* Cards summarise variants in one line (a few swatches + a count, or up to three
+   names); the full list lives on the product page. */
+const MAX_CARD_SWATCHES = 5;
+function variantSummary(p) {
+  if (!p.variants) return '';
+  const label = p.variantLabel || 'opciones';
+  if (p.swatches) {
+    const shown = p.variants.slice(0, MAX_CARD_SWATCHES).map((v) => swatch(p.swatches[v])).join('');
+    const more = p.variants.length - MAX_CARD_SWATCHES;
+    return `<p class="variants"><span class="swatches">${shown}${more > 0 ? `<span class="swatches__more" aria-hidden="true">+${more}</span>` : ''}</span><span>${p.variants.length} ${esc(label)}</span></p>`;
+  }
+  if (p.variants.length <= 3) return `<p class="variants"><span>${p.variants.map(esc).join(' · ')}</span></p>`;
+  return `<p class="variants"><span>${p.variants.length} ${esc(label)}</span></p>`;
 }
 
 const GUIAS = [
-  { cat: 'Corporal', image: { file: 'media/guia-corporal.jpg', alt: 'Retrato de una mujer sonriendo con luz natural', credit: 'Unsplash' } },
-  { cat: 'Energética', image: { file: 'media/guia-energetica.jpg', alt: 'Retrato de una mujer con collar de cuentas en un estudio luminoso', credit: 'Unsplash' } },
-  { cat: 'Espiritual', image: { file: 'media/guia-espiritual.jpg', alt: 'Retrato de un hombre sonriendo al aire libre', credit: 'Unsplash' } },
+  { name: 'Ana Lucía Ríos', focus: 'Masaje corporal', schedule: 'Martes a viernes', image: { file: 'media/guia-corporal.jpg', alt: 'Retrato de Ana Lucía Ríos sonriendo con luz natural' } },
+  { name: 'Valeria Montes', focus: 'Reiki, flores de Bach y biomagnetismo', schedule: 'Miércoles a sábado', image: { file: 'media/guia-energetica.jpg', alt: 'Retrato de Valeria Montes con collar de cuentas en un estudio luminoso' } },
+  { name: 'Tomás Ibarra', focus: 'Limpias y acompañamiento espiritual', schedule: 'Jueves a domingo', image: { file: 'media/guia-espiritual.jpg', alt: 'Retrato de Tomás Ibarra sonriendo al aire libre' } },
 ];
 
 function layout({ prefix, active, title, description, bodyHtml, mainId = 'contenido' }) {
@@ -234,19 +252,14 @@ function homeBody(prefix) {
           <article class="card card--interactive card--compact">
             ${cardMedia(p.image, prefix)}
             <h3 class="card__title card__title--sm">${esc(p.name)}</h3>
-            <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">Ver producto <span class="sr-only">${esc(p.name)}</span></a>
+            <div class="card__footer">
+              ${priceBlock(p.price)}
+              <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">Ver <span class="sr-only">${esc(p.name)}</span></a>
+            </div>
           </article>
         </li>`).join('\n');
 
-  const cards = featured.map((t) => `        <li>
-          <article class="card card--interactive">
-            ${cardMedia(t.image, prefix, 'wide')}
-            <p class="card__eyebrow">${esc(categories[t.category].name)}</p>
-            <h3 class="card__title">${esc(t.name)}</h3>
-            <p class="card__body">${esc(t.summary)}</p>
-            <a class="card__action btn btn--ghost" href="${prefix}terapias/${t.slug}/">Conoce la terapia <span class="sr-only">${esc(t.name)}</span></a>
-          </article>
-        </li>`).join('\n');
+  const cards = featured.map((t) => terapiaCard(t, prefix, 'h3', true)).join('\n');
 
   return `  <section class="hero" id="inicio" aria-labelledby="hero-title">
     <div class="container hero__inner">
@@ -268,12 +281,12 @@ function homeBody(prefix) {
     <div class="container">
       <header class="section__head">
         <p class="label eyebrow">Lo que ofrecemos</p>
-        <h2 class="display-h2" id="terapias-title">Diez caminos, tres familias.</h2>
+        <h2 class="display-h2" id="terapias-title">Cinco caminos, tres familias.</h2>
       </header>
       <ul class="grid grid--3" role="list">
 ${cards}
       </ul>
-      <p class="caption note" style="margin-top: var(--space-6)"><a class="btn btn--ghost" href="${prefix}terapias/">Ver todas las terapias →</a></p>
+      <p class="section__more"><a class="btn btn--secondary btn--lg" href="${prefix}terapias/">Ver todas las terapias</a></p>
     </div>
   </section>
 
@@ -320,29 +333,40 @@ ${guiaCards(prefix, 'h3')}
 }
 
 function guiaCards(prefix, heading) {
-  return GUIAS.map((g) => `        <li><article class="card">${cardMedia(g.image, prefix, 'portrait')}${draftTag()}<${heading} class="card__title card__title--sm">Nombre — pendiente</${heading}><p class="card__body">${esc(g.cat)} · especialidad pendiente</p><p class="card__meta">Horario pendiente</p></article></li>`).join('\n');
+  return GUIAS.map((g) => `        <li><article class="card">${cardMedia(g.image, prefix, 'portrait')}<${heading} class="card__title card__title--sm">${esc(g.name)}</${heading}><p class="card__body">${esc(g.focus)}</p><p class="card__meta">${esc(g.schedule)}</p></article></li>`).join('\n');
+}
+
+// One therapy card, shared by the home page and the catalog. The eyebrow names the
+// category only where cards of different categories sit side by side.
+function terapiaCard(t, prefix, heading, showCategory = false) {
+  return `          <li>
+            <article class="card card--interactive">
+              ${cardMedia(t.image, prefix, 'wide')}
+              ${showCategory ? `<p class="card__eyebrow">${esc(categories[t.category].name)}</p>` : ''}
+              <${heading} class="card__title card__title--sm">${esc(t.name)}</${heading}>
+              <p class="card__body">${esc(t.summary)}</p>
+              <div class="card__footer">
+                ${priceBlock(t.price, t.duration)}
+                <a class="card__action btn btn--ghost" href="${prefix}terapias/${t.slug}/">Ver más <span class="sr-only">sobre ${esc(t.name)}</span></a>
+              </div>
+            </article>
+          </li>`;
 }
 
 function terapiasIndexBody(prefix) {
   const byCategory = Object.keys(categories).map((catKey) => {
     const cat = categories[catKey];
     const items = terapias.filter((t) => t.category === catKey);
-    const cards = items.map((t) => `          <li>
-            <article class="card card--interactive">
-              ${cardMedia(t.image, prefix, 'wide')}
-              ${t.draft ? draftTag() : ''}
-              <h3 class="card__title card__title--sm">${esc(t.name)}</h3>
-              <p class="card__body">${esc(t.summary)}</p>
-              <a class="card__action btn btn--ghost" href="${prefix}terapias/${t.slug}/">Leer más <span class="sr-only">sobre ${esc(t.name)}</span></a>
-            </article>
-          </li>`).join('\n');
-    return `      <div class="stack" style="--stack: var(--space-4); margin-bottom: var(--space-8)">
-        <h2 class="h4">${esc(cat.name)}</h2>
-        <p class="small">${esc(cat.summary)}</p>
+    const cards = items.map((t) => terapiaCard(t, prefix, 'h3')).join('\n');
+    return `      <section class="category" aria-labelledby="cat-${catKey}">
+        <header class="category__head">
+          <h2 class="display-h2" id="cat-${catKey}">${esc(cat.name)}</h2>
+          <p class="category__summary">${esc(cat.summary)}</p>
+        </header>
         <ul class="grid grid--3" role="list">
 ${cards}
         </ul>
-      </div>`;
+      </section>`;
   }).join('\n');
 
   return `  <section class="section" aria-labelledby="terapias-h1">
@@ -350,7 +374,7 @@ ${cards}
       <header class="section__head">
         <p class="label eyebrow">Terapias</p>
         <h1 class="display-h1" id="terapias-h1">Corporal, energética, espiritual.</h1>
-        <p class="lead">Diez formas de volver al cuerpo y al espacio personal, agrupadas por lo que trabajan primero.</p>
+        <p class="lead">Cinco formas de volver al cuerpo y al espacio personal, agrupadas por lo que trabajan primero.</p>
       </header>
 ${byCategory}
       <p class="small note">Trae ropa cómoda. Qué traer exactamente depende de cada terapia — lo encuentras en su propia página.</p>
@@ -363,48 +387,41 @@ function terapiaDetailBody(prefix, t) {
   const expectItems = t.expect.map((e) => `          <li>${esc(e)}</li>`).join('\n');
   return `  <section class="section" aria-labelledby="t-h1">
     <div class="container detail">
-      ${detailMedia(t.image, prefix, 'Foto de referencia, no es nuestro espacio')}
+      ${detailMedia(t.image, prefix)}
       <div class="detail__body">
-      <p class="label eyebrow">${esc(cat.name)}</p>
-      <h1 class="display-h1" id="t-h1">${esc(t.name)}</h1>
-      ${t.draft ? draftTag() : ''}
-      <p class="lead" style="margin-top: var(--space-4)">${esc(t.body)}</p>
-
-      <h2 class="h4" style="margin-top: var(--space-8)">Qué esperar</h2>
-      <ol class="body" style="padding-left: 1.25em">
+        <p class="label eyebrow">${esc(cat.name)}</p>
+        <h1 class="display-h1" id="t-h1">${esc(t.name)}</h1>
+        <p class="lead">${esc(t.body)}</p>
+        ${facts([['Precio', t.price != null ? money(t.price) : null], ['Duración', t.duration], ['Horario', t.schedule]])}
+        <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve data-session="${esc(t.slug)}">Reservar ${esc(t.name)}</button></p>
+        <h2 class="h4">Qué esperar</h2>
+        <ol class="body detail__list">
 ${expectItems}
-      </ol>
-
-      <div class="meta-row" style="margin-top: var(--space-6)">
-        <span>Duración: ${t.duration ? esc(t.duration) : 'pendiente'}</span>
-        <span>Horario: ${t.schedule ? esc(t.schedule) : 'pendiente'}</span>
-        <span>Precio: ${t.price ? esc(t.price) : 'pendiente'}</span>
-      </div>
-
-      <p style="margin-top: var(--space-7)">
-        <button class="btn btn--primary btn--lg" type="button" data-reserve data-session="${esc(t.slug)}">Reservar ${esc(t.name)}</button>
-      </p>
-      <p class="caption" style="margin-top: var(--space-5)"><a href="${prefix}terapias/">← Ver todas las terapias</a></p>
+        </ol>
+        <p class="caption"><a href="${prefix}terapias/">← Ver todas las terapias</a></p>
       </div>
     </div>
   </section>`;
 }
 
+function facts(rows) {
+  const items = rows.filter(([, v]) => v).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
+  return items ? `<dl class="facts">${items}</dl>` : '';
+}
+
 function productosIndexBody(prefix) {
-  const cards = productos.map((p) => {
-    const variants = p.variants ? `<p class="meta-row">${p.variants.map((v) => `<span>${esc(v)}</span>`).join('')}</p>` : '';
-    return `        <li data-name="${esc(p.name.toLowerCase())}">
+  const cards = productos.map((p) => `        <li data-name="${esc(p.name.toLowerCase())}">
           <article class="card card--interactive">
             ${cardMedia(p.image, prefix)}
-            ${p.draft ? draftTag() : ''}
             <h2 class="card__title card__title--sm">${esc(p.name)}</h2>
             <p class="card__body">${esc(p.summary)}</p>
-            ${variants}
-            <p class="card__meta">${p.price ? esc(p.price) : 'Precio por confirmar'}</p>
-            <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">Ver producto <span class="sr-only">${esc(p.name)}</span></a>
+            ${variantSummary(p)}
+            <div class="card__footer">
+              ${priceBlock(p.price, p.priceNote)}
+              <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">Ver <span class="sr-only">${esc(p.name)}</span></a>
+            </div>
           </article>
-        </li>`;
-  }).join('\n');
+        </li>`).join('\n');
 
   return `  <section class="section" aria-labelledby="productos-h1">
     <div class="container">
@@ -426,24 +443,23 @@ ${cards}
 }
 
 function productoDetailBody(prefix, p) {
+  const label = p.variantLabel || 'opciones';
   const variants = p.variants
-    ? `<h2 class="h4" style="margin-top: var(--space-7)">Opciones</h2><div class="meta-row">${p.variants.map((v) => `<span class="tag">${esc(v)}</span>`).join('')}</div>`
+    ? `<h2 class="h4">${p.variants.length} ${esc(label)} disponibles</h2>
+        <ul class="variant-list" role="list">${p.variants.map((v) => `<li class="tag">${p.swatches ? swatch(p.swatches[v]) : ''}${esc(v)}</li>`).join('')}</ul>`
     : '';
   const subject = encodeURIComponent(`Pregunta sobre ${p.name}`);
   return `  <section class="section" aria-labelledby="p-h1">
     <div class="container detail">
       ${detailMedia(p.image, prefix)}
       <div class="detail__body">
-      <p class="label eyebrow">Producto</p>
-      <h1 class="display-h1" id="p-h1">${esc(p.name)}</h1>
-      ${p.draft ? draftTag() : ''}
-      <p class="lead" style="margin-top: var(--space-4)">${esc(p.summary)}</p>
-      ${variants}
-      <p class="meta-row" style="margin-top: var(--space-6)"><span>${p.price ? esc(p.price) : 'Precio por confirmar'}</span></p>
-      <p style="margin-top: var(--space-7)">
-        <a class="btn btn--primary btn--lg" href="mailto:hola@plenitud.center?subject=${subject}">Preguntar por este producto</a>
-      </p>
-      <p class="caption" style="margin-top: var(--space-5)"><a href="${prefix}productos/">← Ver todos los productos</a></p>
+        <p class="label eyebrow">Producto</p>
+        <h1 class="display-h1" id="p-h1">${esc(p.name)}</h1>
+        <p class="lead">${esc(p.summary)}</p>
+        ${priceBlock(p.price, p.priceNote).replace('class="price', 'class="price price--lg')}
+        ${variants}
+        <p class="detail__cta"><a class="btn btn--primary btn--lg" href="mailto:hola@plenitud.center?subject=${subject}">Preguntar por este producto</a></p>
+        <p class="caption"><a href="${prefix}productos/">← Ver todos los productos</a></p>
       </div>
     </div>
   </section>`;
@@ -462,7 +478,6 @@ function guiasBody(prefix) {
       <ul class="grid grid--3" role="list">
 ${guiaCards(prefix, 'h2')}
       </ul>
-      <p class="caption note">Tarjetas de ejemplo: los retratos son fotos de referencia (Unsplash), no personas del equipo. A la espera de nombres, fotos reales, especialidad y horario de cada guía.</p>
     </div>
   </section>`;
 }
@@ -476,7 +491,6 @@ function vocesBody() {
         <blockquote><p class="display-quote">"Llegué cargando una semana. Salí sin ella. La sala misma se sentía paciente."</p></blockquote>
         <figcaption class="caption">Marisol G. · Miembro desde 2024</figcaption>
       </figure>
-      <p class="small note" style="margin-top: var(--space-8)">Esta página está lista para más testimonios reales — se agregan aquí según lleguen, con autorización para publicar el nombre.</p>
     </div>
   </section>`;
 }
@@ -485,18 +499,17 @@ function visitaBody(prefix) {
   const espacio = { file: 'media/espacio.jpg', alt: 'Sala amplia y luminosa con grandes ventanales y piso de madera', credit: 'Unsplash' };
   return `  <section class="section" aria-labelledby="visita-h1">
     <div class="container detail">
-      ${detailMedia(espacio, prefix, 'Foto de referencia, no es nuestro espacio')}
+      ${detailMedia(espacio, prefix)}
       <div class="detail__body">
-      <p class="label eyebrow">Visita</p>
-      <h1 class="display-h1" id="visita-h1">Cómo llegar</h1>
-      <!-- PLACEHOLDER: dirección y horario de ejemplo -->
-      <p class="lead" style="margin-top: var(--space-4)">Calle de la Calma 14, patio del estudio, segundo piso.</p>
-      <p class="body">Abierto de martes a domingo, del amanecer al anochecer.</p>
-      <h2 class="h4" style="margin-top: var(--space-8)">Contacto</h2>
-      <!-- PLACEHOLDER: correo de ejemplo -->
-      <p class="body"><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></p>
-      <p class="small note" style="margin-top: var(--space-6)">Pendiente: dirección exacta, horario por día, política de cancelación, mapa y un canal de contacto real (correo o WhatsApp).</p>
-      <p style="margin-top: var(--space-7)"><button class="btn btn--primary btn--lg" type="button" data-reserve>Reservar una terapia</button></p>
+        <p class="label eyebrow">Visita</p>
+        <h1 class="display-h1" id="visita-h1">Cómo llegar</h1>
+        <!-- PLACEHOLDER: dirección y horario de ejemplo. Pendiente: dirección exacta, horario por día, política de cancelación, mapa y canal de contacto real -->
+        <p class="lead">Calle de la Calma 14, patio del estudio, segundo piso.</p>
+        <p class="body">Abierto de martes a domingo, del amanecer al anochecer.</p>
+        <h2 class="h4">Contacto</h2>
+        <!-- PLACEHOLDER: correo de ejemplo -->
+        <p class="body"><a href="mailto:hola@plenitud.center">hola@plenitud.center</a></p>
+        <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve>Reservar una terapia</button></p>
       </div>
     </div>
   </section>`;
