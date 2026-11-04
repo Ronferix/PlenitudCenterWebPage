@@ -167,10 +167,19 @@ function headExtra(prefix, pagePath) {
     // Arriving from the language toggle (site.js leaves a note): no splash, and the page
     // cross-fades in; any other arrival skips the cross-fade and gets the splash as usual.
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
-    if (sw) d.classList.add('lang-switched');
+    if (sw) {
+      d.classList.add('lang-switched');
+      // Hold the first paint until site.js has run (it reopens Settings and restores the scroll),
+      // so the cross-fade lands on the finished page instead of on one that is still changing.
+      var hold = document.createElement('link');
+      hold.rel = 'expect'; hold.href = '#page-ready'; hold.setAttribute('blocking', 'render');
+      document.head.appendChild(hold);
+    }
     window.addEventListener('pagereveal', function (e) { if (!sw && e.viewTransition) e.viewTransition.skipTransition(); });
   })();
 </script>
+<!-- The site has its own English version, so the browser should not offer to machine-translate it -->
+<meta name="google" content="notranslate" />
 <link rel="alternate" hreflang="es" href="${SITE_URL}${pagePath}" />
 <link rel="alternate" hreflang="en" href="${SITE_URL}en/${pagePath}" />
 <link rel="alternate" hreflang="x-default" href="${SITE_URL}${pagePath}" />
@@ -496,6 +505,7 @@ ${cartDialog()}
 ${settingsDialog(prefix, pagePath)}
 
 <script src="${asset(prefix)}site.js"></script>
+<span id="page-ready" hidden></span>
 </body>
 </html>
 `;

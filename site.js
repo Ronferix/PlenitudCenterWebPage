@@ -138,7 +138,7 @@
     restore();
     /* Once images have their size the page may be taller; adjust, unless the visitor already scrolled */
     window.addEventListener('load', function () { if (Math.abs(scrollY - restoredTo) < 2) restore(); }, { once: true });
-    if (arrived.s && settingsDlg) { settingsDlg.showModal(); var lt = $('[data-lang-toggle]', settingsDlg); if (lt) lt.focus(); }
+    if (arrived.s && settingsDlg && !settingsDlg.open) { settingsDlg.showModal(); var lt = $('[data-lang-toggle]', settingsDlg); if (lt) lt.focus(); }
     setTimeout(function () { html.classList.remove('lang-switched'); }, 600);
   }
 
