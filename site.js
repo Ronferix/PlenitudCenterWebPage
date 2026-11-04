@@ -41,6 +41,10 @@
     $$('[' + attr + ']').forEach(function (a) { a.href = a.href.split('?')[0] + '?text=' + encodeURIComponent(text); });
   };
 
+  /* ---------- Loading splash: take it out of the page once it has faded ---------- */
+  var loader = $('.loader');
+  if (loader) loader.addEventListener('animationend', function (e) { if (e.animationName === 'loader-out') loader.remove(); });
+
   /* ---------- Menu disclosure (mobile) ---------- */
   var toggle = $('.nav__toggle'), list = $('#menu-principal');
   if (toggle && list) {
@@ -52,7 +56,8 @@
     list.addEventListener('click', function (e) { if (e.target.closest('a, button')) setMenu(false); });
     /* The panel floats over the page, so a click or Tab outside the header closes it */
     var header = toggle.closest('header');
-    document.addEventListener('click', function (e) { if (!header.contains(e.target)) setMenu(false); });
+    /* pointerdown, not click: iOS Safari sends no click for a tap on a non-interactive area like the dimmed page */
+    document.addEventListener('pointerdown', function (e) { if (!header.contains(e.target)) setMenu(false); });
     header.addEventListener('focusout', function (e) { if (e.relatedTarget && !header.contains(e.relatedTarget)) setMenu(false); });
   }
 

@@ -257,7 +257,10 @@ code { font-size: 0.9em; }
    Shown only with JS, and gone by itself in about a second (no script has to remove it).
    Home: logo + name. Other pages: + a vertical line and the page name. */
 .loader { display: none; }
-.js .loader { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center;
+/* pointer-events: none — taps always reach the page, even mid-fade. Safari keeps the
+   finished overlay "visible" (it ignores visibility in the keyframes), and without
+   this it swallowed every tap on iPhone. site.js also removes it once it has faded. */
+.js .loader { position: fixed; inset: 0; z-index: 100; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: var(--space-4); padding: var(--space-5); background: var(--bg); color: var(--fg); text-align: center;
   animation: loader-out var(--dur-base) var(--ease-calm) 700ms forwards; }
 .loader__emblem { width: 4.5rem; height: 4.5rem; border-radius: var(--r-pill); box-shadow: var(--shadow-md); }
