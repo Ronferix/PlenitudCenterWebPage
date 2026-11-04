@@ -339,7 +339,9 @@ code { font-size: 0.9em; }
    no splash, no re-opening animation for Settings, and the two pages cross-fade
    (cross-document view transition; browsers without it simply change page). */
 html.lang-switched .loader { display: none; }
-html.lang-switched .dialog[open], html.lang-switched .dialog[open]::backdrop { animation: none; }
+/* Settings fades away before the language changes (site.js adds .is-closing) */
+.dialog.is-closing, .dialog.is-closing::backdrop { animation: settings-out 220ms var(--ease-calm) forwards; }
+@keyframes settings-out { to { opacity: 0; } }
 @view-transition { navigation: auto; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 420ms; animation-timing-function: var(--ease-calm); }
 @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }

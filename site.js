@@ -103,27 +103,31 @@
   var navBottom = function () { var n = $('.nav'); return n ? n.getBoundingClientRect().bottom : 0; };
 
   /* Language: the toggle is a plain link to this page in the other language. With JS the
-     knob slides across first, then the page changes. */
+     knob slides across, Settings fades away, and only then the page changes, so the
+     cross-fade touches nothing but the page text. */
   $$('[data-lang-toggle]').forEach(function (a) {
     a.addEventListener('click', function (e) {
       if (e.metaKey || e.ctrlKey || e.shiftKey) return;
-      /* Note for the next page: skip the splash, reopen Settings, and keep the reading place.
-         Both languages share the same markup, so "the n-th block at the top of the screen, this
-         far down" finds the same spot even though text lengths and image loading differ. */
+      /* Note for the next page: skip the splash and keep the reading place. Both languages
+         share the same markup, so "the n-th block at the top of the screen, this far down"
+         finds the same spot even though text lengths and image loading differ. */
       var list = langAnchors(), top = navBottom(), i = 0;
       while (i < list.length && list[i].getBoundingClientRect().bottom <= top) i++;
-      var note = { i: scrollY > 0 && list[i] ? i : -1, d: list[i] ? list[i].getBoundingClientRect().top : 0, s: !!(settingsDlg && settingsDlg.open) };
+      var note = { i: scrollY > 0 && list[i] ? i : -1, d: list[i] ? list[i].getBoundingClientRect().top : 0 };
       try { sessionStorage.setItem('plenitud-lang-switch', JSON.stringify(note)); } catch (err) {}
       if (reduced) return;
       e.preventDefault();
       a.classList.toggle('is-end');
       $$('.toggle__opt', a).forEach(function (o) { o.classList.toggle('is-current'); });
-      setTimeout(function () { window.location.href = a.href; }, 280);
+      setTimeout(function () {
+        if (!settingsDlg || !settingsDlg.open) { window.location.href = a.href; return; }
+        settingsDlg.classList.add('is-closing');
+        setTimeout(function () { settingsDlg.close(); settingsDlg.classList.remove('is-closing'); window.location.href = a.href; }, 220);
+      }, 260);
     });
   });
 
-  /* Arrived from the language toggle: no splash, same place on the page, and Settings open
-     again on the toggle if that is where the switch was made */
+  /* Arrived from the language toggle: no splash, same place on the page */
   var arrived = null;
   try { arrived = JSON.parse(sessionStorage.getItem('plenitud-lang-switch')); sessionStorage.removeItem('plenitud-lang-switch'); } catch (e) {}
   if (arrived) {
@@ -138,7 +142,6 @@
     restore();
     /* Once images have their size the page may be taller; adjust, unless the visitor already scrolled */
     window.addEventListener('load', function () { if (Math.abs(scrollY - restoredTo) < 2) restore(); }, { once: true });
-    if (arrived.s && settingsDlg && !settingsDlg.open) { settingsDlg.showModal(); var lt = $('[data-lang-toggle]', settingsDlg); if (lt) lt.focus(); }
     setTimeout(function () { html.classList.remove('lang-switched'); }, 600);
   }
 
