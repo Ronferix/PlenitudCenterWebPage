@@ -16,6 +16,14 @@ a.lang-switch__item:hover { background: var(--bg-muted); }
 .nav__toggle[aria-expanded="true"] .icon--menu { --i: var(--icon-close); }
 @media (max-width: 64rem) {
   .nav { top: var(--space-2); }
+  /* The panel floats, so the bar never wraps: brand and Menu share one row down to 320px */
+  .js .nav__bar { flex-wrap: nowrap; gap: var(--space-2); padding-left: var(--space-4); }
+  .nav__brand { min-width: 0; gap: var(--space-2); }
+  .nav__brand span { white-space: nowrap; }
+  @media (max-width: 23rem) { .nav__brand span { letter-spacing: 0.18em; } }
+  /* A bordered pill so Menu reads as a button, not as an underlined link */
+  .js .nav__toggle { flex: none; padding-inline: var(--space-4); border: 1px solid var(--border-control); border-radius: var(--r-pill); color: var(--fg); text-decoration: none; }
+  .js .nav__toggle[aria-expanded="true"] { background: var(--brand-soft); }
   .js .nav__nav { margin: 0; }
   .nav__actions { padding-left: 0; border-left: 0; }
   .js .nav__panel { display: none; position: absolute; top: calc(100% + var(--space-2)); right: 0; width: min(100%, 26rem);
@@ -27,6 +35,17 @@ a.lang-switch__item:hover { background: var(--bg-muted); }
   .js .nav__panel .nav__link { display: flex; min-height: 3.25rem; padding-inline: var(--space-2); font-size: 0.9375rem; border-radius: 0; border-bottom: 1px solid var(--border); }
   .js .nav__panel .nav__actions .btn { flex: 1; }
   .js .nav__hours { display: block; }
+  /* While the menu is open: dim the page behind it (a tap there closes it, see site.js),
+     stop the page scrolling underneath, and hide the floating order button that covered it */
+  html:has(.nav__panel.is-open) { overflow: hidden; }
+  body:has(.nav__panel.is-open)::before { content: ""; position: fixed; inset: 0; z-index: 40; background: var(--overlay); }
+  body:has(.nav__panel.is-open) .cart-fab { display: none; }
+}
+/* Short screens (phones in landscape): tighter rows so the whole menu fits */
+@media (max-width: 64rem) and (max-height: 30rem) {
+  .js .nav__panel { gap: var(--space-3); padding-block: var(--space-2) var(--space-3); }
+  .js .nav__panel .nav__link { min-height: var(--target-min); }
+  .js .nav__panel .nav__list { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-4); }
 }
 @media (max-width: 64rem) and (prefers-reduced-motion: no-preference) {
   .js .nav__panel.is-open { animation: plenitud-rise var(--dur-base) var(--ease-rise); }
