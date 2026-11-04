@@ -33,7 +33,7 @@ const UI = {
     htmlLang: 'es', dir: '', toRoot: '', switchLabel: 'English', switchLang: 'en',
     skip: 'Saltar al contenido', homeLabel: 'Plenitud Center, inicio', menu: 'Menú', mainNav: 'Principal', reserve: 'Reservar',
     nav: { terapias: 'Terapias', productos: 'Productos', guias: 'Guías', voces: 'Voces', visita: 'Visita' },
-    tagline: 'Un lugar para volver a ti.', address: 'Naciones Unidas 5461<br />Zapopan, Jalisco',
+    tagline: 'Un lugar para volver a ti.', address: 'Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco',
     openHours: 'Abierto de 9:00 a 16:00', attention: 'Atención de 9:00 a 16:00',
     fTherapies: 'Terapias', fSeeAll: 'Ver todas', fRead: 'Leer', fContact: 'Contacto',
     appearance: 'Apariencia', themes: ['Automática', 'Clara', 'Oscura', 'Alto contraste'],
@@ -74,7 +74,7 @@ const UI = {
     voices: { title: 'Voces · Plenitud Center', description: 'Testimonios de Plenitud Center.', h1: 'Voces de la casa' },
     visit: {
       title: 'Visita · Plenitud Center', description: 'Dirección, horario y contacto de Plenitud Center.', eyebrow: 'Visita', h1: 'Cómo llegar',
-      address: 'Naciones Unidas 5461, Zapopan, Jalisco.', contact: 'Contacto', contactLead: 'Por WhatsApp o llamada, en el mismo horario:',
+      address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco.', contact: 'Contacto', contactLead: 'Por WhatsApp o llamada, en el mismo horario:',
       mapTitle: 'Dónde estamos', mapFrame: 'Mapa de Google con la ubicación de Plenitud Center', mapOpen: 'Abrir en Google Maps →',
       call: 'Llamar', callTo: 'al', reserve: 'Reservar una terapia', spaceAlt: 'Sala amplia y luminosa con grandes ventanales y piso de madera',
     },
@@ -84,7 +84,7 @@ const UI = {
     htmlLang: 'en', dir: 'en/', toRoot: '../', switchLabel: 'Español', switchLang: 'es',
     skip: 'Skip to content', homeLabel: 'Plenitud Center, home', menu: 'Menu', mainNav: 'Main', reserve: 'Book',
     nav: { terapias: 'Therapies', productos: 'Products', guias: 'Guides', voces: 'Voices', visita: 'Visit' },
-    tagline: 'A place to come back to yourself.', address: 'Naciones Unidas 5461<br />Zapopan, Jalisco, Mexico',
+    tagline: 'A place to come back to yourself.', address: 'Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco, Mexico',
     openHours: 'Open 9 a.m. to 4 p.m.', attention: 'We answer 9 a.m. to 4 p.m.',
     fTherapies: 'Therapies', fSeeAll: 'See all', fRead: 'Read', fContact: 'Contact',
     appearance: 'Appearance', themes: ['Automatic', 'Light', 'Dark', 'High contrast'],
@@ -126,7 +126,7 @@ const UI = {
     voices: { title: 'Voices · Plenitud Center', description: 'Testimonials from Plenitud Center.', h1: 'Voices from the house' },
     visit: {
       title: 'Visit · Plenitud Center', description: 'Address, hours and contact for Plenitud Center.', eyebrow: 'Visit', h1: 'How to get here',
-      address: 'Naciones Unidas 5461, Zapopan, Jalisco, Mexico.', contact: 'Contact', contactLead: 'By WhatsApp or phone, during the same hours:',
+      address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco, Mexico.', contact: 'Contact', contactLead: 'By WhatsApp or phone, during the same hours:',
       mapTitle: 'Where we are', mapFrame: 'Google map showing where Plenitud Center is', mapOpen: 'Open in Google Maps →',
       call: 'Call', callTo: '', reserve: 'Book a therapy', spaceAlt: 'Large, bright room with tall windows and a wooden floor',
     },
@@ -360,7 +360,7 @@ function detailMedia(image, prefix) {
 }
 
 // Business address as given by the owner; the map and the "open in Google Maps" link search for it.
-const MAP_QUERY = 'Naciones Unidas 5461, Zapopan, Jalisco, México';
+const MAP_QUERY = 'Av. Naciones Unidas 5461, Vallarta Universidad, 45110 Zapopan, Jalisco, México';
 
 // Reception lines (WhatsApp and calls). `intl` is the wa.me / tel: form: 52 + 10 digits.
 const CONTACTS = [
