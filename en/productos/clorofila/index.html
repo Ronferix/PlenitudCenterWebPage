@@ -14,6 +14,11 @@
     d.dataset.theme = (s === 'light' || s === 'dark' || s === 'high-contrast') ? s
       : (s === 'auto') ? (m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light')
       : 'light';
+    // Arriving from the language toggle (site.js leaves a note): no splash, and the page
+    // cross-fades in; any other arrival skips the cross-fade and gets the splash as usual.
+    var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
+    if (sw) d.classList.add('lang-switched');
+    window.addEventListener('pagereveal', function (e) { if (!sw && e.viewTransition) e.viewTransition.skipTransition(); });
   })();
 </script>
 <link rel="alternate" hreflang="es" href="https://ronferix.github.io/PlenitudCenterWebPage/productos/clorofila/" />

@@ -99,17 +99,48 @@
     });
   }
 
+  var langAnchors = function () { return $$('main h1, main h2, main h3, main p, main li, main img, main figure'); };
+  var navBottom = function () { var n = $('.nav'); return n ? n.getBoundingClientRect().bottom : 0; };
+
   /* Language: the toggle is a plain link to this page in the other language. With JS the
      knob slides across first, then the page changes. */
   $$('[data-lang-toggle]').forEach(function (a) {
     a.addEventListener('click', function (e) {
-      if (reduced || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+      /* Note for the next page: skip the splash, reopen Settings, and keep the reading place.
+         Both languages share the same markup, so "the n-th block at the top of the screen, this
+         far down" finds the same spot even though text lengths and image loading differ. */
+      var list = langAnchors(), top = navBottom(), i = 0;
+      while (i < list.length && list[i].getBoundingClientRect().bottom <= top) i++;
+      var note = { i: scrollY > 0 && list[i] ? i : -1, d: list[i] ? list[i].getBoundingClientRect().top : 0, s: !!(settingsDlg && settingsDlg.open) };
+      try { sessionStorage.setItem('plenitud-lang-switch', JSON.stringify(note)); } catch (err) {}
+      if (reduced) return;
       e.preventDefault();
       a.classList.toggle('is-end');
       $$('.toggle__opt', a).forEach(function (o) { o.classList.toggle('is-current'); });
       setTimeout(function () { window.location.href = a.href; }, 280);
     });
   });
+
+  /* Arrived from the language toggle: no splash, same place on the page, and Settings open
+     again on the toggle if that is where the switch was made */
+  var arrived = null;
+  try { arrived = JSON.parse(sessionStorage.getItem('plenitud-lang-switch')); sessionStorage.removeItem('plenitud-lang-switch'); } catch (e) {}
+  if (arrived) {
+    if (loader) loader.remove();
+    var restoredTo = 0;
+    var restore = function () {
+      var el = arrived.i >= 0 && langAnchors()[arrived.i];
+      if (!el) return;
+      restoredTo = Math.round(el.getBoundingClientRect().top + scrollY - arrived.d);
+      window.scrollTo({ top: restoredTo, behavior: 'instant' });
+    };
+    restore();
+    /* Once images have their size the page may be taller; adjust, unless the visitor already scrolled */
+    window.addEventListener('load', function () { if (Math.abs(scrollY - restoredTo) < 2) restore(); }, { once: true });
+    if (arrived.s && settingsDlg) { settingsDlg.showModal(); var lt = $('[data-lang-toggle]', settingsDlg); if (lt) lt.focus(); }
+    setTimeout(function () { html.classList.remove('lang-switched'); }, 600);
+  }
 
   /* Google map: its embed is the only thing on the site that sets (third-party) cookies.
      Off = the iframe loses its src and a short note with a "show" button takes its place. */
