@@ -8,6 +8,7 @@
 // text lives in UI below; catalog text in each JSON item's `en` object.
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
@@ -19,6 +20,10 @@ const { productos } = productosData;
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const prefixFor = (depth) => '../'.repeat(depth);
+
+// GitHub Pages lets browsers keep CSS/JS for 10 minutes, so a fresh page could run last
+// deploy's script. Each asset URL carries a hash of its contents: new contents, new URL.
+const versioned = (file) => `${file}?v=${createHash('sha1').update(fs.readFileSync(path.join(ROOT, file))).digest('hex').slice(0, 8)}`;
 
 function write(relPath, html) {
   const full = path.join(ROOT, relPath);
@@ -169,7 +174,7 @@ function headExtra(prefix, pagePath) {
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
     if (sw) {
       d.classList.add('lang-switched');
-      // Hold the first paint until site.js has run (it reopens Settings and restores the scroll),
+      // Hold the first paint until site.js has run (it restores the scroll position),
       // so the cross-fade lands on the finished page instead of on one that is still changing.
       var hold = document.createElement('link');
       hold.rel = 'expect'; hold.href = '#page-ready'; hold.setAttribute('blocking', 'render');
@@ -184,9 +189,9 @@ function headExtra(prefix, pagePath) {
 <link rel="alternate" hreflang="en" href="${SITE_URL}en/${pagePath}" />
 <link rel="alternate" hreflang="x-default" href="${SITE_URL}${pagePath}" />
 <link rel="preload" href="${a}design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="${a}design-system/colors_and_type.css" />
-<link rel="stylesheet" href="${a}design-system/components.css" />
-<link rel="stylesheet" href="${a}site.css" />`;
+<link rel="stylesheet" href="${a}${versioned('design-system/colors_and_type.css')}" />
+<link rel="stylesheet" href="${a}${versioned('design-system/components.css')}" />
+<link rel="stylesheet" href="${a}${versioned('site.css')}" />`;
 }
 
 const NAV_KEYS = ['terapias', 'productos', 'guias', 'voces', 'visita'];
@@ -504,7 +509,7 @@ ${cartDialog()}
 
 ${settingsDialog(prefix, pagePath)}
 
-<script src="${asset(prefix)}site.js"></script>
+<script src="${asset(prefix)}${versioned('site.js')}"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

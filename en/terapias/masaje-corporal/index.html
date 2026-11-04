@@ -19,7 +19,7 @@
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
     if (sw) {
       d.classList.add('lang-switched');
-      // Hold the first paint until site.js has run (it reopens Settings and restores the scroll),
+      // Hold the first paint until site.js has run (it restores the scroll position),
       // so the cross-fade lands on the finished page instead of on one that is still changing.
       var hold = document.createElement('link');
       hold.rel = 'expect'; hold.href = '#page-ready'; hold.setAttribute('blocking', 'render');
@@ -34,9 +34,9 @@
 <link rel="alternate" hreflang="en" href="https://ronferix.github.io/PlenitudCenterWebPage/en/terapias/masaje-corporal/" />
 <link rel="alternate" hreflang="x-default" href="https://ronferix.github.io/PlenitudCenterWebPage/terapias/masaje-corporal/" />
 <link rel="preload" href="../../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="../../../design-system/colors_and_type.css" />
-<link rel="stylesheet" href="../../../design-system/components.css" />
-<link rel="stylesheet" href="../../../site.css" />
+<link rel="stylesheet" href="../../../design-system/colors_and_type.css?v=a0ee520b" />
+<link rel="stylesheet" href="../../../design-system/components.css?v=c95e0146" />
+<link rel="stylesheet" href="../../../site.css?v=d4b947d0" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -242,7 +242,7 @@
   </div>
 </dialog>
 
-<script src="../../../site.js"></script>
+<script src="../../../site.js?v=5862401e"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>
