@@ -1,7 +1,36 @@
 /* Page layout for the Plenitud reference site. Components live in components/bundle.css. */
+/* ---------- Navigation ----------
+   Desktop: brand · links | language + Book. Mobile: brand · Menu, which opens the same
+   #menu-principal as a solid panel under the bar. Without JS the panel stays in flow. */
 .nav__nav { margin-left: auto; }
+.nav__panel { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
 .nav__nav .nav__list { margin: 0; }
-@media (max-width: 52rem) { .js .nav__nav { width: 100%; margin: 0; } .nav { top: var(--space-2); } }
+.nav__actions { display: flex; align-items: center; gap: var(--space-3); padding-left: var(--space-3); border-left: 1px solid var(--border); }
+.nav__hours { display: none; }
+@media (max-width: 72rem) { .nav__link { padding-inline: var(--space-3); } }
+.lang-switch { display: inline-flex; max-width: none; border: 1px solid var(--border-control); border-radius: var(--r-pill); }
+.lang-switch__item { display: inline-grid; place-items: center; min-width: var(--target-min); min-height: var(--target-min); border-radius: var(--r-pill);
+  font-size: 0.8125rem; font-weight: 500; letter-spacing: var(--tracking-button); color: var(--fg); text-decoration: none; }
+span.lang-switch__item { background: var(--brand-soft); }   /* the language on screen */
+a.lang-switch__item:hover { background: var(--bg-muted); }
+.nav__toggle[aria-expanded="true"] .icon--menu { --i: var(--icon-close); }
+@media (max-width: 64rem) {
+  .nav { top: var(--space-2); }
+  .js .nav__nav { margin: 0; }
+  .nav__actions { padding-left: 0; border-left: 0; }
+  .js .nav__panel { display: none; position: absolute; top: calc(100% + var(--space-2)); right: 0; width: min(100%, 26rem);
+    flex-direction: column; align-items: stretch; gap: var(--space-5); padding: var(--space-3) var(--space-5) var(--space-5);
+    max-height: calc(100dvh - 6rem); overflow-y: auto;
+    background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); }
+  .js .nav__panel.is-open { display: flex; }
+  .js .nav__panel .nav__list { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
+  .js .nav__panel .nav__link { display: flex; min-height: 3.25rem; padding-inline: var(--space-2); font-size: 0.9375rem; border-radius: 0; border-bottom: 1px solid var(--border); }
+  .js .nav__panel .nav__actions .btn { flex: 1; }
+  .js .nav__hours { display: block; }
+}
+@media (max-width: 64rem) and (prefers-reduced-motion: no-preference) {
+  .js .nav__panel.is-open { animation: plenitud-rise var(--dur-base) var(--ease-rise); }
+}
 
 .section { padding-block: var(--space-8); }
 @media (min-width: 48rem) { .section { padding-block: var(--space-9); } }
@@ -187,3 +216,40 @@ code { font-size: 0.9em; }
 .field--inline { flex-direction: row; align-items: center; gap: var(--space-3); }
 .field--inline .select { width: auto; min-width: 11rem; }
 .field--inline .field__label { color: var(--footer-fg); }
+
+/* ---------- Map (Visita) ----------
+   Google's embed cannot be styled, so it is drawn in greys and tinted with the brand
+   colour through a blend layer; dark theme inverts it. High contrast keeps the real map. */
+.map { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm); background: var(--bg-muted); }
+@media (min-width: 40rem) { .map { aspect-ratio: 16 / 9; } }
+@media (min-width: 64rem) { .map { aspect-ratio: 21 / 9; } }
+.map iframe { display: block; width: 100%; height: 100%; border: 0; filter: grayscale(1) contrast(0.92) brightness(1.04); }
+.map::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: var(--brand); mix-blend-mode: color; opacity: 0.6; }
+[data-theme="dark"] .map iframe { filter: grayscale(1) invert(0.9) contrast(0.85); }
+[data-theme="high-contrast"] .map iframe { filter: none; }
+[data-theme="high-contrast"] .map::after { display: none; }
+.map__link { margin-top: var(--space-4); }
+
+/* English pages: WhatsApp messages go out in Spanish */
+.wa-lang-note { color: var(--fg-muted); }
+.dialog .wa-lang-note { margin-bottom: var(--space-4); }
+
+/* ---------- Loading splash ----------
+   Shown only with JS, and gone by itself in about a second (no script has to remove it).
+   Home: logo + name. Other pages: + a vertical line and the page name. */
+.loader { display: none; }
+.js .loader { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--space-4); padding: var(--space-5); background: var(--bg); color: var(--fg); text-align: center;
+  animation: loader-out var(--dur-base) var(--ease-calm) 700ms forwards; }
+.loader__emblem { width: 4.5rem; height: 4.5rem; border-radius: var(--r-pill); box-shadow: var(--shadow-md); }
+.loader__name { font-size: 0.9375rem; letter-spacing: var(--tracking-wordmark); text-transform: uppercase; }
+.loader__rule { display: block; width: 1px; height: var(--space-8); background: var(--border-strong); transform-origin: top; }
+.loader__page { font-family: var(--font-display); font-size: clamp(2rem, 1.25rem + 3vw, 3rem); font-weight: 400; line-height: 1.1; }
+@media (prefers-reduced-motion: no-preference) {
+  .loader__emblem, .loader__name { animation: plenitud-rise var(--dur-slow) var(--ease-rise) both; }
+  .loader__rule { animation: loader-line var(--dur-base) var(--ease-calm) 120ms both; }
+  .loader__page { animation: plenitud-rise var(--dur-slow) var(--ease-rise) 220ms both; }
+}
+@media (prefers-reduced-motion: reduce) { .js .loader { animation-delay: 400ms; } }
+@keyframes loader-out { to { opacity: 0; visibility: hidden; } }
+@keyframes loader-line { from { transform: scaleY(0); } }

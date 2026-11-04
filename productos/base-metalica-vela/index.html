@@ -25,6 +25,12 @@
 <link rel="stylesheet" href="../../site.css" />
 </head>
 <body>
+<div class="loader" aria-hidden="true">
+  <img class="loader__emblem" src="../../design-system/assets/logo-emblem.png" alt="" width="72" height="72" />
+  <p class="loader__name">Plenitud Center</p>
+  <span class="loader__rule"></span>
+  <p class="loader__page">Base metálica para vela</p>
+</div>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
 <header class="nav">
@@ -37,15 +43,20 @@
       <span class="icon icon--menu" aria-hidden="true"></span><span>Menú</span>
     </button>
     <nav aria-label="Principal" class="nav__nav">
-      <ul class="nav__list" id="menu-principal">
+      <div class="nav__panel" id="menu-principal">
+        <ul class="nav__list">
         <li><a class="nav__link" href="../../terapias/">Terapias</a></li>
         <li><a class="nav__link" href="../../productos/" aria-current="page">Productos</a></li>
         <li><a class="nav__link" href="../../guias/">Guías</a></li>
         <li><a class="nav__link" href="../../voces/">Voces</a></li>
         <li><a class="nav__link" href="../../visita/">Visita</a></li>
-        <li><a class="nav__link nav__lang" href="../../en/productos/base-metalica-vela/" lang="en" hreflang="en">English</a></li>
-        <li><button class="btn btn--primary" type="button" data-reserve>Reservar</button></li>
-      </ul>
+        </ul>
+        <div class="nav__actions">
+          <p class="lang-switch"><span class="lang-switch__item" aria-hidden="true">ES</span><a class="lang-switch__item" href="../../en/productos/base-metalica-vela/" lang="en" hreflang="en">EN<span class="sr-only"> · English</span></a></p>
+          <button class="btn btn--primary" type="button" data-reserve>Reservar</button>
+        </div>
+        <p class="caption nav__hours">Atención de 9:00 a 16:00</p>
+      </div>
     </nav>
   </div>
   <!-- Order cart: floating, early in tab order; site.js shows it once something has been added -->
@@ -65,11 +76,12 @@
         <!-- With JS: "add to order" is the main action and the direct link becomes secondary.
              Without JS the add button stays hidden and the direct WhatsApp link still works. -->
         <div class="detail__cta buy">
-          <button class="btn btn--primary btn--lg" type="button" data-cart-add data-slug="base-metalica-vela" data-name="Base metálica para vela" data-variant-name="opción" data-price="120" data-note="" hidden>Agregar al pedido</button>
+          <button class="btn btn--primary btn--lg" type="button" data-cart-add data-slug="base-metalica-vela" data-price="120" data-texts="{&quot;es&quot;:{&quot;name&quot;:&quot;Base metálica para vela&quot;,&quot;variantName&quot;:&quot;opción&quot;,&quot;note&quot;:&quot;&quot;,&quot;variants&quot;:[]},&quot;en&quot;:{&quot;name&quot;:&quot;Metal candle base&quot;,&quot;variantName&quot;:&quot;option&quot;,&quot;note&quot;:&quot;&quot;,&quot;variants&quot;:[]}}" hidden>Agregar al pedido</button>
           <a class="btn btn--secondary btn--lg" data-order-one data-whatsapp data-product="Base metálica para vela" data-variant-name="opción" data-price="$120 MXN" href="https://wa.me/523335992034?text=Hola%2C%20quiero%20pedir%3A%20Base%20met%C3%A1lica%20para%20vela%20%C2%B7%20%24120%20MXN.%20%C2%BFEst%C3%A1%20disponible%3F">Pedir por WhatsApp</a>
         </div>
         <p class="small cart-added" role="status" data-cart-added></p>
         <p class="caption contact-note">Atención de 9:00 a 16:00 · WhatsApp <a data-whatsapp data-product="Base metálica para vela" data-variant-name="opción" data-price="$120 MXN" href="https://wa.me/523335992034?text=Hola%2C%20quiero%20pedir%3A%20Base%20met%C3%A1lica%20para%20vela%20%C2%B7%20%24120%20MXN.%20%C2%BFEst%C3%A1%20disponible%3F">33 3599 2034</a> o <a data-whatsapp data-product="Base metálica para vela" data-variant-name="opción" data-price="$120 MXN" href="https://wa.me/523324909550?text=Hola%2C%20quiero%20pedir%3A%20Base%20met%C3%A1lica%20para%20vela%20%C2%B7%20%24120%20MXN.%20%C2%BFEst%C3%A1%20disponible%3F">33 2490 9550</a></p>
+        
         <p class="caption"><a href="../../productos/">← Ver todos los productos</a></p>
       </div>
     </div>
@@ -165,6 +177,7 @@
     <div data-step="3" hidden>
       <h2 class="dialog__title" id="reserve-t3" tabindex="-1">Tu mensaje está listo.</h2>
       <p class="dialog__lead">Al tocar el botón se abre WhatsApp con este texto; solo envíalo y te confirmamos el horario.</p>
+      
       <p class="message-preview" id="reserve-summary"></p>
       <div class="dialog__actions">
         <button class="btn btn--ghost" type="button" data-close>Cerrar</button>
@@ -180,6 +193,7 @@
     <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Cerrar"><span class="icon icon--close" aria-hidden="true"></span></button>
     <h2 class="dialog__title" id="cart-title" tabindex="-1">Tu pedido</h2>
     <p class="dialog__lead">Al enviarlo se abre WhatsApp con tu lista; ahí confirmamos disponibilidad y entrega.</p>
+    
     <p class="small" data-cart-empty>Tu pedido está vacío. Agrega productos desde la página de cada uno.</p>
     <ul class="cart-list" role="list" data-cart-list></ul>
     <p class="cart-total" data-cart-total></p>

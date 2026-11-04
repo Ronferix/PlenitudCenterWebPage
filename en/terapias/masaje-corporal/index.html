@@ -25,6 +25,12 @@
 <link rel="stylesheet" href="../../../site.css" />
 </head>
 <body>
+<div class="loader" aria-hidden="true">
+  <img class="loader__emblem" src="../../../design-system/assets/logo-emblem.png" alt="" width="72" height="72" />
+  <p class="loader__name">Plenitud Center</p>
+  <span class="loader__rule"></span>
+  <p class="loader__page">Body massage</p>
+</div>
 <a class="skip-link" href="#contenido">Skip to content</a>
 
 <header class="nav">
@@ -37,15 +43,20 @@
       <span class="icon icon--menu" aria-hidden="true"></span><span>Menu</span>
     </button>
     <nav aria-label="Main" class="nav__nav">
-      <ul class="nav__list" id="menu-principal">
+      <div class="nav__panel" id="menu-principal">
+        <ul class="nav__list">
         <li><a class="nav__link" href="../../terapias/" aria-current="page">Therapies</a></li>
         <li><a class="nav__link" href="../../productos/">Products</a></li>
         <li><a class="nav__link" href="../../guias/">Guides</a></li>
         <li><a class="nav__link" href="../../voces/">Voices</a></li>
         <li><a class="nav__link" href="../../visita/">Visit</a></li>
-        <li><a class="nav__link nav__lang" href="../../../terapias/masaje-corporal/" lang="es" hreflang="es">Español</a></li>
-        <li><button class="btn btn--primary" type="button" data-reserve>Book</button></li>
-      </ul>
+        </ul>
+        <div class="nav__actions">
+          <p class="lang-switch"><a class="lang-switch__item" href="../../../terapias/masaje-corporal/" lang="es" hreflang="es">ES<span class="sr-only"> · Español</span></a><span class="lang-switch__item" aria-hidden="true">EN</span></p>
+          <button class="btn btn--primary" type="button" data-reserve>Book</button>
+        </div>
+        <p class="caption nav__hours">We answer 9 a.m. to 4 p.m.</p>
+      </div>
     </nav>
   </div>
   <!-- Order cart: floating, early in tab order; site.js shows it once something has been added -->
@@ -62,7 +73,7 @@
         <p class="lead">A hands-on session that moves through the body with steady pressure, made to release what posture and long days leave in your shoulders, back and legs.</p>
         <dl class="facts"><div><dt>Price</dt><dd>$750 MXN</dd></div><div><dt>Duration</dt><dd>60 min</dd></div><div><dt>Hours</dt><dd>By appointment, 9:00 to 16:00</dd></div></dl>
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve data-session="masaje-corporal">Book Body massage</button></p>
-        <p class="caption contact-note">We answer 9 a.m. to 4 p.m. · WhatsApp <a href="https://wa.me/523335992034?text=Hi%2C%20I%20would%20like%20some%20information%20about%20Plenitud%20Center.">33 3599 2034</a> or <a href="https://wa.me/523324909550?text=Hi%2C%20I%20would%20like%20some%20information%20about%20Plenitud%20Center.">33 2490 9550</a></p>
+        <p class="caption contact-note">We answer 9 a.m. to 4 p.m. · WhatsApp <a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">33 3599 2034</a> or <a href="https://wa.me/523324909550?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">33 2490 9550</a></p>
         <h2 class="h4">What to expect</h2>
         <ol class="body detail__list">
           <li>Arrive a few minutes early to settle in calmly.</li>
@@ -95,8 +106,8 @@
       <div>
         <h2 class="footer__heading" id="f-contacto">Contact</h2>
         <ul class="footer__links" role="list">
-          <li><a href="https://wa.me/523335992034?text=Hi%2C%20I%20would%20like%20some%20information%20about%20Plenitud%20Center.">WhatsApp 33 3599 2034</a></li>
-          <li><a href="https://wa.me/523324909550?text=Hi%2C%20I%20would%20like%20some%20information%20about%20Plenitud%20Center.">WhatsApp 33 2490 9550</a></li>
+          <li><a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">WhatsApp 33 3599 2034</a></li>
+          <li><a href="https://wa.me/523324909550?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">WhatsApp 33 2490 9550</a></li>
         </ul>
         <p class="footer__muted footer__hours">We answer 9 a.m. to 4 p.m.</p>
       </div>
@@ -126,11 +137,11 @@
       <p class="dialog__lead">Pick one to start. You can change your mind at any time.</p>
       <fieldset class="choice-group">
         <legend class="sr-only">Therapy</legend>
-        <label class="choice"><input type="radio" name="session" value="masaje-corporal" data-name="Body massage" data-detail="$750 MXN · 60 min" checked /><span class="choice__box"><span class="choice__title">Body massage</span><span class="choice__meta">Body</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="masaje-corporal" data-name="Masaje corporal" data-detail="$750 MXN · 60 min" checked /><span class="choice__box"><span class="choice__title">Body massage</span><span class="choice__meta">Body</span><span class="choice__check" aria-hidden="true"></span></span></label>
         <label class="choice"><input type="radio" name="session" value="reiki" data-name="Reiki" data-detail="$600 MXN · 50 min" /><span class="choice__box"><span class="choice__title">Reiki</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
-        <label class="choice"><input type="radio" name="session" value="limpia" data-name="Limpia (energy cleansing)" data-detail="$450 MXN · 40 min" /><span class="choice__box"><span class="choice__title">Limpia (energy cleansing)</span><span class="choice__meta">Spiritual</span><span class="choice__check" aria-hidden="true"></span></span></label>
-        <label class="choice"><input type="radio" name="session" value="flores-de-bach" data-name="Bach flower remedies" data-detail="$550 MXN · 45 min" /><span class="choice__box"><span class="choice__title">Bach flower remedies</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
-        <label class="choice"><input type="radio" name="session" value="biomagnetismo" data-name="Biomagnetism therapy" data-detail="$700 MXN · 60 min" /><span class="choice__box"><span class="choice__title">Biomagnetism therapy</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="limpia" data-name="Limpia" data-detail="$450 MXN · 40 min" /><span class="choice__box"><span class="choice__title">Limpia (energy cleansing)</span><span class="choice__meta">Spiritual</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="flores-de-bach" data-name="Flores de Bach" data-detail="$550 MXN · 45 min" /><span class="choice__box"><span class="choice__title">Bach flower remedies</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
+        <label class="choice"><input type="radio" name="session" value="biomagnetismo" data-name="Terapia de biomagnetismo" data-detail="$700 MXN · 60 min" /><span class="choice__box"><span class="choice__title">Biomagnetism therapy</span><span class="choice__meta">Energy</span><span class="choice__check" aria-hidden="true"></span></span></label>
       </fieldset>
       <div class="dialog__actions">
         <button class="btn btn--ghost" type="button" data-close>Cancel</button>
@@ -164,6 +175,7 @@
     <div data-step="3" hidden>
       <h2 class="dialog__title" id="reserve-t3" tabindex="-1">Your message is ready.</h2>
       <p class="dialog__lead">The button opens WhatsApp with this text; just send it and we will confirm the time.</p>
+      <p class="small wa-lang-note">The message is sent in Spanish, the language our team works in.</p>
       <p class="message-preview" id="reserve-summary"></p>
       <div class="dialog__actions">
         <button class="btn btn--ghost" type="button" data-close>Close</button>
@@ -179,6 +191,7 @@
     <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Close"><span class="icon icon--close" aria-hidden="true"></span></button>
     <h2 class="dialog__title" id="cart-title" tabindex="-1">Your order</h2>
     <p class="dialog__lead">Sending it opens WhatsApp with your list; we confirm availability and delivery there.</p>
+    <p class="small wa-lang-note">The message is sent in Spanish, the language our team works in.</p>
     <p class="small" data-cart-empty>Your order is empty. Add products from each product page.</p>
     <ul class="cart-list" role="list" data-cart-list></ul>
     <p class="cart-total" data-cart-total></p>

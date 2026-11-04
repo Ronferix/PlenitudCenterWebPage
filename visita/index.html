@@ -25,6 +25,12 @@
 <link rel="stylesheet" href="../site.css" />
 </head>
 <body>
+<div class="loader" aria-hidden="true">
+  <img class="loader__emblem" src="../design-system/assets/logo-emblem.png" alt="" width="72" height="72" />
+  <p class="loader__name">Plenitud Center</p>
+  <span class="loader__rule"></span>
+  <p class="loader__page">Visita</p>
+</div>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
 <header class="nav">
@@ -37,15 +43,20 @@
       <span class="icon icon--menu" aria-hidden="true"></span><span>Menú</span>
     </button>
     <nav aria-label="Principal" class="nav__nav">
-      <ul class="nav__list" id="menu-principal">
+      <div class="nav__panel" id="menu-principal">
+        <ul class="nav__list">
         <li><a class="nav__link" href="../terapias/">Terapias</a></li>
         <li><a class="nav__link" href="../productos/">Productos</a></li>
         <li><a class="nav__link" href="../guias/">Guías</a></li>
         <li><a class="nav__link" href="../voces/">Voces</a></li>
         <li><a class="nav__link" href="../visita/" aria-current="page">Visita</a></li>
-        <li><a class="nav__link nav__lang" href="../en/visita/" lang="en" hreflang="en">English</a></li>
-        <li><button class="btn btn--primary" type="button" data-reserve>Reservar</button></li>
-      </ul>
+        </ul>
+        <div class="nav__actions">
+          <p class="lang-switch"><span class="lang-switch__item" aria-hidden="true">ES</span><a class="lang-switch__item" href="../en/visita/" lang="en" hreflang="en">EN<span class="sr-only"> · English</span></a></p>
+          <button class="btn btn--primary" type="button" data-reserve>Reservar</button>
+        </div>
+        <p class="caption nav__hours">Atención de 9:00 a 16:00</p>
+      </div>
     </nav>
   </div>
   <!-- Order cart: floating, early in tab order; site.js shows it once something has been added -->
@@ -70,6 +81,18 @@
         </ul>
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve>Reservar una terapia</button></p>
       </div>
+    </div>
+  </section>
+  <section class="section section--sage" aria-labelledby="mapa-h2">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="display-h2" id="mapa-h2">Dónde estamos</h2>
+      </div>
+      <!-- PLACEHOLDER: el mapa apunta a la ciudad (lada 33). Cambiar MAP_QUERY por la dirección exacta o el nombre del negocio en Google Maps -->
+      <div class="map">
+        <iframe src="https://maps.google.com/maps?q=Guadalajara%2C%20Jalisco%2C%20M%C3%A9xico&amp;z=14&amp;hl=es&amp;output=embed" title="Mapa de Google con la ubicación de Plenitud Center" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <p class="small map__link"><a href="https://www.google.com/maps/search/?api=1&amp;query=Guadalajara%2C%20Jalisco%2C%20M%C3%A9xico">Abrir en Google Maps →</a></p>
     </div>
   </section>
 </main>
@@ -163,6 +186,7 @@
     <div data-step="3" hidden>
       <h2 class="dialog__title" id="reserve-t3" tabindex="-1">Tu mensaje está listo.</h2>
       <p class="dialog__lead">Al tocar el botón se abre WhatsApp con este texto; solo envíalo y te confirmamos el horario.</p>
+      
       <p class="message-preview" id="reserve-summary"></p>
       <div class="dialog__actions">
         <button class="btn btn--ghost" type="button" data-close>Cerrar</button>
@@ -178,6 +202,7 @@
     <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Cerrar"><span class="icon icon--close" aria-hidden="true"></span></button>
     <h2 class="dialog__title" id="cart-title" tabindex="-1">Tu pedido</h2>
     <p class="dialog__lead">Al enviarlo se abre WhatsApp con tu lista; ahí confirmamos disponibilidad y entrega.</p>
+    
     <p class="small" data-cart-empty>Tu pedido está vacío. Agrega productos desde la página de cada uno.</p>
     <ul class="cart-list" role="list" data-cart-list></ul>
     <p class="cart-total" data-cart-total></p>

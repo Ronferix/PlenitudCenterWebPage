@@ -5,36 +5,36 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-  /* Messages written by script, in the page's language (<html lang>). Page text comes from build.mjs. */
+  /* WhatsApp messages: always Spanish, the language reception works in (English pages say so). */
+  var WA = {
+    order: 'Hola, quiero pedir: ', available: '. ¿Está disponible?',
+    booking: function (name, therapy, detail, pref) {
+      return 'Hola, soy ' + name + '. Quiero reservar una terapia:\n• ' + therapy + (detail ? ' (' + detail + ')' : '') +
+        (pref ? '\nDía y hora que prefiero: ' + pref : '') + '\n¿Qué horarios tienen disponibles?';
+    },
+    cartIntro: 'Hola, quiero hacer este pedido:', total: 'Total', cartEnd: '¿Está disponible?'
+  };
+  /* Interface text written by script, in the page's language (<html lang>). Page text comes from build.mjs. */
   var MESSAGES = {
     es: {
-      order: 'Hola, quiero pedir: ', available: '. ¿Está disponible?',
       errors: function (n) { return n === 1 ? 'Hay 1 campo por corregir.' : 'Hay ' + n + ' campos por corregir.'; },
-      booking: function (name, therapy, detail, pref) {
-        return 'Hola, soy ' + name + '. Quiero reservar una terapia:\n• ' + therapy + (detail ? ' (' + detail + ')' : '') +
-          (pref ? '\nDía y hora que prefiero: ' + pref : '') + '\n¿Qué horarios tienen disponibles?';
-      },
-      cartIntro: 'Hola, quiero hacer este pedido:', total: 'Total', cartEnd: '¿Está disponible?',
+      total: 'Total',
       cartLabel: function (n) { return 'Pedido, ' + (n === 1 ? '1 artículo' : n + ' artículos'); },
       added: function (item, n) { return 'Agregado: ' + item + '. Llevas ' + (n === 1 ? '1 artículo' : n + ' artículos') + ' en tu pedido.'; },
       less: 'Quitar uno de', more: 'Agregar uno de', remove: 'Quitar', qty: 'Cantidad de', view: 'Ver pedido →',
       changed: function (item, q) { return item + ': ' + q; }, removed: function (item) { return item + ' quitado del pedido.'; }, cleared: 'Pedido vacío.'
     },
     en: {
-      order: 'Hi, I would like to order: ', available: '. Is it available?',
       errors: function (n) { return n === 1 ? '1 field needs fixing.' : n + ' fields need fixing.'; },
-      booking: function (name, therapy, detail, pref) {
-        return 'Hi, my name is ' + name + '. I would like to book a therapy:\n• ' + therapy + (detail ? ' (' + detail + ')' : '') +
-          (pref ? '\nPreferred day and time: ' + pref : '') + '\nWhat times do you have available?';
-      },
-      cartIntro: 'Hi, I would like to place this order:', total: 'Total', cartEnd: 'Is it available?',
+      total: 'Total',
       cartLabel: function (n) { return 'Order, ' + (n === 1 ? '1 item' : n + ' items'); },
       added: function (item, n) { return 'Added: ' + item + '. Your order has ' + (n === 1 ? '1 item' : n + ' items') + '.'; },
       less: 'One less', more: 'One more', remove: 'Remove', qty: 'Quantity of', view: 'View order →',
       changed: function (item, q) { return item + ': ' + q; }, removed: function (item) { return item + ' removed from the order.'; }, cleared: 'Order emptied.'
     }
   };
-  var T = MESSAGES[document.documentElement.lang] || MESSAGES.es;
+  var LANG = MESSAGES[document.documentElement.lang] ? document.documentElement.lang : 'es';
+  var T = MESSAGES[LANG];
   var money = function (n) { return '$' + n.toLocaleString('es-MX') + ' MXN'; };
   /* Point every WhatsApp link carrying `attr` at the same message (main button + second reception line) */
   var setWhatsApp = function (attr, text) {
@@ -49,7 +49,11 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { setMenu(false); toggle.focus(); }
     });
-    list.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    list.addEventListener('click', function (e) { if (e.target.closest('a, button')) setMenu(false); });
+    /* The panel floats over the page, so a click or Tab outside the header closes it */
+    var header = toggle.closest('header');
+    document.addEventListener('click', function (e) { if (!header.contains(e.target)) setMenu(false); });
+    header.addEventListener('focusout', function (e) { if (e.relatedTarget && !header.contains(e.relatedTarget)) setMenu(false); });
   }
 
   /* ---------- Theme switch ---------- */
@@ -98,9 +102,9 @@
     var setMessage = function () {
       var picked = $('input[name=variant]:checked');
       waLinks.forEach(function (wa) {
-        var text = T.order + wa.dataset.product +
+        var text = WA.order + wa.dataset.product +
           (picked ? ' (' + wa.dataset.variantName + ': ' + picked.value + ')' : '') +
-          (wa.dataset.price ? ' · ' + wa.dataset.price : '') + T.available;
+          (wa.dataset.price ? ' · ' + wa.dataset.price : '') + WA.available;
         wa.href = wa.href.split('?')[0] + '?text=' + encodeURIComponent(text);
       });
     };
@@ -110,23 +114,34 @@
 
   /* ---------- Order cart ----------
      Lives in localStorage (this browser only) and leaves the site as one WhatsApp
-     message listing every item. Without storage it still works for the visit. */
+     message listing every item. Without storage it still works for the visit.
+     Each item keeps its text in both languages (`t`), so the list follows the page
+     language while the message is always written in Spanish. */
   var CART_KEY = 'plenitud-cart';
   var cart = [];
   try { cart = JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch (e) { cart = []; }
   var cartDlg = $('#cart');
   var cartCount = function () { return cart.reduce(function (n, it) { return n + it.qty; }, 0); };
-  var itemLabel = function (it) { return it.name + (it.variant ? ' (' + it.variantName + ': ' + it.variant + ')' : ''); };
+  /* Item text in `lang`; carts saved before items carried both languages fall back to their stored fields */
+  var itemText = function (it, lang) {
+    var t = it.t && (it.t[lang] || it.t.es);
+    return t ? { name: t.name, variantName: t.variantName, variant: it.vi >= 0 ? t.variants[it.vi] : '', note: t.note }
+      : { name: it.name, variantName: it.variantName, variant: it.variant, note: it.note };
+  };
+  var itemLabel = function (it, lang) {
+    var x = itemText(it, lang || LANG);
+    return x.name + (x.variant ? ' (' + x.variantName + ': ' + x.variant + ')' : '');
+  };
   var saveCart = function () { try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) {} };
 
   function cartMessage() {
     var total = 0, priced = true;
     var lines = cart.map(function (it) {
-      var line = '• ' + it.qty + ' × ' + itemLabel(it);
+      var line = '• ' + it.qty + ' × ' + itemLabel(it, 'es');
       if (it.price != null) { line += ' — ' + money(it.price * it.qty); total += it.price * it.qty; } else priced = false;
       return line;
     });
-    return [T.cartIntro].concat(lines, priced ? [T.total + ': ' + money(total)] : [], [T.cartEnd]).join('\n');
+    return [WA.cartIntro].concat(lines, priced ? [WA.total + ': ' + money(total)] : [], [WA.cartEnd]).join('\n');
   }
 
   function renderCart(focusKey, focusAct) {
@@ -142,7 +157,7 @@
     cart.forEach(function (it) {
       var li = document.createElement('li');
       li.className = 'cart-item';
-      var label = itemLabel(it);
+      var label = itemLabel(it), x = itemText(it, LANG);
       li.innerHTML =
         '<div class="cart-item__info"><p class="cart-item__name"></p><p class="cart-item__meta caption"></p></div>' +
         '<div class="cart-item__qty" role="group">' +
@@ -152,8 +167,8 @@
         '</div>' +
         '<p class="cart-item__total"></p>' +
         '<button class="btn btn--ghost cart-item__remove" type="button" data-act="remove"></button>';
-      $('.cart-item__name', li).textContent = it.name;
-      $('.cart-item__meta', li).textContent = [it.variant ? it.variantName + ': ' + it.variant : '', it.price != null ? money(it.price) + (it.note ? ' ' + it.note : '') : ''].filter(Boolean).join(' · ');
+      $('.cart-item__name', li).textContent = x.name;
+      $('.cart-item__meta', li).textContent = [x.variant ? x.variantName + ': ' + x.variant : '', it.price != null ? money(it.price) + (x.note ? ' ' + x.note : '') : ''].filter(Boolean).join(' · ');
       $('.cart-item__qty', li).setAttribute('aria-label', T.qty + ' ' + label);
       $('.qty-value', li).textContent = it.qty;
       $('[data-act=less]', li).setAttribute('aria-label', T.less + ' ' + label);
@@ -180,12 +195,11 @@
   }
 
   function addToCart(btn) {
-    var picked = $('input[name=variant]:checked');
     var it = {
-      slug: btn.dataset.slug, name: btn.dataset.name, variantName: btn.dataset.variantName,
-      variant: picked ? picked.value : '', price: btn.dataset.price ? Number(btn.dataset.price) : null, note: btn.dataset.note, qty: 1
+      slug: btn.dataset.slug, vi: $$('input[name=variant]').indexOf($('input[name=variant]:checked')),
+      price: btn.dataset.price ? Number(btn.dataset.price) : null, t: JSON.parse(btn.dataset.texts), qty: 1
     };
-    it.key = it.slug + '|' + it.variant;
+    it.key = it.slug + '|' + it.vi;   /* the same in both languages, so a product never appears twice */
     var found = cart.filter(function (x) { return x.key === it.key; })[0];
     if (found) found.qty++; else cart.push(it);
     saveCart(); renderCart();
@@ -276,7 +290,7 @@
     if (!validate()) return;
     /* Step 3 shows the exact text that will reach WhatsApp; the visitor sends it from there */
     var checked = $('input[name=session]:checked', form);
-    var text = T.booking($('#f-name').value.trim(), checked.dataset.name, checked.dataset.detail, $('#f-pref').value.trim());
+    var text = WA.booking($('#f-name').value.trim(), checked.dataset.name, checked.dataset.detail, $('#f-pref').value.trim());
     $('#reserve-summary').textContent = text;
     setWhatsApp('data-booking-send', text);
     show(3);

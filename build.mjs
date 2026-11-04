@@ -42,6 +42,7 @@ const UI = {
     pricePending: 'Precio por confirmar', or: 'o', alsoAt: 'también por', options: 'opciones', option: 'opción',
     waOrder: (prod, variant, price) => `Hola, quiero pedir: ${prod}${variant ? ` (${variant})` : ''}${price ? ` · ${price}` : ''}. ¿Está disponible?`,
     waHello: 'Hola, quisiera información sobre Plenitud Center.',
+    waLangNote: '',
     seeMore: 'Ver más', seeMoreAbout: 'sobre', see: 'Ver',
     home: {
       title: 'Plenitud Center · Un lugar para volver a ti', description: 'Plenitud Center: terapias corporales, energéticas y espirituales, y productos para la práctica en casa.',
@@ -74,6 +75,7 @@ const UI = {
     visit: {
       title: 'Visita · Plenitud Center', description: 'Dirección, horario y contacto de Plenitud Center.', eyebrow: 'Visita', h1: 'Cómo llegar',
       address: 'Calle de la Calma 14, patio del estudio, segundo piso.', contact: 'Contacto', contactLead: 'Por WhatsApp o llamada, en el mismo horario:',
+      mapTitle: 'Dónde estamos', mapFrame: 'Mapa de Google con la ubicación de Plenitud Center', mapOpen: 'Abrir en Google Maps →',
       call: 'Llamar', callTo: 'al', reserve: 'Reservar una terapia', spaceAlt: 'Sala amplia y luminosa con grandes ventanales y piso de madera',
     },
     built: 'Generado',
@@ -91,6 +93,8 @@ const UI = {
     pricePending: 'Price to be confirmed', or: 'or', alsoAt: 'also on', options: 'options', option: 'option',
     waOrder: (prod, variant, price) => `Hi, I would like to order: ${prod}${variant ? ` (${variant})` : ''}${price ? ` · ${price}` : ''}. Is it available?`,
     waHello: 'Hi, I would like some information about Plenitud Center.',
+    // WhatsApp messages always go out in Spanish (see whatsappLink); English pages say so next to each send button
+    waLangNote: 'The message is sent in Spanish, the language our team works in.',
     seeMore: 'See more', seeMoreAbout: 'about', see: 'See',
     home: {
       title: 'Plenitud Center · A place to come back to yourself', description: 'Plenitud Center: body, energy and spiritual therapies, and products for your practice at home.',
@@ -123,6 +127,7 @@ const UI = {
     visit: {
       title: 'Visit · Plenitud Center', description: 'Address, hours and contact for Plenitud Center.', eyebrow: 'Visit', h1: 'How to get here',
       address: 'Calle de la Calma 14, studio courtyard, second floor.', contact: 'Contact', contactLead: 'By WhatsApp or phone, during the same hours:',
+      mapTitle: 'Where we are', mapFrame: 'Google map showing where Plenitud Center is', mapOpen: 'Open in Google Maps →',
       call: 'Call', callTo: '', reserve: 'Book a therapy', spaceAlt: 'Large, bright room with tall windows and a wooden floor',
     },
     built: 'Built',
@@ -175,6 +180,11 @@ function nav(prefix, active, pagePath) {
   // Same page in the other language: from es add "en/", from en drop it.
   const other = UI[L.switchLang];
   const switchHref = `${asset(prefix)}${other.dir}${pagePath}` || './';
+  // Desktop: brand · links · [ES|EN] Book. Mobile: brand · Menu, and the button opens
+  // #menu-principal as a panel under the bar (links, Book, language, hours).
+  const langs = ['es', 'en'].map((lg) => (lg === LANG
+    ? `<span class="lang-switch__item" aria-hidden="true">${lg.toUpperCase()}</span>`
+    : `<a class="lang-switch__item" href="${switchHref}" lang="${lg}" hreflang="${lg}">${lg.toUpperCase()}<span class="sr-only"> · ${L.switchLabel}</span></a>`)).join('');
   return `<header class="nav">
   <div class="nav__bar">
     <a class="nav__brand" href="${home}" aria-label="${L.homeLabel}">
@@ -185,11 +195,16 @@ function nav(prefix, active, pagePath) {
       <span class="icon icon--menu" aria-hidden="true"></span><span>${L.menu}</span>
     </button>
     <nav aria-label="${L.mainNav}" class="nav__nav">
-      <ul class="nav__list" id="menu-principal">
+      <div class="nav__panel" id="menu-principal">
+        <ul class="nav__list">
         ${items}
-        <li><a class="nav__link nav__lang" href="${switchHref}" lang="${L.switchLang}" hreflang="${L.switchLang}">${L.switchLabel}</a></li>
-        <li><button class="btn btn--primary" type="button" data-reserve>${L.reserve}</button></li>
-      </ul>
+        </ul>
+        <div class="nav__actions">
+          <p class="lang-switch">${langs}</p>
+          <button class="btn btn--primary" type="button" data-reserve>${L.reserve}</button>
+        </div>
+        <p class="caption nav__hours">${L.attention}</p>
+      </div>
     </nav>
   </div>
   <!-- Order cart: floating, early in tab order; site.js shows it once something has been added -->
@@ -238,8 +253,8 @@ ${['auto', 'light', 'dark', 'high-contrast'].map((v, i) => `          <option va
 
 function reserveDialog() {
   const D = L.dlg;
-  // data-* on each radio feed the WhatsApp message site.js writes in step 3
-  const choices = terapias.map((t, i) => `        <label class="choice"><input type="radio" name="session" value="${t.slug}" data-name="${esc(tr(t, 'name'))}" data-detail="${esc([t.price != null ? money(t.price) : '', t.duration].filter(Boolean).join(' · '))}"${i === 0 ? ' checked' : ''} /><span class="choice__box"><span class="choice__title">${esc(tr(t, 'name'))}</span><span class="choice__meta">${esc(catName(t.category))}</span><span class="choice__check" aria-hidden="true"></span></span></label>`).join('\n');
+  // data-* on each radio feed the (Spanish) WhatsApp message site.js writes in step 3
+  const choices = terapias.map((t, i) => `        <label class="choice"><input type="radio" name="session" value="${t.slug}" data-name="${esc(t.name)}" data-detail="${esc([t.price != null ? money(t.price) : '', t.duration].filter(Boolean).join(' · '))}"${i === 0 ? ' checked' : ''} /><span class="choice__box"><span class="choice__title">${esc(tr(t, 'name'))}</span><span class="choice__meta">${esc(catName(t.category))}</span><span class="choice__check" aria-hidden="true"></span></span></label>`).join('\n');
   return `<dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
   <form class="dialog__panel" id="reserve-form" novalidate>
     <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="${D.close}"><span class="icon icon--close" aria-hidden="true"></span></button>
@@ -284,6 +299,7 @@ ${choices}
     <div data-step="3" hidden>
       <h2 class="dialog__title" id="reserve-t3" tabindex="-1">${D.t3}</h2>
       <p class="dialog__lead">${D.lead3}</p>
+      ${waLangNote()}
       <p class="message-preview" id="reserve-summary"></p>
       <div class="dialog__actions">
         <button class="btn btn--ghost" type="button" data-close>${D.close}</button>
@@ -303,6 +319,7 @@ function cartDialog() {
     <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="${L.dlg.close}"><span class="icon icon--close" aria-hidden="true"></span></button>
     <h2 class="dialog__title" id="cart-title" tabindex="-1">${C.title}</h2>
     <p class="dialog__lead">${C.lead}</p>
+    ${waLangNote()}
     <p class="small" data-cart-empty>${C.empty}</p>
     <ul class="cart-list" role="list" data-cart-list></ul>
     <p class="cart-total" data-cart-total></p>
@@ -343,16 +360,22 @@ function detailMedia(image, prefix) {
   return `<figure class="detail__media"><img src="${asset(prefix)}${image.file}" alt="${esc(image.alt)}" /></figure>`;
 }
 
+// PLACEHOLDER: city only (the reception lines use the 33 area code). Replace with the exact
+// address or the business name as it appears on Google Maps.
+const MAP_QUERY = 'Guadalajara, Jalisco, México';
+
 // Reception lines (WhatsApp and calls). `intl` is the wa.me / tel: form: 52 + 10 digits.
 const CONTACTS = [
   { display: '33 3599 2034', intl: '523335992034' },
   { display: '33 2490 9550', intl: '523324909550' },
 ];
-// Same message shape as site.js builds when the visitor picks another variant
+// Reception works in Spanish, so every WhatsApp message is written in Spanish whatever
+// the page language. Same message shape as site.js builds when the visitor picks another variant.
 function whatsappLink(product, variant, price, number = CONTACTS[0].intl) {
-  return `https://wa.me/${number}?text=${encodeURIComponent(L.waOrder(product, variant, price))}`;
+  return `https://wa.me/${number}?text=${encodeURIComponent(UI.es.waOrder(product, variant, price))}`;
 }
-const waGeneral = (c) => `https://wa.me/${c.intl}?text=${encodeURIComponent(L.waHello)}`;
+const waGeneral = (c) => `https://wa.me/${c.intl}?text=${encodeURIComponent(UI.es.waHello)}`;
+const waLangNote = () => (L.waLangNote ? `<p class="small wa-lang-note">${L.waLangNote}</p>` : '');
 
 /* Quiet line under a call to action: hours + both reception lines on WhatsApp.
    `attrs(c)` returns each link's attributes (product pages add the data site.js needs). */
@@ -389,6 +412,18 @@ const GUIAS = [
   { name: 'Tomás Ibarra', focus: 'Limpias y acompañamiento espiritual', schedule: 'Jueves a domingo', en: { focus: 'Limpias and spiritual guidance', schedule: 'Thursday to Sunday', imageAlt: 'Portrait of Tomás Ibarra smiling outdoors' }, image: { file: 'media/guia-espiritual.jpg', alt: 'Retrato de Tomás Ibarra sonriendo al aire libre' } },
 ];
 
+/* Short splash while the page settles: logo and name on the home page; on the rest, a
+   vertical line and the page's own name below them. CSS shows it only with JS and fades
+   it out on its own after a moment; it is decorative, so screen readers skip it. */
+function loader(prefix, pageName) {
+  return `<div class="loader" aria-hidden="true">
+  <img class="loader__emblem" src="${asset(prefix)}design-system/assets/logo-emblem.png" alt="" width="72" height="72" />
+  <p class="loader__name">Plenitud Center</p>${pageName ? `
+  <span class="loader__rule"></span>
+  <p class="loader__page">${esc(pageName)}</p>` : ''}
+</div>`;
+}
+
 function layout({ prefix, active, pagePath, title, description, bodyHtml, mainId = 'contenido' }) {
   return `<!doctype html>
 <html lang="${L.htmlLang}" data-theme="light">
@@ -400,6 +435,7 @@ function layout({ prefix, active, pagePath, title, description, bodyHtml, mainId
 ${headExtra(prefix, pagePath)}
 </head>
 <body>
+${loader(prefix, pagePath ? title.split(' · ')[0] : '')}
 <a class="skip-link" href="#${mainId}">${L.skip}</a>
 
 ${nav(prefix, active, pagePath)}
@@ -645,19 +681,26 @@ function productoDetailBody(prefix, p) {
   const vs = variantList(p);
   const label = tr(p, 'variantLabel') || L.options;
   const one = tr(p, 'variantName') || L.option;
-  // Native radios; site.js copies the choice into the WhatsApp message. The first
-  // option starts selected so the link always names a concrete variant.
+  // Native radios; the value is the Spanish name, which site.js copies into the WhatsApp
+  // message. The first option starts selected so the link always names a concrete variant.
   const variants = vs
     ? `<fieldset class="variant-picker">
           <legend class="h4">${P.choose} ${esc(one)} <span class="variant-picker__count">(${vs.length} ${esc(label)})</span></legend>
           <div class="variant-picker__options">${vs.map((v, i) => `
-            <label class="variant-chip"><input type="radio" name="variant" value="${esc(v.name)}"${i === 0 ? ' checked' : ''} /><span class="variant-chip__box">${p.swatches ? swatch(p.swatches[v.key]) : ''}${esc(v.name)}</span></label>`).join('')}
+            <label class="variant-chip"><input type="radio" name="variant" value="${esc(v.key)}"${i === 0 ? ' checked' : ''} /><span class="variant-chip__box">${p.swatches ? swatch(p.swatches[v.key]) : ''}${esc(v.name)}</span></label>`).join('')}
           </div>
         </fieldset>`
     : '';
   const note = tr(p, 'priceNote');
-  const priceText = p.price != null ? `${money(p.price)}${note ? ` ${note}` : ''}` : '';
-  const orderAttrs = (c) => `data-whatsapp data-product="${esc(name)}" data-variant-name="${esc(one)}" data-price="${esc(priceText)}" href="${whatsappLink(name, vs ? `${one}: ${vs[0].name}` : '', priceText, c.intl)}"`;
+  // The direct WhatsApp order is written in Spanish (see whatsappLink)
+  const oneEs = p.variantName || UI.es.option;
+  const priceEs = p.price != null ? `${money(p.price)}${p.priceNote ? ` ${p.priceNote}` : ''}` : '';
+  const orderAttrs = (c) => `data-whatsapp data-product="${esc(p.name)}" data-variant-name="${esc(oneEs)}" data-price="${esc(priceEs)}" href="${whatsappLink(p.name, vs ? `${oneEs}: ${vs[0].key}` : '', priceEs, c.intl)}"`;
+  // The cart shows each item in the page's language and writes the message in Spanish, so it keeps both
+  const texts = Object.fromEntries(['es', 'en'].map((lg) => {
+    const t = (f) => (lg !== 'es' && p.en && p.en[f] != null ? p.en[f] : p[f]);
+    return [lg, { name: t('name'), variantName: t('variantName') || UI[lg].option, note: t('priceNote') || '', variants: t('variants') || [] }];
+  }));
   return `  <section class="section" aria-labelledby="p-h1">
     <div class="container detail">
       ${detailMedia(imageOf(p), prefix)}
@@ -670,11 +713,12 @@ function productoDetailBody(prefix, p) {
         <!-- With JS: "add to order" is the main action and the direct link becomes secondary.
              Without JS the add button stays hidden and the direct WhatsApp link still works. -->
         <div class="detail__cta buy">
-          <button class="btn btn--primary btn--lg" type="button" data-cart-add data-slug="${esc(p.slug)}" data-name="${esc(name)}" data-variant-name="${esc(one)}" data-price="${p.price ?? ''}" data-note="${esc(note || '')}" hidden>${L.cart.add}</button>
+          <button class="btn btn--primary btn--lg" type="button" data-cart-add data-slug="${esc(p.slug)}" data-price="${p.price ?? ''}" data-texts="${esc(JSON.stringify(texts))}" hidden>${L.cart.add}</button>
           <a class="btn btn--secondary btn--lg" data-order-one ${orderAttrs(CONTACTS[0])}>${P.orderWa}</a>
         </div>
         <p class="small cart-added" role="status" data-cart-added></p>
         ${contactNote(orderAttrs)}
+        ${waLangNote()}
         <p class="caption"><a href="${prefix}productos/">${P.back}</a></p>
       </div>
     </div>
@@ -731,6 +775,18 @@ ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.disp
         </ul>
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve>${V.reserve}</button></p>
       </div>
+    </div>
+  </section>
+  <section class="section section--sage" aria-labelledby="mapa-h2">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="display-h2" id="mapa-h2">${V.mapTitle}</h2>
+      </div>
+      <!-- PLACEHOLDER: el mapa apunta a la ciudad (lada 33). Cambiar MAP_QUERY por la dirección exacta o el nombre del negocio en Google Maps -->
+      <div class="map">
+        <iframe src="https://maps.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&amp;z=14&amp;hl=${LANG}&amp;output=embed" title="${V.mapFrame}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <p class="small map__link"><a href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(MAP_QUERY)}">${V.mapOpen}</a></p>
     </div>
   </section>`;
 }
