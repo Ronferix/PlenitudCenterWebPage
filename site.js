@@ -47,8 +47,8 @@
 
   /* ---------- Menu disclosure (mobile) ---------- */
   var toggle = $('.nav__toggle'), list = $('#menu-principal');
+  var setMenu = function (open) { toggle.setAttribute('aria-expanded', String(open)); list.classList.toggle('is-open', open); };
   if (toggle && list) {
-    var setMenu = function (open) { toggle.setAttribute('aria-expanded', String(open)); list.classList.toggle('is-open', open); };
     toggle.addEventListener('click', function () { setMenu(toggle.getAttribute('aria-expanded') !== 'true'); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { setMenu(false); toggle.focus(); }
@@ -61,18 +61,74 @@
     header.addEventListener('focusout', function (e) { if (e.relatedTarget && !header.contains(e.relatedTarget)) setMenu(false); });
   }
 
-  /* ---------- Theme switch ---------- */
-  var sel = $('#theme');
-  if (sel) {
-    var saved = null; try { saved = localStorage.getItem('plenitud-theme'); } catch (e) {}
-    sel.value = saved || 'light'; /* matches the pre-paint script's default so the switch never lies about what's on screen */
-    var apply = function () {
-      var v = sel.value, m = function (q) { return window.matchMedia(q).matches; };
-      document.documentElement.dataset.theme = v !== 'auto' ? v : m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light';
-    };
-    sel.addEventListener('change', function () { try { localStorage.setItem('plenitud-theme', sel.value); } catch (e) {} apply(); });
-    ['(prefers-color-scheme: dark)', '(prefers-contrast: more)'].forEach(function (q) { window.matchMedia(q).addEventListener('change', function () { if (sel.value === 'auto') apply(); }); });
+  /* ---------- Settings dialog: language, theme, Google map ---------- */
+  var settingsDlg = $('#settings');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var store = function (k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) {} return null; };
+  if (settingsDlg) {
+    $$('[data-settings-open]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (toggle && list) setMenu(false);
+        settingsDlg.showModal(); $('#settings-title').focus();
+      });
+    });
+    $$('[data-close]', settingsDlg).forEach(function (b) { b.addEventListener('click', function () { settingsDlg.close(); }); });
+    settingsDlg.addEventListener('click', function (e) { if (e.target === settingsDlg) settingsDlg.close(); });
   }
+
+  /* Theme: the pre-paint script in <head> already applied the saved choice. Dark and high
+     contrast are two switches over one setting, so turning one on turns the other off. */
+  var html = document.documentElement;
+  var themeSwitches = $$('[data-theme-switch]');
+  var syncTheme = function () { themeSwitches.forEach(function (b) { b.setAttribute('aria-checked', String(html.dataset.theme === b.dataset.themeSwitch)); }); };
+  themeSwitches.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('aria-checked') === 'true' ? 'light' : b.dataset.themeSwitch;
+      html.classList.add('theme-fade');   /* colours ease over instead of snapping (no-op under reduced motion) */
+      html.dataset.theme = v; store('plenitud-theme', v); syncTheme();
+      setTimeout(function () { html.classList.remove('theme-fade'); }, 500);
+    });
+  });
+  syncTheme();
+  if (store('plenitud-theme') === 'auto') {   /* a choice saved by the old footer selector keeps following the device */
+    ['(prefers-color-scheme: dark)', '(prefers-contrast: more)'].forEach(function (q) {
+      window.matchMedia(q).addEventListener('change', function () {
+        var m = function (x) { return window.matchMedia(x).matches; };
+        html.dataset.theme = m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light'; syncTheme();
+      });
+    });
+  }
+
+  /* Language: the toggle is a plain link to this page in the other language. With JS the
+     knob slides across first, then the page changes. */
+  $$('[data-lang-toggle]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (reduced || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      a.classList.toggle('is-end');
+      $$('.toggle__opt', a).forEach(function (o) { o.classList.toggle('is-current'); });
+      setTimeout(function () { window.location.href = a.href; }, 280);
+    });
+  });
+
+  /* Google map: its embed is the only thing on the site that sets (third-party) cookies.
+     Off = the iframe loses its src and a short note with a "show" button takes its place. */
+  var mapsSwitch = $('[data-maps-switch]'), map = $('[data-map]');
+  var applyMaps = function () {
+    var on = store('plenitud-maps') !== 'off';
+    if (mapsSwitch) mapsSwitch.setAttribute('aria-checked', String(on));
+    if (!map) return;
+    var frame = $('iframe', map);
+    if (!frame.dataset.src) frame.dataset.src = frame.getAttribute('src');
+    if (on && !frame.getAttribute('src')) frame.setAttribute('src', frame.dataset.src);
+    if (!on) frame.removeAttribute('src');
+    frame.hidden = !on; $('.map__off', map).hidden = on;
+    map.classList.toggle('map--off', !on);
+  };
+  if (mapsSwitch) mapsSwitch.addEventListener('click', function () { store('plenitud-maps', mapsSwitch.getAttribute('aria-checked') === 'true' ? 'off' : 'on'); applyMaps(); });
+  var showMap = $('[data-map-show]');
+  if (showMap) showMap.addEventListener('click', function () { store('plenitud-maps', 'on'); applyMaps(); });
+  applyMaps();
 
   /* ---------- Carousels (therapy groups) ----------
      The track scrolls natively; JS only adds the arrows, and only when the row overflows.

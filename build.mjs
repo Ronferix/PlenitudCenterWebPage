@@ -36,7 +36,9 @@ const UI = {
     tagline: 'Un lugar para volver a ti.', address: 'Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco',
     openHours: 'Abierto de 9:00 a 16:00', attention: 'Atención de 9:00 a 16:00',
     fTherapies: 'Terapias', fSeeAll: 'Ver todas', fRead: 'Leer', fContact: 'Contacto',
-    appearance: 'Apariencia', themes: ['Automática', 'Clara', 'Oscura', 'Alto contraste'],
+    settings: { open: 'Ajustes', title: 'Ajustes', lang: 'Idioma', langTo: 'Cambiar a inglés', dark: 'Modo oscuro', contrast: 'Alto contraste',
+      privacy: 'Privacidad y cookies', privacyLead: 'Este sitio no usa cookies propias. Tus ajustes y tu pedido se guardan solo en este navegador.',
+      maps: 'Mapa de Google', mapsHint: 'Al mostrar el mapa en Visita, Google puede guardar sus propias cookies.', done: 'Listo' },
     dlg: { close: 'Cerrar', step1: 'Paso 1 de 2', step2: 'Paso 2 de 2', t1: '¿Qué terapia te llama?', lead1: 'Elige una para empezar. Puedes cambiar de opinión cuando quieras.', legend: 'Terapia', cancel: 'Cancelar', next: 'Continuar', t2: '¿A nombre de quién?', lead2: 'Con estos datos armamos tu mensaje de WhatsApp.', name: 'Nombre', req: '(obligatorio)', nameErr: 'Escribe tu nombre.', pref: 'Día y hora que prefieres', optional: '(opcional)', prefHint: 'Ejemplo: jueves por la mañana', back: 'Atrás', prepare: 'Preparar mensaje', t3: 'Tu mensaje está listo.', lead3: 'Al tocar el botón se abre WhatsApp con este texto; solo envíalo y te confirmamos el horario.', send: 'Enviar por WhatsApp' },
     cart: { open: 'Pedido', title: 'Tu pedido', lead: 'Al enviarlo se abre WhatsApp con tu lista; ahí confirmamos disponibilidad y entrega.', empty: 'Tu pedido está vacío. Agrega productos desde la página de cada uno.', clear: 'Vaciar pedido', send: 'Enviar pedido por WhatsApp', add: 'Agregar al pedido' },
     pricePending: 'Precio por confirmar', or: 'o', alsoAt: 'también por', options: 'opciones', option: 'opción',
@@ -76,6 +78,7 @@ const UI = {
       title: 'Visita · Plenitud Center', description: 'Dirección, horario y contacto de Plenitud Center.', eyebrow: 'Visita', h1: 'Cómo llegar',
       address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco.', contact: 'Contacto', contactLead: 'Por WhatsApp o llamada, en el mismo horario:',
       mapTitle: 'Dónde estamos', mapFrame: 'Mapa de Google con la ubicación de Plenitud Center', mapOpen: 'Abrir en Google Maps →',
+      mapOff: 'El mapa de Google está apagado en Ajustes.', mapShow: 'Mostrar el mapa',
       call: 'Llamar', callTo: 'al', reserve: 'Reservar una terapia', spaceAlt: 'Sala amplia y luminosa con grandes ventanales y piso de madera',
     },
     built: 'Generado',
@@ -87,7 +90,9 @@ const UI = {
     tagline: 'A place to come back to yourself.', address: 'Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco, Mexico',
     openHours: 'Open 9 a.m. to 4 p.m.', attention: 'We answer 9 a.m. to 4 p.m.',
     fTherapies: 'Therapies', fSeeAll: 'See all', fRead: 'Read', fContact: 'Contact',
-    appearance: 'Appearance', themes: ['Automatic', 'Light', 'Dark', 'High contrast'],
+    settings: { open: 'Settings', title: 'Settings', lang: 'Language', langTo: 'Switch to Spanish', dark: 'Dark mode', contrast: 'High contrast',
+      privacy: 'Privacy and cookies', privacyLead: 'This site sets no cookies of its own. Your settings and your order are stored only in this browser.',
+      maps: 'Google map', mapsHint: 'When the map is shown on Visit, Google may store its own cookies.', done: 'Done' },
     dlg: { close: 'Close', step1: 'Step 1 of 2', step2: 'Step 2 of 2', t1: 'Which therapy calls you?', lead1: 'Pick one to start. You can change your mind at any time.', legend: 'Therapy', cancel: 'Cancel', next: 'Continue', t2: 'Who is the booking for?', lead2: 'We use this to write your WhatsApp message.', name: 'Name', req: '(required)', nameErr: 'Enter your name.', pref: 'Preferred day and time', optional: '(optional)', prefHint: 'Example: Thursday morning', back: 'Back', prepare: 'Prepare message', t3: 'Your message is ready.', lead3: 'The button opens WhatsApp with this text; just send it and we will confirm the time.', send: 'Send on WhatsApp' },
     cart: { open: 'Order', title: 'Your order', lead: 'Sending it opens WhatsApp with your list; we confirm availability and delivery there.', empty: 'Your order is empty. Add products from each product page.', clear: 'Empty order', send: 'Send order on WhatsApp', add: 'Add to order' },
     pricePending: 'Price to be confirmed', or: 'or', alsoAt: 'also on', options: 'options', option: 'option',
@@ -128,6 +133,7 @@ const UI = {
       title: 'Visit · Plenitud Center', description: 'Address, hours and contact for Plenitud Center.', eyebrow: 'Visit', h1: 'How to get here',
       address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco, Mexico.', contact: 'Contact', contactLead: 'By WhatsApp or phone, during the same hours:',
       mapTitle: 'Where we are', mapFrame: 'Google map showing where Plenitud Center is', mapOpen: 'Open in Google Maps →',
+      mapOff: 'The Google map is turned off in Settings.', mapShow: 'Show the map',
       call: 'Call', callTo: '', reserve: 'Book a therapy', spaceAlt: 'Large, bright room with tall windows and a wooden floor',
     },
     built: 'Built',
@@ -177,20 +183,16 @@ function nav(prefix, active, pagePath) {
     const current = key === active ? ' aria-current="page"' : '';
     return `<li><a class="nav__link" href="${prefix}${key}/"${current}>${L.nav[key]}</a></li>`;
   }).join('\n        ');
-  // Same page in the other language: from es add "en/", from en drop it.
-  const other = UI[L.switchLang];
-  const switchHref = `${asset(prefix)}${other.dir}${pagePath}` || './';
-  // Desktop: brand · links · [ES|EN] Book. Mobile: brand · Menu, and the button opens
-  // #menu-principal as a panel under the bar (links, Book, language, hours).
-  const langs = ['es', 'en'].map((lg) => (lg === LANG
-    ? `<span class="lang-switch__item" aria-hidden="true">${lg.toUpperCase()}</span>`
-    : `<a class="lang-switch__item" href="${switchHref}" lang="${lg}" hreflang="${lg}">${lg.toUpperCase()}<span class="sr-only"> · ${L.switchLabel}</span></a>`)).join('');
+  // Desktop: brand · links · Book · Settings. Mobile: brand · Settings · Menu, and Menu opens
+  // #menu-principal as a panel under the bar (links, Book, hours). Language and theme live in
+  // the Settings dialog; each layout has its own Settings button, the other one is display:none.
   return `<header class="nav">
   <div class="nav__bar">
     <a class="nav__brand" href="${home}" aria-label="${L.homeLabel}">
       <img src="${asset(prefix)}design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
       <span>Plenitud</span>
     </a>
+    ${settingsButton('nav__settings nav__settings--bar')}
     <button class="btn btn--ghost nav__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
       <span class="icon icon--menu" aria-hidden="true"></span><span>${L.menu}</span>
     </button>
@@ -200,8 +202,8 @@ function nav(prefix, active, pagePath) {
         ${items}
         </ul>
         <div class="nav__actions">
-          <p class="lang-switch">${langs}</p>
           <button class="btn btn--primary" type="button" data-reserve>${L.reserve}</button>
+          ${settingsButton('nav__settings nav__settings--panel')}
         </div>
         <p class="caption nav__hours">${L.attention}</p>
       </div>
@@ -210,6 +212,49 @@ function nav(prefix, active, pagePath) {
   <!-- Order cart: floating, early in tab order; site.js shows it once something has been added -->
   <button class="btn btn--secondary cart-fab" type="button" data-cart-open hidden>${L.cart.open} <span class="cart-fab__count" data-cart-count aria-hidden="true">0</span></button>
 </header>`;
+}
+
+const settingsButton = (cls) => `<button class="btn btn--ghost icon-btn ${cls}" type="button" data-settings-open aria-haspopup="dialog" title="${L.settings.open}"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">${L.settings.open}</span></button>`;
+
+// Same page in the other language: from es add "en/", from en drop it.
+const switchHrefFor = (prefix, pagePath) => `${asset(prefix)}${UI[L.switchLang].dir}${pagePath}` || './';
+
+/* Settings: language, light/dark, high contrast and the Google map (the only third-party
+   cookies on the site). The language toggle is one link: a tap anywhere on it slides the
+   knob and opens this page in the other language. The theme rows are role="switch". */
+function settingsDialog(prefix, pagePath) {
+  const S = L.settings;
+  const langOpt = (lg) => `<span class="toggle__opt${lg === LANG ? ' is-current' : ''}" aria-hidden="true">${lg.toUpperCase()}</span>`;
+  const sw = (id, label, attrs, icons = ['', '']) => `<li class="setting">
+        <span class="setting__label" id="${id}">${label}</span>
+        <button class="toggle" type="button" role="switch" aria-checked="false" aria-labelledby="${id}" ${attrs}><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true">${icons[0]}</span><span class="toggle__opt" aria-hidden="true">${icons[1]}</span></button>
+      </li>`;
+  const icon = (n) => `<span class="icon icon--${n}"></span>`;
+  return `<dialog class="dialog settings" id="settings" aria-labelledby="settings-title">
+  <div class="dialog__panel">
+    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="${L.dlg.close}"><span class="icon icon--close" aria-hidden="true"></span></button>
+    <h2 class="dialog__title" id="settings-title" tabindex="-1">${S.title}</h2>
+    <ul class="settings__list" role="list">
+      <li class="setting">
+        <span class="setting__label" id="set-lang">${S.lang}</span>
+        <a class="toggle toggle--lang${LANG === 'en' ? ' is-end' : ''}" href="${switchHrefFor(prefix, pagePath)}" hreflang="${L.switchLang}" data-lang-toggle aria-describedby="set-lang"><span class="toggle__knob" aria-hidden="true"></span>${langOpt('es')}${langOpt('en')}<span class="sr-only">${S.langTo}</span></a>
+      </li>
+      ${sw('set-dark', S.dark, 'data-theme-switch="dark"', [icon('sun'), icon('moon')])}
+      ${sw('set-contrast', S.contrast, 'data-theme-switch="high-contrast"', ['', icon('check')])}
+    </ul>
+    <h3 class="h4 settings__heading">${S.privacy}</h3>
+    <p class="small settings__lead">${S.privacyLead}</p>
+    <ul class="settings__list" role="list">
+      <li class="setting">
+        <span class="setting__text"><span class="setting__label" id="set-maps">${S.maps}</span><span class="caption setting__hint" id="set-maps-hint">${S.mapsHint}</span></span>
+        <button class="toggle" type="button" role="switch" aria-checked="true" aria-labelledby="set-maps" aria-describedby="set-maps-hint" data-maps-switch><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true">${icon('check')}</span></button>
+      </li>
+    </ul>
+    <div class="dialog__actions">
+      <button class="btn btn--primary" type="button" data-close>${S.done}</button>
+    </div>
+  </div>
+</dialog>`;
 }
 
 function footerPartial(prefix) {
@@ -239,12 +284,7 @@ ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.disp
     </div>
     <div class="footer__bottom">
       <p class="footer__muted">© Plenitud Center · 2026</p>
-      <div class="field field--inline">
-        <label class="field__label" for="theme">${L.appearance}</label>
-        <select class="select" id="theme">
-${['auto', 'light', 'dark', 'high-contrast'].map((v, i) => `          <option value="${v}">${L.themes[i]}</option>`).join('\n')}
-        </select>
-      </div>
+      <button class="btn btn--ghost footer__settings" type="button" data-settings-open aria-haspopup="dialog"><span class="icon icon--settings" aria-hidden="true"></span>${L.settings.open}</button>
     </div>
   </div>
 </footer>`;
@@ -447,6 +487,8 @@ ${footerPartial(prefix)}
 ${reserveDialog()}
 
 ${cartDialog()}
+
+${settingsDialog(prefix, pagePath)}
 
 <script src="${asset(prefix)}site.js"></script>
 </body>
@@ -780,7 +822,8 @@ ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.disp
       <div class="section__head">
         <h2 class="display-h2" id="mapa-h2">${V.mapTitle}</h2>
       </div>
-      <div class="map">
+      <div class="map" data-map>
+        <div class="map__off" hidden><p class="body">${V.mapOff}</p><button class="btn btn--secondary" type="button" data-map-show>${V.mapShow}</button></div>
         <iframe src="https://maps.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&amp;z=16&amp;hl=${LANG}&amp;output=embed" title="${V.mapFrame}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
       <p class="small map__link"><a href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(MAP_QUERY)}">${V.mapOpen}</a></p>

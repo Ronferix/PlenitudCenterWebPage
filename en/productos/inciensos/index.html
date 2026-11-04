@@ -39,6 +39,7 @@
       <img src="../../../design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
       <span>Plenitud</span>
     </a>
+    <button class="btn btn--ghost icon-btn nav__settings nav__settings--bar" type="button" data-settings-open aria-haspopup="dialog" title="Settings"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">Settings</span></button>
     <button class="btn btn--ghost nav__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
       <span class="icon icon--menu" aria-hidden="true"></span><span>Menu</span>
     </button>
@@ -52,8 +53,8 @@
         <li><a class="nav__link" href="../../visita/">Visit</a></li>
         </ul>
         <div class="nav__actions">
-          <p class="lang-switch"><a class="lang-switch__item" href="../../../productos/inciensos/" lang="es" hreflang="es">ES<span class="sr-only"> · Español</span></a><span class="lang-switch__item" aria-hidden="true">EN</span></p>
           <button class="btn btn--primary" type="button" data-reserve>Book</button>
+          <button class="btn btn--ghost icon-btn nav__settings nav__settings--panel" type="button" data-settings-open aria-haspopup="dialog" title="Settings"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">Settings</span></button>
         </div>
         <p class="caption nav__hours">We answer 9 a.m. to 4 p.m.</p>
       </div>
@@ -122,15 +123,7 @@
     </div>
     <div class="footer__bottom">
       <p class="footer__muted">© Plenitud Center · 2026</p>
-      <div class="field field--inline">
-        <label class="field__label" for="theme">Appearance</label>
-        <select class="select" id="theme">
-          <option value="auto">Automatic</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-          <option value="high-contrast">High contrast</option>
-        </select>
-      </div>
+      <button class="btn btn--ghost footer__settings" type="button" data-settings-open aria-haspopup="dialog"><span class="icon icon--settings" aria-hidden="true"></span>Settings</button>
     </div>
   </div>
 </footer>
@@ -209,6 +202,38 @@
       <a class="btn btn--primary" data-cart-send href="https://wa.me/523335992034">Send order on WhatsApp</a>
     </div>
     <p class="caption contact-note dialog__note">We answer 9 a.m. to 4 p.m. · also on <a data-cart-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
+  </div>
+</dialog>
+
+<dialog class="dialog settings" id="settings" aria-labelledby="settings-title">
+  <div class="dialog__panel">
+    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Close"><span class="icon icon--close" aria-hidden="true"></span></button>
+    <h2 class="dialog__title" id="settings-title" tabindex="-1">Settings</h2>
+    <ul class="settings__list" role="list">
+      <li class="setting">
+        <span class="setting__label" id="set-lang">Language</span>
+        <a class="toggle toggle--lang is-end" href="../../../productos/inciensos/" hreflang="es" data-lang-toggle aria-describedby="set-lang"><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true">ES</span><span class="toggle__opt is-current" aria-hidden="true">EN</span><span class="sr-only">Switch to Spanish</span></a>
+      </li>
+      <li class="setting">
+        <span class="setting__label" id="set-dark">Dark mode</span>
+        <button class="toggle" type="button" role="switch" aria-checked="false" aria-labelledby="set-dark" data-theme-switch="dark"><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"><span class="icon icon--sun"></span></span><span class="toggle__opt" aria-hidden="true"><span class="icon icon--moon"></span></span></button>
+      </li>
+      <li class="setting">
+        <span class="setting__label" id="set-contrast">High contrast</span>
+        <button class="toggle" type="button" role="switch" aria-checked="false" aria-labelledby="set-contrast" data-theme-switch="high-contrast"><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"><span class="icon icon--check"></span></span></button>
+      </li>
+    </ul>
+    <h3 class="h4 settings__heading">Privacy and cookies</h3>
+    <p class="small settings__lead">This site sets no cookies of its own. Your settings and your order are stored only in this browser.</p>
+    <ul class="settings__list" role="list">
+      <li class="setting">
+        <span class="setting__text"><span class="setting__label" id="set-maps">Google map</span><span class="caption setting__hint" id="set-maps-hint">When the map is shown on Visit, Google may store its own cookies.</span></span>
+        <button class="toggle" type="button" role="switch" aria-checked="true" aria-labelledby="set-maps" aria-describedby="set-maps-hint" data-maps-switch><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"><span class="icon icon--check"></span></span></button>
+      </li>
+    </ul>
+    <div class="dialog__actions">
+      <button class="btn btn--primary" type="button" data-close>Done</button>
+    </div>
   </div>
 </dialog>
 

@@ -1,28 +1,38 @@
 /* Page layout for the Plenitud reference site. Components live in components/bundle.css. */
+/* Extra icons, same mask technique as components.css */
+:root {
+  --icon-settings: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1'/%3E%3Ccircle cx='15' cy='6' r='2'/%3E%3Ccircle cx='9' cy='12' r='2'/%3E%3Ccircle cx='17' cy='18' r='2'/%3E%3C/svg%3E");
+  --icon-sun: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'/%3E%3C/svg%3E");
+  --icon-moon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z'/%3E%3C/svg%3E");
+}
+.icon--settings { --i: var(--icon-settings); } .icon--sun { --i: var(--icon-sun); } .icon--moon { --i: var(--icon-moon); }
+.icon-btn { padding: 0; width: var(--target-min); color: var(--fg); border-radius: var(--r-pill); }
+.icon-btn:hover { background: var(--brand-soft); }
+
 /* ---------- Navigation ----------
-   Desktop: brand · links | language + Book. Mobile: brand · Menu, which opens the same
-   #menu-principal as a solid panel under the bar. Without JS the panel stays in flow. */
+   Desktop: brand · links | Book · Settings. Mobile: brand · Settings · Menu, which opens the
+   same #menu-principal as a solid panel under the bar. Without JS the panel stays in flow. */
 .nav__nav { margin-left: auto; }
 .nav__panel { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
 .nav__nav .nav__list { margin: 0; }
-.nav__actions { display: flex; align-items: center; gap: var(--space-3); padding-left: var(--space-3); border-left: 1px solid var(--border); }
+.nav__actions { display: flex; align-items: center; gap: var(--space-2); padding-left: var(--space-3); border-left: 1px solid var(--border); }
 .nav__hours { display: none; }
+.nav__settings--bar { display: none; }
 @media (max-width: 72rem) { .nav__link { padding-inline: var(--space-3); } }
-.lang-switch { display: inline-flex; max-width: none; border: 1px solid var(--border-control); border-radius: var(--r-pill); }
-.lang-switch__item { display: inline-grid; place-items: center; min-width: var(--target-min); min-height: var(--target-min); border-radius: var(--r-pill);
-  font-size: 0.8125rem; font-weight: 500; letter-spacing: var(--tracking-button); color: var(--fg); text-decoration: none; }
-span.lang-switch__item { background: var(--brand-soft); }   /* the language on screen */
-a.lang-switch__item:hover { background: var(--bg-muted); }
 .nav__toggle[aria-expanded="true"] .icon--menu { --i: var(--icon-close); }
 @media (max-width: 64rem) {
   .nav { top: var(--space-2); }
+  /* Settings sits in the bar, next to Menu; the copy inside the panel is for desktop */
+  .js .nav__settings--bar { display: inline-flex; flex: none; margin-left: auto; }
+  .js .nav__settings--panel { display: none; }
+  @media (max-width: 24rem) { .nav__brand span { display: none; } }   /* logo only; the link keeps its name */
   /* The panel floats, so the bar never wraps: brand and Menu share one row down to 320px */
   .js .nav__bar { flex-wrap: nowrap; gap: var(--space-2); padding-left: var(--space-4); }
   .nav__brand { min-width: 0; gap: var(--space-2); }
   .nav__brand span { white-space: nowrap; }
   @media (max-width: 23rem) { .nav__brand span { letter-spacing: 0.18em; } }
   /* A bordered pill so Menu reads as a button, not as an underlined link */
-  .js .nav__toggle { flex: none; padding-inline: var(--space-4); border: 1px solid var(--border-control); border-radius: var(--r-pill); color: var(--fg); text-decoration: none; }
+  .js .nav__toggle { flex: none; margin-left: 0; padding-inline: var(--space-4); border: 1px solid var(--border-control); border-radius: var(--r-pill); color: var(--fg); text-decoration: none; }
   .js .nav__toggle[aria-expanded="true"] { background: var(--brand-soft); }
   .js .nav__nav { margin: 0; }
   .nav__actions { padding-left: 0; border-left: 0; }
@@ -254,24 +264,72 @@ code { font-size: 0.9em; }
 .dialog .wa-lang-note { margin-bottom: var(--space-4); }
 
 /* ---------- Loading splash ----------
-   Shown only with JS, and gone by itself in about a second (no script has to remove it).
-   Home: logo + name. Other pages: + a vertical line and the page name. */
+   Shown only with JS, and gone by itself in about two seconds (no script has to remove it).
+   Home: logo + name. Other pages: + a vertical line and the page name. Each piece eases in
+   one after another, then everything drifts up while the veil fades. */
 .loader { display: none; }
 /* pointer-events: none — taps always reach the page, even mid-fade. Safari keeps the
    finished overlay "visible" (it ignores visibility in the keyframes), and without
    this it swallowed every tap on iPhone. site.js also removes it once it has faded. */
 .js .loader { position: fixed; inset: 0; z-index: 100; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: var(--space-4); padding: var(--space-5); background: var(--bg); color: var(--fg); text-align: center;
-  animation: loader-out var(--dur-base) var(--ease-calm) 700ms forwards; }
+  animation: loader-out 650ms var(--ease-calm) 1400ms forwards; }
 .loader__emblem { width: 4.5rem; height: 4.5rem; border-radius: var(--r-pill); box-shadow: var(--shadow-md); }
 .loader__name { font-size: 0.9375rem; letter-spacing: var(--tracking-wordmark); text-transform: uppercase; }
 .loader__rule { display: block; width: 1px; height: var(--space-8); background: var(--border-strong); transform-origin: top; }
 .loader__page { font-family: var(--font-display); font-size: clamp(2rem, 1.25rem + 3vw, 3rem); font-weight: 400; line-height: 1.1; }
 @media (prefers-reduced-motion: no-preference) {
-  .loader__emblem, .loader__name { animation: plenitud-rise var(--dur-slow) var(--ease-rise) both; }
-  .loader__rule { animation: loader-line var(--dur-base) var(--ease-calm) 120ms both; }
-  .loader__page { animation: plenitud-rise var(--dur-slow) var(--ease-rise) 220ms both; }
+  .loader__emblem { animation: loader-in 900ms var(--ease-rise) both, loader-lift 650ms var(--ease-calm) 1400ms forwards; }
+  .loader__name { animation: loader-in 900ms var(--ease-rise) 150ms both, loader-lift 650ms var(--ease-calm) 1400ms forwards; }
+  .loader__rule { animation: loader-line 700ms var(--ease-calm) 420ms both, loader-lift 650ms var(--ease-calm) 1400ms forwards; }
+  .loader__page { animation: loader-in 900ms var(--ease-rise) 600ms both, loader-lift 650ms var(--ease-calm) 1400ms forwards; }
 }
-@media (prefers-reduced-motion: reduce) { .js .loader { animation-delay: 400ms; } }
+@media (prefers-reduced-motion: reduce) { .js .loader { animation-delay: 600ms; } }
 @keyframes loader-out { to { opacity: 0; visibility: hidden; } }
+@keyframes loader-in { from { opacity: 0; transform: translateY(14px) scale(0.96); } }
 @keyframes loader-line { from { transform: scaleY(0); } }
+@keyframes loader-lift { to { transform: translateY(-16px); } }
+
+/* ---------- Toggle (two-position pill) ----------
+   One control: a tap anywhere on it moves the knob to the other side. Used as a link for
+   the language (navigates) and as role="switch" buttons for the theme and the map. */
+.toggle { position: relative; display: inline-flex; flex: none; align-items: stretch; width: 6rem; min-height: var(--target-min); padding: 3px;
+  border: 1px solid var(--border-control); border-radius: var(--r-pill); background: var(--bg-muted); color: var(--fg-muted);
+  font: inherit; text-decoration: none; cursor: pointer; }
+.toggle:hover { border-color: var(--brand); }
+.toggle__knob { position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px); border-radius: var(--r-pill);
+  background: var(--bg-elevated); border: 1px solid var(--border-control); box-shadow: var(--shadow-xs); }
+.toggle[aria-checked="true"] .toggle__knob, .toggle.is-end .toggle__knob { transform: translateX(100%); background: var(--brand); border-color: var(--brand); }
+.toggle__opt { position: relative; flex: 1; display: grid; place-items: center; font-size: 0.8125rem; font-weight: 500; letter-spacing: var(--tracking-button); }
+/* The side the knob sits on shows in full colour */
+.toggle--lang .toggle__opt.is-current, .toggle[aria-checked="true"] .toggle__opt:last-of-type { color: var(--on-brand); }
+.toggle[aria-checked="false"] .toggle__opt:first-of-type { color: var(--fg); }
+.toggle--lang .toggle__knob { background: var(--brand); border-color: var(--brand); }
+.toggle .icon { width: 1.125rem; height: 1.125rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .toggle__knob { transition: transform var(--dur-base) var(--ease-calm), background-color var(--dur-base) var(--ease-calm); }
+  .toggle__opt { transition: color var(--dur-base) var(--ease-calm); }
+}
+
+/* ---------- Settings dialog ---------- */
+.settings .dialog__panel { max-width: 28rem; }
+.settings__list { list-style: none; margin: var(--space-4) 0 0; padding: 0; }
+.setting { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding-block: var(--space-3); border-bottom: 1px solid var(--border); }
+.setting:last-child { border-bottom: 0; }
+.setting__label { font-size: 1rem; font-weight: 500; color: var(--fg); }
+.setting__text { display: flex; flex-direction: column; gap: var(--space-1); }
+.setting__hint { color: var(--fg-muted); }
+.settings__heading { margin-top: var(--space-6); }
+.settings__lead { margin-top: var(--space-2); color: var(--fg-muted); }
+.footer__settings { gap: var(--space-2); color: var(--footer-fg); }
+
+/* Theme switch: colours ease over for a moment instead of snapping */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-fade, html.theme-fade *:not(.toggle__knob), html.theme-fade *::before, html.theme-fade *::after {
+    transition: background-color var(--dur-base) var(--ease-calm), color var(--dur-base) var(--ease-calm), border-color var(--dur-base) var(--ease-calm) !important; }
+}
+
+/* Map switched off in Settings */
+.map__off { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-4);
+  padding: var(--space-5); text-align: center; background: var(--bg-muted); }
+.map--off::after { display: none; }

@@ -39,6 +39,7 @@
       <img src="../../design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
       <span>Plenitud</span>
     </a>
+    <button class="btn btn--ghost icon-btn nav__settings nav__settings--bar" type="button" data-settings-open aria-haspopup="dialog" title="Ajustes"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">Ajustes</span></button>
     <button class="btn btn--ghost nav__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
       <span class="icon icon--menu" aria-hidden="true"></span><span>Menú</span>
     </button>
@@ -52,8 +53,8 @@
         <li><a class="nav__link" href="../../visita/">Visita</a></li>
         </ul>
         <div class="nav__actions">
-          <p class="lang-switch"><span class="lang-switch__item" aria-hidden="true">ES</span><a class="lang-switch__item" href="../../en/productos/ozono/" lang="en" hreflang="en">EN<span class="sr-only"> · English</span></a></p>
           <button class="btn btn--primary" type="button" data-reserve>Reservar</button>
+          <button class="btn btn--ghost icon-btn nav__settings nav__settings--panel" type="button" data-settings-open aria-haspopup="dialog" title="Ajustes"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">Ajustes</span></button>
         </div>
         <p class="caption nav__hours">Atención de 9:00 a 16:00</p>
       </div>
@@ -115,15 +116,7 @@
     </div>
     <div class="footer__bottom">
       <p class="footer__muted">© Plenitud Center · 2026</p>
-      <div class="field field--inline">
-        <label class="field__label" for="theme">Apariencia</label>
-        <select class="select" id="theme">
-          <option value="auto">Automática</option>
-          <option value="light">Clara</option>
-          <option value="dark">Oscura</option>
-          <option value="high-contrast">Alto contraste</option>
-        </select>
-      </div>
+      <button class="btn btn--ghost footer__settings" type="button" data-settings-open aria-haspopup="dialog"><span class="icon icon--settings" aria-hidden="true"></span>Ajustes</button>
     </div>
   </div>
 </footer>
@@ -202,6 +195,38 @@
       <a class="btn btn--primary" data-cart-send href="https://wa.me/523335992034">Enviar pedido por WhatsApp</a>
     </div>
     <p class="caption contact-note dialog__note">Atención de 9:00 a 16:00 · también por <a data-cart-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
+  </div>
+</dialog>
+
+<dialog class="dialog settings" id="settings" aria-labelledby="settings-title">
+  <div class="dialog__panel">
+    <button class="btn btn--ghost dialog__close" type="button" data-close aria-label="Cerrar"><span class="icon icon--close" aria-hidden="true"></span></button>
+    <h2 class="dialog__title" id="settings-title" tabindex="-1">Ajustes</h2>
+    <ul class="settings__list" role="list">
+      <li class="setting">
+        <span class="setting__label" id="set-lang">Idioma</span>
+        <a class="toggle toggle--lang" href="../../en/productos/ozono/" hreflang="en" data-lang-toggle aria-describedby="set-lang"><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt is-current" aria-hidden="true">ES</span><span class="toggle__opt" aria-hidden="true">EN</span><span class="sr-only">Cambiar a inglés</span></a>
+      </li>
+      <li class="setting">
+        <span class="setting__label" id="set-dark">Modo oscuro</span>
+        <button class="toggle" type="button" role="switch" aria-checked="false" aria-labelledby="set-dark" data-theme-switch="dark"><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"><span class="icon icon--sun"></span></span><span class="toggle__opt" aria-hidden="true"><span class="icon icon--moon"></span></span></button>
+      </li>
+      <li class="setting">
+        <span class="setting__label" id="set-contrast">Alto contraste</span>
+        <button class="toggle" type="button" role="switch" aria-checked="false" aria-labelledby="set-contrast" data-theme-switch="high-contrast"><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"><span class="icon icon--check"></span></span></button>
+      </li>
+    </ul>
+    <h3 class="h4 settings__heading">Privacidad y cookies</h3>
+    <p class="small settings__lead">Este sitio no usa cookies propias. Tus ajustes y tu pedido se guardan solo en este navegador.</p>
+    <ul class="settings__list" role="list">
+      <li class="setting">
+        <span class="setting__text"><span class="setting__label" id="set-maps">Mapa de Google</span><span class="caption setting__hint" id="set-maps-hint">Al mostrar el mapa en Visita, Google puede guardar sus propias cookies.</span></span>
+        <button class="toggle" type="button" role="switch" aria-checked="true" aria-labelledby="set-maps" aria-describedby="set-maps-hint" data-maps-switch><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true"><span class="icon icon--check"></span></span></button>
+      </li>
+    </ul>
+    <div class="dialog__actions">
+      <button class="btn btn--primary" type="button" data-close>Listo</button>
+    </div>
   </div>
 </dialog>
 
