@@ -1,4 +1,9 @@
 /* Page layout for the Plenitud reference site. Components live in components/bundle.css. */
+/* The hidden attribute always wins. Component rules that set display (flex, grid…) would
+   otherwise show elements the HTML or site.js marked hidden — that kept the "map is off"
+   note over the map, and earlier showed buttons meant to stay hidden without JS. */
+[hidden] { display: none !important; }
+
 /* Extra icons, same mask technique as components.css */
 :root {
   --icon-settings: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1'/%3E%3Ccircle cx='15' cy='6' r='2'/%3E%3Ccircle cx='9' cy='12' r='2'/%3E%3Ccircle cx='17' cy='18' r='2'/%3E%3C/svg%3E");
@@ -111,7 +116,6 @@
    without JS. Visible cards adapt to the width: 1 + a peek of the next, then 2, then 3. */
 .carousel { --carousel-gap: var(--space-5); }
 .carousel__controls { display: flex; gap: var(--space-2); }
-.carousel__controls[hidden] { display: none; }
 .carousel__btn { width: var(--target-min); min-width: var(--target-min); height: var(--target-min); padding: 0; font-size: 1.25rem; letter-spacing: 0; }
 .carousel__btn[aria-disabled="true"] { opacity: 0.4; cursor: default; }
 /* The padding keeps each card's 3 px focus ring and hover shadow from being clipped by the scroll box */
@@ -178,7 +182,6 @@
 .link-button { display: inline-flex; align-items: center; min-height: var(--target-min); padding: 0; border: 0; background: none; font: inherit; font-weight: 500;
   color: var(--brand-text); text-decoration: underline; text-decoration-thickness: 0.08em; text-underline-offset: 0.2em; cursor: pointer; }
 
-.btn[hidden] { display: none; }   /* .btn sets display, which would otherwise override the hidden attribute */
 /* Floating order button, bottom right, only while the order has items. The page gets
    extra room at the bottom so the button never covers the last links or a focused control. */
 /* Secondary style (one primary per view), lifted with a shadow and an elevated fill */
