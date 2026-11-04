@@ -16,6 +16,7 @@
       : 'light';
     // Arriving from the language toggle (site.js leaves a note): no splash, and the page
     // cross-fades in; any other arrival skips the cross-fade and gets the splash as usual.
+    try { if (localStorage.getItem('plenitud-demo-ok')) d.classList.add('demo-ok'); } catch (e) {}
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
     if (sw) {
       d.classList.add('lang-switched');
@@ -25,7 +26,12 @@
       hold.rel = 'expect'; hold.href = '#page-ready'; hold.setAttribute('blocking', 'render');
       document.head.appendChild(hold);
     }
-    window.addEventListener('pagereveal', function (e) { if (!sw && e.viewTransition) e.viewTransition.skipTransition(); });
+    window.addEventListener('pagereveal', function (e) {
+      var vt = e.viewTransition;
+      if (sw || !vt) return;
+      vt.ready.catch(function () {});   // skipping rejects .ready; it is expected, not an error
+      vt.skipTransition();
+    });
   })();
 </script>
 <!-- The site has its own English version, so the browser should not offer to machine-translate it -->
@@ -36,21 +42,25 @@
 <link rel="preload" href="../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../../site.css?v=d4b947d0" />
+<link rel="stylesheet" href="../../site.css?v=e2427c37" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
-  <img class="loader__emblem" src="../../design-system/assets/logo-emblem.png" alt="" width="72" height="72" />
+  <img class="loader__emblem" src="../../design-system/assets/logo-emblem-192.png" alt="" width="72" height="72" />
   <p class="loader__name">Plenitud Center</p>
   <span class="loader__rule"></span>
   <p class="loader__page">Products</p>
 </div>
 <a class="skip-link" href="#contenido">Skip to content</a>
+<aside class="demo-note" aria-label="Demo site notice">
+  <p class="small demo-note__text"><strong>This is a demo site.</strong> Products, services, prices, photos and testimonials are examples and do not yet reflect the real offer. <a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">For current information, message us on WhatsApp.</a></p>
+  <button class="btn btn--ghost icon-btn demo-note__ok" type="button" data-demo-ok title="Got it, close notice"><span class="icon icon--close" aria-hidden="true"></span><span class="sr-only">Got it, close notice</span></button>
+</aside>
 
 <header class="nav">
   <div class="nav__bar">
     <a class="nav__brand" href="../" aria-label="Plenitud Center, home">
-      <img src="../../design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
+      <img src="../../design-system/assets/logo-emblem-192.png" alt="" width="32" height="32" />
       <span>Plenitud</span>
     </a>
     <button class="btn btn--ghost icon-btn nav__settings nav__settings--bar" type="button" data-settings-open aria-haspopup="dialog" title="Settings"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">Settings</span></button>
@@ -93,7 +103,7 @@
       <ul class="grid grid--3" role="list" id="product-grid">
         <li data-name="incense sticks">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../../media/inciensos.jpg" alt="Bundles of colorful incense sticks" loading="lazy" />
+            <img class="card__media card__media--square" src="../../media/inciensos.jpg" srcset="../../media/w/inciensos-480.webp 480w, ../../media/w/inciensos-800.webp 800w, ../../media/w/inciensos-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Bundles of colorful incense sticks" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Incense sticks</h2>
             <p class="card__body">Incense sticks in three scents.</p>
             <p class="variants"><span>Nag Champa · Copal · Cinnamon</span></p>
@@ -105,7 +115,7 @@
         </li>
         <li data-name="chlorophyll">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../../media/clorofila.jpg" alt="Green drink being poured into a glass" loading="lazy" />
+            <img class="card__media card__media--square" src="../../media/clorofila.jpg" srcset="../../media/w/clorofila-480.webp 480w, ../../media/w/clorofila-800.webp 800w, ../../media/w/clorofila-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Green drink being poured into a glass" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Chlorophyll</h2>
             <p class="card__body">Liquid chlorophyll supplement.</p>
             
@@ -117,7 +127,7 @@
         </li>
         <li data-name="colored candles">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../../media/velas-de-color.jpg" alt="Lit colored candles" loading="lazy" />
+            <img class="card__media card__media--square" src="../../media/velas-de-color.jpg" srcset="../../media/w/velas-de-color-480.webp 480w, ../../media/w/velas-de-color-800.webp 800w, ../../media/w/velas-de-color-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Lit colored candles" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Colored candles</h2>
             <p class="card__body">Ritual candles in nine colors.</p>
             <p class="variants"><span class="swatches"><span class="swatch" style="--swatch: #b3261e" aria-hidden="true"></span><span class="swatch" style="--swatch: #e8a0b4" aria-hidden="true"></span><span class="swatch" style="--swatch: #e07b2a" aria-hidden="true"></span><span class="swatch" style="--swatch: #6b3fa0" aria-hidden="true"></span><span class="swatch" style="--swatch: #f7f4ec" aria-hidden="true"></span><span class="swatches__more" aria-hidden="true">+4</span></span><span>9 colors</span></p>
@@ -129,7 +139,7 @@
         </li>
         <li data-name="copal resin">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../../media/copal-resina.jpg" alt="Amber resin pieces on granules" loading="lazy" />
+            <img class="card__media card__media--square" src="../../media/copal-resina.jpg" srcset="../../media/w/copal-resina-480.webp 480w, ../../media/w/copal-resina-800.webp 800w, ../../media/w/copal-resina-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Amber resin pieces on granules" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Copal resin</h2>
             <p class="card__body">Copal resin to burn on charcoal.</p>
             
@@ -141,7 +151,7 @@
         </li>
         <li data-name="charcoal tablets">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../../media/carbon-compactado.jpg" alt="Metal bowl with smoking embers" loading="lazy" />
+            <img class="card__media card__media--square" src="../../media/carbon-compactado.jpg" srcset="../../media/w/carbon-compactado-480.webp 480w, ../../media/w/carbon-compactado-800.webp 800w, ../../media/w/carbon-compactado-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Metal bowl with smoking embers" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Charcoal tablets</h2>
             <p class="card__body">Charcoal for burning resins and loose incense.</p>
             
@@ -153,7 +163,7 @@
         </li>
         <li data-name="metal candle base">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../../media/base-metalica-vela.jpg" alt="Lit candle on a brass base" loading="lazy" />
+            <img class="card__media card__media--square" src="../../media/base-metalica-vela.jpg" srcset="../../media/w/base-metalica-vela-480.webp 480w, ../../media/w/base-metalica-vela-800.webp 800w, ../../media/w/base-metalica-vela-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Lit candle on a brass base" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Metal candle base</h2>
             <p class="card__body">A base that holds the candle and protects the surface while it burns.</p>
             
@@ -165,7 +175,7 @@
         </li>
         <li data-name="incense holder">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../../media/portaincienso.jpg" alt="Lit incense stick in a holder" loading="lazy" />
+            <img class="card__media card__media--square" src="../../media/portaincienso.jpg" srcset="../../media/w/portaincienso-480.webp 480w, ../../media/w/portaincienso-800.webp 800w, ../../media/w/portaincienso-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Lit incense stick in a holder" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Incense holder</h2>
             <p class="card__body">Holder for burning incense sticks.</p>
             
@@ -177,7 +187,7 @@
         </li>
         <li data-name="incense holder with compartment">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../../media/portaincienso-compartimiento.jpg" alt="Incense smoking on a lotus-shaped holder" loading="lazy" />
+            <img class="card__media card__media--square" src="../../media/portaincienso-compartimiento.jpg" srcset="../../media/w/portaincienso-compartimiento-480.webp 480w, ../../media/w/portaincienso-compartimiento-800.webp 800w, ../../media/w/portaincienso-compartimiento-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Incense smoking on a lotus-shaped holder" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Incense holder with compartment</h2>
             <p class="card__body">Incense holder with space to store spare sticks.</p>
             
@@ -189,7 +199,7 @@
         </li>
         <li data-name="ozonated oil">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../../media/ozono.jpg" alt="Air bubbles under water" loading="lazy" />
+            <img class="card__media card__media--square" src="../../media/ozono.jpg" srcset="../../media/w/ozono-480.webp 480w, ../../media/w/ozono-800.webp 800w, ../../media/w/ozono-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Air bubbles under water" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Ozonated oil</h2>
             <p class="card__body">Ozonated oil for daily skin care.</p>
             
@@ -231,7 +241,7 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <p class="footer__muted">© Plenitud Center · 2026</p>
+      <p class="footer__muted">© Plenitud Center · 2026 · Demo site: content is illustrative and does not yet reflect what the business actually offers.</p>
       <button class="btn btn--ghost footer__settings" type="button" data-settings-open aria-haspopup="dialog"><span class="icon icon--settings" aria-hidden="true"></span>Settings</button>
     </div>
   </div>
@@ -346,7 +356,7 @@
   </div>
 </dialog>
 
-<script src="../../site.js?v=5862401e"></script>
+<script src="../../site.js?v=82f8b520"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

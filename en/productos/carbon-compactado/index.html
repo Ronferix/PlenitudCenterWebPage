@@ -16,6 +16,7 @@
       : 'light';
     // Arriving from the language toggle (site.js leaves a note): no splash, and the page
     // cross-fades in; any other arrival skips the cross-fade and gets the splash as usual.
+    try { if (localStorage.getItem('plenitud-demo-ok')) d.classList.add('demo-ok'); } catch (e) {}
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
     if (sw) {
       d.classList.add('lang-switched');
@@ -25,7 +26,12 @@
       hold.rel = 'expect'; hold.href = '#page-ready'; hold.setAttribute('blocking', 'render');
       document.head.appendChild(hold);
     }
-    window.addEventListener('pagereveal', function (e) { if (!sw && e.viewTransition) e.viewTransition.skipTransition(); });
+    window.addEventListener('pagereveal', function (e) {
+      var vt = e.viewTransition;
+      if (sw || !vt) return;
+      vt.ready.catch(function () {});   // skipping rejects .ready; it is expected, not an error
+      vt.skipTransition();
+    });
   })();
 </script>
 <!-- The site has its own English version, so the browser should not offer to machine-translate it -->
@@ -36,21 +42,25 @@
 <link rel="preload" href="../../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../../../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../../../site.css?v=d4b947d0" />
+<link rel="stylesheet" href="../../../site.css?v=e2427c37" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
-  <img class="loader__emblem" src="../../../design-system/assets/logo-emblem.png" alt="" width="72" height="72" />
+  <img class="loader__emblem" src="../../../design-system/assets/logo-emblem-192.png" alt="" width="72" height="72" />
   <p class="loader__name">Plenitud Center</p>
   <span class="loader__rule"></span>
   <p class="loader__page">Charcoal tablets</p>
 </div>
 <a class="skip-link" href="#contenido">Skip to content</a>
+<aside class="demo-note" aria-label="Demo site notice">
+  <p class="small demo-note__text"><strong>This is a demo site.</strong> Products, services, prices, photos and testimonials are examples and do not yet reflect the real offer. <a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">For current information, message us on WhatsApp.</a></p>
+  <button class="btn btn--ghost icon-btn demo-note__ok" type="button" data-demo-ok title="Got it, close notice"><span class="icon icon--close" aria-hidden="true"></span><span class="sr-only">Got it, close notice</span></button>
+</aside>
 
 <header class="nav">
   <div class="nav__bar">
     <a class="nav__brand" href="../../" aria-label="Plenitud Center, home">
-      <img src="../../../design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
+      <img src="../../../design-system/assets/logo-emblem-192.png" alt="" width="32" height="32" />
       <span>Plenitud</span>
     </a>
     <button class="btn btn--ghost icon-btn nav__settings nav__settings--bar" type="button" data-settings-open aria-haspopup="dialog" title="Settings"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">Settings</span></button>
@@ -81,7 +91,7 @@
 <main id="contenido" tabindex="-1">
   <section class="section" aria-labelledby="p-h1">
     <div class="container detail">
-      <figure class="detail__media"><img src="../../../media/carbon-compactado.jpg" alt="Metal bowl with smoking embers" /></figure>
+      <figure class="detail__media"><img src="../../../media/carbon-compactado.jpg" srcset="../../../media/w/carbon-compactado-480.webp 480w, ../../../media/w/carbon-compactado-800.webp 800w, ../../../media/w/carbon-compactado-1200.webp 1200w" sizes="(min-width: 60rem) 34rem, 92vw" alt="Metal bowl with smoking embers" decoding="async" fetchpriority="high" /></figure>
       <div class="detail__body">
         <p class="label eyebrow">Product</p>
         <h1 class="display-h1" id="p-h1">Charcoal tablets</h1>
@@ -129,7 +139,7 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <p class="footer__muted">© Plenitud Center · 2026</p>
+      <p class="footer__muted">© Plenitud Center · 2026 · Demo site: content is illustrative and does not yet reflect what the business actually offers.</p>
       <button class="btn btn--ghost footer__settings" type="button" data-settings-open aria-haspopup="dialog"><span class="icon icon--settings" aria-hidden="true"></span>Settings</button>
     </div>
   </div>
@@ -244,7 +254,7 @@
   </div>
 </dialog>
 
-<script src="../../../site.js?v=5862401e"></script>
+<script src="../../../site.js?v=82f8b520"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

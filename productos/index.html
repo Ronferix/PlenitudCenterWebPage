@@ -16,6 +16,7 @@
       : 'light';
     // Arriving from the language toggle (site.js leaves a note): no splash, and the page
     // cross-fades in; any other arrival skips the cross-fade and gets the splash as usual.
+    try { if (localStorage.getItem('plenitud-demo-ok')) d.classList.add('demo-ok'); } catch (e) {}
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
     if (sw) {
       d.classList.add('lang-switched');
@@ -25,7 +26,12 @@
       hold.rel = 'expect'; hold.href = '#page-ready'; hold.setAttribute('blocking', 'render');
       document.head.appendChild(hold);
     }
-    window.addEventListener('pagereveal', function (e) { if (!sw && e.viewTransition) e.viewTransition.skipTransition(); });
+    window.addEventListener('pagereveal', function (e) {
+      var vt = e.viewTransition;
+      if (sw || !vt) return;
+      vt.ready.catch(function () {});   // skipping rejects .ready; it is expected, not an error
+      vt.skipTransition();
+    });
   })();
 </script>
 <!-- The site has its own English version, so the browser should not offer to machine-translate it -->
@@ -36,21 +42,25 @@
 <link rel="preload" href="../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../site.css?v=d4b947d0" />
+<link rel="stylesheet" href="../site.css?v=e2427c37" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
-  <img class="loader__emblem" src="../design-system/assets/logo-emblem.png" alt="" width="72" height="72" />
+  <img class="loader__emblem" src="../design-system/assets/logo-emblem-192.png" alt="" width="72" height="72" />
   <p class="loader__name">Plenitud Center</p>
   <span class="loader__rule"></span>
   <p class="loader__page">Productos</p>
 </div>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
+<aside class="demo-note" aria-label="Aviso de sitio de demostración">
+  <p class="small demo-note__text"><strong>Sitio de demostración.</strong> Productos, servicios, precios, fotos y testimonios son de ejemplo y aún no reflejan la oferta real. <a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">Para información actual, escríbenos por WhatsApp.</a></p>
+  <button class="btn btn--ghost icon-btn demo-note__ok" type="button" data-demo-ok title="Entendido, cerrar aviso"><span class="icon icon--close" aria-hidden="true"></span><span class="sr-only">Entendido, cerrar aviso</span></button>
+</aside>
 
 <header class="nav">
   <div class="nav__bar">
     <a class="nav__brand" href="../" aria-label="Plenitud Center, inicio">
-      <img src="../design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
+      <img src="../design-system/assets/logo-emblem-192.png" alt="" width="32" height="32" />
       <span>Plenitud</span>
     </a>
     <button class="btn btn--ghost icon-btn nav__settings nav__settings--bar" type="button" data-settings-open aria-haspopup="dialog" title="Ajustes"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">Ajustes</span></button>
@@ -93,7 +103,7 @@
       <ul class="grid grid--3" role="list" id="product-grid">
         <li data-name="inciensos">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../media/inciensos.jpg" alt="Manojos de varillas de incienso de colores" loading="lazy" />
+            <img class="card__media card__media--square" src="../media/inciensos.jpg" srcset="../media/w/inciensos-480.webp 480w, ../media/w/inciensos-800.webp 800w, ../media/w/inciensos-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Manojos de varillas de incienso de colores" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Inciensos</h2>
             <p class="card__body">Varillas de incienso en tres aromas.</p>
             <p class="variants"><span>Nag Champa · Copal · Canela</span></p>
@@ -105,7 +115,7 @@
         </li>
         <li data-name="clorofila">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../media/clorofila.jpg" alt="Bebida verde vertida en un vaso de vidrio" loading="lazy" />
+            <img class="card__media card__media--square" src="../media/clorofila.jpg" srcset="../media/w/clorofila-480.webp 480w, ../media/w/clorofila-800.webp 800w, ../media/w/clorofila-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Bebida verde vertida en un vaso de vidrio" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Clorofila</h2>
             <p class="card__body">Suplemento líquido de clorofila.</p>
             
@@ -117,7 +127,7 @@
         </li>
         <li data-name="velas de color">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../media/velas-de-color.jpg" alt="Velas de colores encendidas" loading="lazy" />
+            <img class="card__media card__media--square" src="../media/velas-de-color.jpg" srcset="../media/w/velas-de-color-480.webp 480w, ../media/w/velas-de-color-800.webp 800w, ../media/w/velas-de-color-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Velas de colores encendidas" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Velas de color</h2>
             <p class="card__body">Velas rituales en nueve colores.</p>
             <p class="variants"><span class="swatches"><span class="swatch" style="--swatch: #b3261e" aria-hidden="true"></span><span class="swatch" style="--swatch: #e8a0b4" aria-hidden="true"></span><span class="swatch" style="--swatch: #e07b2a" aria-hidden="true"></span><span class="swatch" style="--swatch: #6b3fa0" aria-hidden="true"></span><span class="swatch" style="--swatch: #f7f4ec" aria-hidden="true"></span><span class="swatches__more" aria-hidden="true">+4</span></span><span>9 colores</span></p>
@@ -129,7 +139,7 @@
         </li>
         <li data-name="copal en resina">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../media/copal-resina.jpg" alt="Trozos de resina ámbar sobre gránulos" loading="lazy" />
+            <img class="card__media card__media--square" src="../media/copal-resina.jpg" srcset="../media/w/copal-resina-480.webp 480w, ../media/w/copal-resina-800.webp 800w, ../media/w/copal-resina-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Trozos de resina ámbar sobre gránulos" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Copal en resina</h2>
             <p class="card__body">Resina de copal para quemar sobre carbón.</p>
             
@@ -141,7 +151,7 @@
         </li>
         <li data-name="carbón compactado">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../media/carbon-compactado.jpg" alt="Cuenco metálico con brasas que desprenden humo" loading="lazy" />
+            <img class="card__media card__media--square" src="../media/carbon-compactado.jpg" srcset="../media/w/carbon-compactado-480.webp 480w, ../media/w/carbon-compactado-800.webp 800w, ../media/w/carbon-compactado-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Cuenco metálico con brasas que desprenden humo" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Carbón compactado</h2>
             <p class="card__body">Carbón para encender resinas e inciensos de grano.</p>
             
@@ -153,7 +163,7 @@
         </li>
         <li data-name="base metálica para vela">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../media/base-metalica-vela.jpg" alt="Vela encendida sobre una base de latón" loading="lazy" />
+            <img class="card__media card__media--square" src="../media/base-metalica-vela.jpg" srcset="../media/w/base-metalica-vela-480.webp 480w, ../media/w/base-metalica-vela-800.webp 800w, ../media/w/base-metalica-vela-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Vela encendida sobre una base de latón" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Base metálica para vela</h2>
             <p class="card__body">Base para sostener y proteger la superficie al quemar una vela.</p>
             
@@ -165,7 +175,7 @@
         </li>
         <li data-name="portaincienso">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../media/portaincienso.jpg" alt="Varilla de incienso encendida en un soporte" loading="lazy" />
+            <img class="card__media card__media--square" src="../media/portaincienso.jpg" srcset="../media/w/portaincienso-480.webp 480w, ../media/w/portaincienso-800.webp 800w, ../media/w/portaincienso-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Varilla de incienso encendida en un soporte" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Portaincienso</h2>
             <p class="card__body">Soporte para quemar varillas de incienso.</p>
             
@@ -177,7 +187,7 @@
         </li>
         <li data-name="portaincienso con compartimiento">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../media/portaincienso-compartimiento.jpg" alt="Incienso humeando sobre un soporte en forma de loto" loading="lazy" />
+            <img class="card__media card__media--square" src="../media/portaincienso-compartimiento.jpg" srcset="../media/w/portaincienso-compartimiento-480.webp 480w, ../media/w/portaincienso-compartimiento-800.webp 800w, ../media/w/portaincienso-compartimiento-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Incienso humeando sobre un soporte en forma de loto" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Portaincienso con compartimiento</h2>
             <p class="card__body">Portaincienso con espacio para guardar varillas de repuesto.</p>
             
@@ -189,7 +199,7 @@
         </li>
         <li data-name="aceite ozonizado">
           <article class="card card--interactive">
-            <img class="card__media card__media--square" src="../media/ozono.jpg" alt="Burbujas de aire bajo el agua" loading="lazy" />
+            <img class="card__media card__media--square" src="../media/ozono.jpg" srcset="../media/w/ozono-480.webp 480w, ../media/w/ozono-800.webp 800w, ../media/w/ozono-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Burbujas de aire bajo el agua" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Aceite ozonizado</h2>
             <p class="card__body">Aceite ozonizado para el cuidado diario de la piel.</p>
             
@@ -231,7 +241,7 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <p class="footer__muted">© Plenitud Center · 2026</p>
+      <p class="footer__muted">© Plenitud Center · 2026 · Sitio de demostración: el contenido es ilustrativo y no refleja todavía la oferta real del negocio.</p>
       <button class="btn btn--ghost footer__settings" type="button" data-settings-open aria-haspopup="dialog"><span class="icon icon--settings" aria-hidden="true"></span>Ajustes</button>
     </div>
   </div>
@@ -346,7 +356,7 @@
   </div>
 </dialog>
 
-<script src="../site.js?v=5862401e"></script>
+<script src="../site.js?v=82f8b520"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

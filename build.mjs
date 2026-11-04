@@ -41,6 +41,7 @@ const UI = {
     tagline: 'Un lugar para volver a ti.', address: 'Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco',
     openHours: 'Abierto de 9:00 a 16:00', attention: 'Atención de 9:00 a 16:00',
     fTherapies: 'Terapias', fSeeAll: 'Ver todas', fRead: 'Leer', fContact: 'Contacto',
+    demo: { label: 'Aviso de sitio de demostración', title: 'Sitio de demostración.', text: 'Productos, servicios, precios, fotos y testimonios son de ejemplo y aún no reflejan la oferta real.', wa: 'Para información actual, escríbenos por WhatsApp.', ok: 'Entendido, cerrar aviso', footer: 'Sitio de demostración: el contenido es ilustrativo y no refleja todavía la oferta real del negocio.' },
     settings: { open: 'Ajustes', title: 'Ajustes', lang: 'Idioma', langTo: 'Cambiar a inglés', dark: 'Modo oscuro', contrast: 'Alto contraste',
       privacy: 'Privacidad y cookies', privacyLead: 'Este sitio no usa cookies propias. Tus ajustes y tu pedido se guardan solo en este navegador.',
       maps: 'Mapa de Google', mapsHint: 'Al mostrar el mapa en Visita, Google puede guardar sus propias cookies.', done: 'Listo' },
@@ -95,6 +96,7 @@ const UI = {
     tagline: 'A place to come back to yourself.', address: 'Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco, Mexico',
     openHours: 'Open 9 a.m. to 4 p.m.', attention: 'We answer 9 a.m. to 4 p.m.',
     fTherapies: 'Therapies', fSeeAll: 'See all', fRead: 'Read', fContact: 'Contact',
+    demo: { label: 'Demo site notice', title: 'This is a demo site.', text: 'Products, services, prices, photos and testimonials are examples and do not yet reflect the real offer.', wa: 'For current information, message us on WhatsApp.', ok: 'Got it, close notice', footer: 'Demo site: content is illustrative and does not yet reflect what the business actually offers.' },
     settings: { open: 'Settings', title: 'Settings', lang: 'Language', langTo: 'Switch to Spanish', dark: 'Dark mode', contrast: 'High contrast',
       privacy: 'Privacy and cookies', privacyLead: 'This site sets no cookies of its own. Your settings and your order are stored only in this browser.',
       maps: 'Google map', mapsHint: 'When the map is shown on Visit, Google may store its own cookies.', done: 'Done' },
@@ -171,6 +173,7 @@ function headExtra(prefix, pagePath) {
       : 'light';
     // Arriving from the language toggle (site.js leaves a note): no splash, and the page
     // cross-fades in; any other arrival skips the cross-fade and gets the splash as usual.
+    try { if (localStorage.getItem('plenitud-demo-ok')) d.classList.add('demo-ok'); } catch (e) {}
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
     if (sw) {
       d.classList.add('lang-switched');
@@ -180,7 +183,12 @@ function headExtra(prefix, pagePath) {
       hold.rel = 'expect'; hold.href = '#page-ready'; hold.setAttribute('blocking', 'render');
       document.head.appendChild(hold);
     }
-    window.addEventListener('pagereveal', function (e) { if (!sw && e.viewTransition) e.viewTransition.skipTransition(); });
+    window.addEventListener('pagereveal', function (e) {
+      var vt = e.viewTransition;
+      if (sw || !vt) return;
+      vt.ready.catch(function () {});   // skipping rejects .ready; it is expected, not an error
+      vt.skipTransition();
+    });
   })();
 </script>
 <!-- The site has its own English version, so the browser should not offer to machine-translate it -->
@@ -208,7 +216,7 @@ function nav(prefix, active, pagePath) {
   return `<header class="nav">
   <div class="nav__bar">
     <a class="nav__brand" href="${home}" aria-label="${L.homeLabel}">
-      <img src="${asset(prefix)}design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
+      <img src="${asset(prefix)}design-system/assets/logo-emblem-192.png" alt="" width="32" height="32" />
       <span>Plenitud</span>
     </a>
     ${settingsButton('nav__settings nav__settings--bar')}
@@ -276,6 +284,17 @@ function settingsDialog(prefix, pagePath) {
 </dialog>`;
 }
 
+/* Demo notice: a strip above the navigation until the visitor dismisses it (remembered in this
+   browser; the pre-paint script hides it on later pages). Without JS it stays, without the button.
+   The footer repeats it in one quiet line on every page. */
+function demoNotice() {
+  const D = L.demo;
+  return `<aside class="demo-note" aria-label="${D.label}">
+  <p class="small demo-note__text"><strong>${D.title}</strong> ${D.text} <a href="${waGeneral(CONTACTS[0])}">${D.wa}</a></p>
+  <button class="btn btn--ghost icon-btn demo-note__ok" type="button" data-demo-ok title="${D.ok}"><span class="icon icon--close" aria-hidden="true"></span><span class="sr-only">${D.ok}</span></button>
+</aside>`;
+}
+
 function footerPartial(prefix) {
   return `<footer class="footer" id="visita">
   <div class="container footer__inner">
@@ -302,7 +321,7 @@ ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.disp
       </div>
     </div>
     <div class="footer__bottom">
-      <p class="footer__muted">© Plenitud Center · 2026</p>
+      <p class="footer__muted">© Plenitud Center · 2026 · ${L.demo.footer}</p>
       <button class="btn btn--ghost footer__settings" type="button" data-settings-open aria-haspopup="dialog"><span class="icon icon--settings" aria-hidden="true"></span>${L.settings.open}</button>
     </div>
   </div>
@@ -408,14 +427,26 @@ function priceBlock(price, note) {
   return `<p class="price">${money(price)}${note ? ` <span class="price__note">${esc(note)}</span>` : ''}</p>`;
 }
 
-function cardMedia(image, prefix, ratio = 'square') {
-  if (!image) return `<div class="card__media card__media--${ratio} card__media--empty" aria-hidden="true"></div>`;
-  return `<img class="card__media card__media--${ratio}" src="${asset(prefix)}${image.file}" alt="${esc(image.alt)}" loading="lazy" />`;
+/* Photos: media/<name>.jpg is the 1200px original; tools/optimize-images.py writes WebP copies at
+   480/800/1200px into media/w/. srcset + sizes let each screen download only the size it shows
+   (a phone card gets ~20 KB instead of up to 550 KB); the JPG stays as src for old browsers. */
+const IMG_WIDTHS = [480, 800, 1200];
+function photoAttrs(image, prefix, sizes) {
+  const stem = path.basename(image.file, path.extname(image.file));
+  const set = IMG_WIDTHS.filter((w) => fs.existsSync(path.join(ROOT, `media/w/${stem}-${w}.webp`)))
+    .map((w) => `${asset(prefix)}media/w/${stem}-${w}.webp ${w}w`).join(', ');
+  return `src="${asset(prefix)}${image.file}"${set ? ` srcset="${set}" sizes="${sizes}"` : ''} alt="${esc(image.alt)}" decoding="async"`;
 }
 
+function cardMedia(image, prefix, ratio = 'square') {
+  if (!image) return `<div class="card__media card__media--${ratio} card__media--empty" aria-hidden="true"></div>`;
+  return `<img class="card__media card__media--${ratio}" ${photoAttrs(image, prefix, '(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw')} loading="lazy" />`;
+}
+
+// The page's main photo is usually the largest thing on screen: fetch it first
 function detailMedia(image, prefix) {
   if (!image) return `<div class="detail__media detail__media--empty" aria-hidden="true"></div>`;
-  return `<figure class="detail__media"><img src="${asset(prefix)}${image.file}" alt="${esc(image.alt)}" /></figure>`;
+  return `<figure class="detail__media"><img ${photoAttrs(image, prefix, '(min-width: 60rem) 34rem, 92vw')} fetchpriority="high" /></figure>`;
 }
 
 // Business address as given by the owner; the map and the "open in Google Maps" link search for it.
@@ -474,7 +505,7 @@ const GUIAS = [
    it out on its own after a moment; it is decorative, so screen readers skip it. */
 function loader(prefix, pageName) {
   return `<div class="loader" aria-hidden="true">
-  <img class="loader__emblem" src="${asset(prefix)}design-system/assets/logo-emblem.png" alt="" width="72" height="72" />
+  <img class="loader__emblem" src="${asset(prefix)}design-system/assets/logo-emblem-192.png" alt="" width="72" height="72" />
   <p class="loader__name">Plenitud Center</p>${pageName ? `
   <span class="loader__rule"></span>
   <p class="loader__page">${esc(pageName)}</p>` : ''}
@@ -494,6 +525,7 @@ ${headExtra(prefix, pagePath)}
 <body>
 ${loader(prefix, pagePath ? title.split(' · ')[0] : '')}
 <a class="skip-link" href="#${mainId}">${L.skip}</a>
+${demoNotice()}
 
 ${nav(prefix, active, pagePath)}
 
@@ -541,7 +573,7 @@ function homeBody(prefix) {
 
   return `  <section class="hero" id="inicio" aria-labelledby="hero-title">
     <div class="container hero__inner">
-      <img class="hero__emblem" src="${asset(prefix)}design-system/assets/logo-emblem.png" alt="" width="96" height="96" />
+      <img class="hero__emblem" src="${asset(prefix)}design-system/assets/logo-emblem-192.png" alt="" width="96" height="96" />
       <p class="label eyebrow">Plenitud · Center</p>
       <!-- PLACEHOLDER: tagline de ejemplo, confirmar si sigue aplicando al centro de terapias holísticas -->
       <h1 class="display-hero" id="hero-title">${H.heroTitle}</h1>

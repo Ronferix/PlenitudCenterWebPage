@@ -36,15 +36,26 @@
   .js .nav__toggle[aria-expanded="true"] { background: var(--brand-soft); }
   .js .nav__nav { margin: 0; }
   .nav__actions { padding-left: 0; border-left: 0; }
-  .js .nav__panel { display: none; position: absolute; top: calc(100% + var(--space-2)); right: 0; width: min(100%, 26rem);
+  /* The panel spans the bar at every width. Its links fill as many columns as fit
+     (1 on phones, 2 on large phones and small tablets, 3 on tablets), and the text grows a
+     little with the screen. Max height follows the viewport, scrolling inside if needed. */
+  .js .nav__panel { display: none; position: absolute; top: calc(100% + var(--space-2)); left: 0; right: 0;
     flex-direction: column; align-items: stretch; gap: var(--space-5); padding: var(--space-3) var(--space-5) var(--space-5);
-    max-height: calc(100dvh - 6rem); overflow-y: auto;
+    max-height: calc(100dvh - 6rem); overflow-y: auto; overscroll-behavior: contain;
     background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); }
   .js .nav__panel.is-open { display: flex; }
-  .js .nav__panel .nav__list { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
-  .js .nav__panel .nav__link { display: flex; min-height: 3.25rem; padding-inline: var(--space-2); font-size: 0.9375rem; border-radius: 0; border-bottom: 1px solid var(--border); }
+  .js .nav__panel .nav__list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); column-gap: var(--space-5); padding: 0; }
+  .js .nav__panel .nav__link { display: flex; min-height: 3.25rem; padding-inline: var(--space-2); font-size: clamp(0.9375rem, 0.85rem + 0.4vw, 1.0625rem); border-radius: 0; border-bottom: 1px solid var(--border); }
   .js .nav__panel .nav__actions .btn { flex: 1; }
   .js .nav__hours { display: block; }
+  /* Wider screens: hours on the left, Book on the right, on one row under the links */
+  @media (min-width: 40rem) {
+    .js .nav__panel { flex-flow: row wrap; align-items: center; column-gap: var(--space-5); padding-inline: var(--space-6); }
+    .js .nav__panel .nav__list { flex: 1 1 100%; }
+    .js .nav__hours { order: 1; flex: 1; }
+    .js .nav__panel .nav__actions { order: 2; }
+    .js .nav__panel .nav__actions .btn { flex: none; min-width: 12rem; }
+  }
   /* While the menu is open: dim the page behind it (a tap there closes it, see site.js),
      stop the page scrolling underneath, and hide the floating order button that covered it */
   html:has(.nav__panel.is-open) { overflow: hidden; }
@@ -55,7 +66,7 @@
 @media (max-width: 64rem) and (max-height: 30rem) {
   .js .nav__panel { gap: var(--space-3); padding-block: var(--space-2) var(--space-3); }
   .js .nav__panel .nav__link { min-height: var(--target-min); }
-  .js .nav__panel .nav__list { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-4); }
+  .js .nav__panel .nav__list { grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr)); }
 }
 @media (max-width: 64rem) and (prefers-reduced-motion: no-preference) {
   .js .nav__panel.is-open { animation: plenitud-rise var(--dur-base) var(--ease-rise); }
@@ -345,3 +356,13 @@ html.lang-switched .loader { display: none; }
 @view-transition { navigation: auto; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 420ms; animation-timing-function: var(--ease-calm); }
 @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+
+/* ---------- Demo notice ----------
+   A quiet strip above the navigation; it scrolls away with the page. */
+.demo-note { display: flex; align-items: center; justify-content: center; gap: var(--space-3);
+  margin-bottom: var(--space-3); padding: var(--space-2) var(--space-3) var(--space-2) var(--space-5);
+  background: var(--bg-sage); color: var(--fg); border-bottom: 1px solid var(--border); }
+.demo-note__text { flex: 0 1 60rem; font-size: 0.875rem; line-height: 1.5; }
+.demo-note__ok { display: none; flex: none; }
+.js .demo-note__ok { display: inline-flex; }
+.demo-ok .demo-note { display: none; }

@@ -16,6 +16,7 @@
       : 'light';
     // Arriving from the language toggle (site.js leaves a note): no splash, and the page
     // cross-fades in; any other arrival skips the cross-fade and gets the splash as usual.
+    try { if (localStorage.getItem('plenitud-demo-ok')) d.classList.add('demo-ok'); } catch (e) {}
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
     if (sw) {
       d.classList.add('lang-switched');
@@ -25,7 +26,12 @@
       hold.rel = 'expect'; hold.href = '#page-ready'; hold.setAttribute('blocking', 'render');
       document.head.appendChild(hold);
     }
-    window.addEventListener('pagereveal', function (e) { if (!sw && e.viewTransition) e.viewTransition.skipTransition(); });
+    window.addEventListener('pagereveal', function (e) {
+      var vt = e.viewTransition;
+      if (sw || !vt) return;
+      vt.ready.catch(function () {});   // skipping rejects .ready; it is expected, not an error
+      vt.skipTransition();
+    });
   })();
 </script>
 <!-- The site has its own English version, so the browser should not offer to machine-translate it -->
@@ -36,19 +42,23 @@
 <link rel="preload" href="design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="site.css?v=d4b947d0" />
+<link rel="stylesheet" href="site.css?v=e2427c37" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
-  <img class="loader__emblem" src="design-system/assets/logo-emblem.png" alt="" width="72" height="72" />
+  <img class="loader__emblem" src="design-system/assets/logo-emblem-192.png" alt="" width="72" height="72" />
   <p class="loader__name">Plenitud Center</p>
 </div>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
+<aside class="demo-note" aria-label="Aviso de sitio de demostración">
+  <p class="small demo-note__text"><strong>Sitio de demostración.</strong> Productos, servicios, precios, fotos y testimonios son de ejemplo y aún no reflejan la oferta real. <a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">Para información actual, escríbenos por WhatsApp.</a></p>
+  <button class="btn btn--ghost icon-btn demo-note__ok" type="button" data-demo-ok title="Entendido, cerrar aviso"><span class="icon icon--close" aria-hidden="true"></span><span class="sr-only">Entendido, cerrar aviso</span></button>
+</aside>
 
 <header class="nav">
   <div class="nav__bar">
     <a class="nav__brand" href="./" aria-label="Plenitud Center, inicio">
-      <img src="design-system/assets/logo-emblem.png" alt="" width="32" height="32" />
+      <img src="design-system/assets/logo-emblem-192.png" alt="" width="32" height="32" />
       <span>Plenitud</span>
     </a>
     <button class="btn btn--ghost icon-btn nav__settings nav__settings--bar" type="button" data-settings-open aria-haspopup="dialog" title="Ajustes"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">Ajustes</span></button>
@@ -79,7 +89,7 @@
 <main id="contenido" tabindex="-1">
   <section class="hero" id="inicio" aria-labelledby="hero-title">
     <div class="container hero__inner">
-      <img class="hero__emblem" src="design-system/assets/logo-emblem.png" alt="" width="96" height="96" />
+      <img class="hero__emblem" src="design-system/assets/logo-emblem-192.png" alt="" width="96" height="96" />
       <p class="label eyebrow">Plenitud · Center</p>
       <!-- PLACEHOLDER: tagline de ejemplo, confirmar si sigue aplicando al centro de terapias holísticas -->
       <h1 class="display-hero" id="hero-title">Un lugar para volver <em>a ti.</em></h1>
@@ -101,7 +111,7 @@
       <ul class="grid grid--3" role="list">
           <li>
             <article class="card card--interactive">
-              <img class="card__media card__media--wide" src="media/masaje-corporal.jpg" alt="Manos dando un masaje en la espalda" loading="lazy" />
+              <img class="card__media card__media--wide" src="media/masaje-corporal.jpg" srcset="media/w/masaje-corporal-480.webp 480w, media/w/masaje-corporal-800.webp 800w, media/w/masaje-corporal-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Manos dando un masaje en la espalda" decoding="async" loading="lazy" />
               <p class="card__eyebrow">Corporal</p>
               <h3 class="card__title card__title--sm">Masaje corporal</h3>
               <p class="card__body">Trabajo manual sobre el cuerpo para liberar la tensión acumulada.</p>
@@ -113,7 +123,7 @@
           </li>
           <li>
             <article class="card card--interactive">
-              <img class="card__media card__media--wide" src="media/reiki.jpg" alt="Manos abiertas con las palmas hacia arriba" loading="lazy" />
+              <img class="card__media card__media--wide" src="media/reiki.jpg" srcset="media/w/reiki-480.webp 480w, media/w/reiki-800.webp 800w, media/w/reiki-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Manos abiertas con las palmas hacia arriba" decoding="async" loading="lazy" />
               <p class="card__eyebrow">Energética</p>
               <h3 class="card__title card__title--sm">Reiki</h3>
               <p class="card__body">Sanación energética canalizada con las manos, sin contacto invasivo.</p>
@@ -125,7 +135,7 @@
           </li>
           <li>
             <article class="card card--interactive">
-              <img class="card__media card__media--wide" src="media/limpia.jpg" alt="Atado de salvia blanca en un cuenco de cerámica" loading="lazy" />
+              <img class="card__media card__media--wide" src="media/limpia.jpg" srcset="media/w/limpia-480.webp 480w, media/w/limpia-800.webp 800w, media/w/limpia-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Atado de salvia blanca en un cuenco de cerámica" decoding="async" loading="lazy" />
               <p class="card__eyebrow">Espiritual</p>
               <h3 class="card__title card__title--sm">Limpia</h3>
               <p class="card__body">Ritual de limpieza energética del espacio personal.</p>
@@ -150,7 +160,7 @@
       <ul class="grid grid--4" role="list">
         <li>
           <article class="card card--interactive card--compact">
-            <img class="card__media card__media--square" src="media/inciensos.jpg" alt="Manojos de varillas de incienso de colores" loading="lazy" />
+            <img class="card__media card__media--square" src="media/inciensos.jpg" srcset="media/w/inciensos-480.webp 480w, media/w/inciensos-800.webp 800w, media/w/inciensos-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Manojos de varillas de incienso de colores" decoding="async" loading="lazy" />
             <h3 class="card__title card__title--sm">Inciensos</h3>
             <div class="card__footer">
               <p class="price">$45 MXN</p>
@@ -160,7 +170,7 @@
         </li>
         <li>
           <article class="card card--interactive card--compact">
-            <img class="card__media card__media--square" src="media/clorofila.jpg" alt="Bebida verde vertida en un vaso de vidrio" loading="lazy" />
+            <img class="card__media card__media--square" src="media/clorofila.jpg" srcset="media/w/clorofila-480.webp 480w, media/w/clorofila-800.webp 800w, media/w/clorofila-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Bebida verde vertida en un vaso de vidrio" decoding="async" loading="lazy" />
             <h3 class="card__title card__title--sm">Clorofila</h3>
             <div class="card__footer">
               <p class="price">$180 MXN</p>
@@ -170,7 +180,7 @@
         </li>
         <li>
           <article class="card card--interactive card--compact">
-            <img class="card__media card__media--square" src="media/velas-de-color.jpg" alt="Velas de colores encendidas" loading="lazy" />
+            <img class="card__media card__media--square" src="media/velas-de-color.jpg" srcset="media/w/velas-de-color-480.webp 480w, media/w/velas-de-color-800.webp 800w, media/w/velas-de-color-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Velas de colores encendidas" decoding="async" loading="lazy" />
             <h3 class="card__title card__title--sm">Velas de color</h3>
             <div class="card__footer">
               <p class="price">$35 MXN</p>
@@ -180,7 +190,7 @@
         </li>
         <li>
           <article class="card card--interactive card--compact">
-            <img class="card__media card__media--square" src="media/copal-resina.jpg" alt="Trozos de resina ámbar sobre gránulos" loading="lazy" />
+            <img class="card__media card__media--square" src="media/copal-resina.jpg" srcset="media/w/copal-resina-480.webp 480w, media/w/copal-resina-800.webp 800w, media/w/copal-resina-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Trozos de resina ámbar sobre gránulos" decoding="async" loading="lazy" />
             <h3 class="card__title card__title--sm">Copal en resina</h3>
             <div class="card__footer">
               <p class="price">$90 MXN</p>
@@ -215,9 +225,9 @@
         <p class="lead">Conoce a quienes guían cada terapia. <a href="guias/">Ver el equipo →</a></p>
       </header>
       <ul class="grid grid--3" role="list">
-        <li><article class="card"><img class="card__media card__media--portrait" src="media/guia-corporal.jpg" alt="Retrato de Ana Lucía Ríos sonriendo con luz natural" loading="lazy" /><h3 class="card__title card__title--sm">Ana Lucía Ríos</h3><p class="card__body">Masaje corporal</p><p class="card__meta">Martes a viernes</p></article></li>
-        <li><article class="card"><img class="card__media card__media--portrait" src="media/guia-energetica.jpg" alt="Retrato de Valeria Montes con collar de cuentas en un estudio luminoso" loading="lazy" /><h3 class="card__title card__title--sm">Valeria Montes</h3><p class="card__body">Reiki, flores de Bach y biomagnetismo</p><p class="card__meta">Miércoles a sábado</p></article></li>
-        <li><article class="card"><img class="card__media card__media--portrait" src="media/guia-espiritual.jpg" alt="Retrato de Tomás Ibarra sonriendo al aire libre" loading="lazy" /><h3 class="card__title card__title--sm">Tomás Ibarra</h3><p class="card__body">Limpias y acompañamiento espiritual</p><p class="card__meta">Jueves a domingo</p></article></li>
+        <li><article class="card"><img class="card__media card__media--portrait" src="media/guia-corporal.jpg" srcset="media/w/guia-corporal-480.webp 480w, media/w/guia-corporal-800.webp 800w, media/w/guia-corporal-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Retrato de Ana Lucía Ríos sonriendo con luz natural" decoding="async" loading="lazy" /><h3 class="card__title card__title--sm">Ana Lucía Ríos</h3><p class="card__body">Masaje corporal</p><p class="card__meta">Martes a viernes</p></article></li>
+        <li><article class="card"><img class="card__media card__media--portrait" src="media/guia-energetica.jpg" srcset="media/w/guia-energetica-480.webp 480w, media/w/guia-energetica-800.webp 800w, media/w/guia-energetica-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Retrato de Valeria Montes con collar de cuentas en un estudio luminoso" decoding="async" loading="lazy" /><h3 class="card__title card__title--sm">Valeria Montes</h3><p class="card__body">Reiki, flores de Bach y biomagnetismo</p><p class="card__meta">Miércoles a sábado</p></article></li>
+        <li><article class="card"><img class="card__media card__media--portrait" src="media/guia-espiritual.jpg" srcset="media/w/guia-espiritual-480.webp 480w, media/w/guia-espiritual-800.webp 800w, media/w/guia-espiritual-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Retrato de Tomás Ibarra sonriendo al aire libre" decoding="async" loading="lazy" /><h3 class="card__title card__title--sm">Tomás Ibarra</h3><p class="card__body">Limpias y acompañamiento espiritual</p><p class="card__meta">Jueves a domingo</p></article></li>
       </ul>
     </div>
   </section>
@@ -249,7 +259,7 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <p class="footer__muted">© Plenitud Center · 2026</p>
+      <p class="footer__muted">© Plenitud Center · 2026 · Sitio de demostración: el contenido es ilustrativo y no refleja todavía la oferta real del negocio.</p>
       <button class="btn btn--ghost footer__settings" type="button" data-settings-open aria-haspopup="dialog"><span class="icon icon--settings" aria-hidden="true"></span>Ajustes</button>
     </div>
   </div>
@@ -364,7 +374,7 @@
   </div>
 </dialog>
 
-<script src="site.js?v=5862401e"></script>
+<script src="site.js?v=82f8b520"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

@@ -45,6 +45,15 @@
   var loader = $('.loader');
   if (loader) loader.addEventListener('animationend', function (e) { if (e.animationName === 'loader-out') loader.remove(); });
 
+  /* ---------- Demo notice: dismissed once, remembered in this browser ---------- */
+  $$('[data-demo-ok]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      try { localStorage.setItem('plenitud-demo-ok', '1'); } catch (e) {}
+      document.documentElement.classList.add('demo-ok');
+      var brand = $('.nav__brand'); if (brand) brand.focus();   /* the button is gone; keep focus at the top of the page */
+    });
+  });
+
   /* ---------- Menu disclosure (mobile) ---------- */
   var toggle = $('.nav__toggle'), list = $('#menu-principal');
   var setMenu = function (open) { toggle.setAttribute('aria-expanded', String(open)); list.classList.toggle('is-open', open); };
