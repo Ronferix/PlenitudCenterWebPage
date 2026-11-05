@@ -236,9 +236,9 @@ function nav(prefix, active, pagePath) {
     const current = key === active ? ' aria-current="page"' : '';
     return `<li><a class="nav__link" href="${prefix}${key}/"${current}>${L.nav[key]}</a></li>`;
   }).join('\n        ');
-  // Desktop: brand · links · Book · Settings. Mobile: brand · Settings · Menu, and Menu opens
-  // #menu-principal as a panel under the bar (links, Book, hours). Language and theme live in
-  // the Settings dialog; each layout has its own Settings button, the other one is display:none.
+  // Desktop: brand · links · Book · EN/ES · Settings. Mobile: brand · Settings · Menu, and Menu
+  // opens #menu-principal as a panel under the bar (links, language toggle, Book, hours). Each
+  // layout has its own Settings button and language control; the other one is display:none.
   return `<header class="nav">
   <div class="nav__bar">
     <a class="nav__brand" href="${home}" aria-label="${L.homeLabel}">
@@ -254,8 +254,10 @@ function nav(prefix, active, pagePath) {
         <ul class="nav__list">
         ${items}
         </ul>
+        <div class="nav__lang-row"><span class="nav__lang-label" id="nav-lang">${L.settings.lang}</span>${langToggle(prefix, pagePath, 'nav-lang')}</div>
         <div class="nav__actions">
           <button class="btn btn--primary" type="button" data-reserve>${L.reserve}</button>
+          <a class="btn btn--ghost nav__lang" href="${switchHrefFor(prefix, pagePath)}" hreflang="${L.switchLang}" lang="${L.switchLang}" data-lang-toggle title="${L.switchLabel}">${L.switchLang.toUpperCase()}<span class="sr-only"> (${L.switchLabel})</span></a>
           ${settingsButton('nav__settings nav__settings--panel')}
         </div>
         <p class="caption nav__hours">${L.attention}</p>
@@ -274,12 +276,18 @@ const settingsButton = (cls) => `<button class="btn btn--ghost icon-btn ${cls}" 
 // Same page in the other language: from es add "en/", from en drop it.
 const switchHrefFor = (prefix, pagePath) => `${asset(prefix)}${UI[L.switchLang].dir}${pagePath}` || './';
 
+/* The language toggle: one link to this page in the other language; a tap anywhere on it
+   slides the knob (site.js) and opens it. Used in Settings and in the phone menu. */
+function langToggle(prefix, pagePath, labelId) {
+  const opt = (lg) => `<span class="toggle__opt${lg === LANG ? ' is-current' : ''}" aria-hidden="true">${lg.toUpperCase()}</span>`;
+  return `<a class="toggle toggle--lang${LANG === 'en' ? ' is-end' : ''}" href="${switchHrefFor(prefix, pagePath)}" hreflang="${L.switchLang}" data-lang-toggle aria-describedby="${labelId}"><span class="toggle__knob" aria-hidden="true"></span>${opt('es')}${opt('en')}<span class="sr-only">${L.settings.langTo}</span></a>`;
+}
+
 /* Settings: language, light/dark, high contrast and the Google map (the only third-party
    cookies on the site). The language toggle is one link: a tap anywhere on it slides the
    knob and opens this page in the other language. The theme rows are role="switch". */
 function settingsDialog(prefix, pagePath) {
   const S = L.settings;
-  const langOpt = (lg) => `<span class="toggle__opt${lg === LANG ? ' is-current' : ''}" aria-hidden="true">${lg.toUpperCase()}</span>`;
   const sw = (id, label, attrs, icons = ['', '']) => `<li class="setting">
         <span class="setting__label" id="${id}">${label}</span>
         <button class="toggle" type="button" role="switch" aria-checked="false" aria-labelledby="${id}" ${attrs}><span class="toggle__knob" aria-hidden="true"></span><span class="toggle__opt" aria-hidden="true">${icons[0]}</span><span class="toggle__opt" aria-hidden="true">${icons[1]}</span></button>
@@ -292,7 +300,7 @@ function settingsDialog(prefix, pagePath) {
     <ul class="settings__list" role="list">
       <li class="setting">
         <span class="setting__label" id="set-lang">${S.lang}</span>
-        <a class="toggle toggle--lang${LANG === 'en' ? ' is-end' : ''}" href="${switchHrefFor(prefix, pagePath)}" hreflang="${L.switchLang}" data-lang-toggle aria-describedby="set-lang"><span class="toggle__knob" aria-hidden="true"></span>${langOpt('es')}${langOpt('en')}<span class="sr-only">${S.langTo}</span></a>
+        ${langToggle(prefix, pagePath, 'set-lang')}
       </li>
       ${sw('set-dark', S.dark, 'data-theme-switch="dark"', [icon('sun'), icon('moon')])}
       ${sw('set-contrast', S.contrast, 'data-theme-switch="high-contrast"', ['', icon('check')])}

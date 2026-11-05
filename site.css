@@ -25,6 +25,9 @@
 .nav__actions { display: flex; align-items: center; gap: var(--space-2); padding-left: var(--space-3); border-left: 1px solid var(--border); }
 .nav__hours { display: none; }
 .nav__settings--bar { display: none; }
+/* Language: a two-letter link beside Settings on desktop; a toggle row in the phone menu */
+.nav__lang { min-width: var(--target-min); padding-inline: var(--space-3); color: var(--fg); }
+.nav__lang-row { display: none; }
 @media (max-width: 72rem) { .nav__link { padding-inline: var(--space-3); } }
 .nav__toggle[aria-expanded="true"] .icon--menu { --i: var(--icon-close); }
 @media (max-width: 64rem) {
@@ -32,6 +35,9 @@
   /* Settings sits in the bar, next to Menu; the copy inside the panel is for desktop */
   .js .nav__settings--bar { display: inline-flex; flex: none; margin-left: auto; }
   .js .nav__settings--panel { display: none; }
+  .js .nav__lang { display: none; }
+  .js .nav__lang-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-2) var(--space-2) 0; }
+  .nav__lang-label { font-weight: 500; }
   @media (max-width: 24rem) { .nav__brand span { display: none; } }   /* logo only; the link keeps its name */
   /* The panel floats, so the bar never wraps: brand and Menu share one row down to 320px */
   .js .nav__bar { flex-wrap: nowrap; gap: var(--space-2); padding-left: var(--space-4); }
@@ -58,7 +64,7 @@
   /* Wider screens: hours on the left, Book on the right, on one row under the links */
   @media (min-width: 40rem) {
     .js .nav__panel { flex-flow: row wrap; align-items: center; column-gap: var(--space-5); padding-inline: var(--space-6); }
-    .js .nav__panel .nav__list { flex: 1 1 100%; }
+    .js .nav__panel .nav__list, .js .nav__lang-row { flex: 1 1 100%; }
     .js .nav__hours { order: 1; flex: 1; }
     .js .nav__panel .nav__actions { order: 2; }
     .js .nav__panel .nav__actions .btn { flex: none; min-width: 12rem; }
@@ -122,12 +128,10 @@
 }
 @keyframes hero-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(0.375rem); } }
 
-/* Navigation bar on scroll (site.js sets the classes). Home: the bar floats over the page and
-   stays out of sight on the hero until it starts to scroll away. Phones: it tucks up while
-   scrolling down. Focus inside it, or an open menu, always brings it back. */
+/* Home (site.js sets the class): the bar floats over the page and stays out of sight on the
+   hero until it starts to scroll away. Focus inside it, or an open menu, brings it back. */
 .is-home .nav { position: fixed; inset-inline: 0; }
-.js .is-home:not(.nav-shown) .nav__bar:not(:focus-within),
-.nav-away .nav__bar:not(:focus-within) { transform: translateY(calc(-100% - 2 * var(--space-4))); opacity: 0; pointer-events: none; }
+.js .is-home:not(.nav-shown) .nav__bar:not(:focus-within) { transform: translateY(calc(-100% - 2 * var(--space-4))); opacity: 0; pointer-events: none; }
 body:has(.nav__panel.is-open) .nav__bar { transform: none; opacity: 1; pointer-events: auto; }
 @media (prefers-reduced-motion: no-preference) {
   .nav__bar { transition: transform var(--dur-slow) var(--ease-calm), opacity var(--dur-slow) var(--ease-calm); }

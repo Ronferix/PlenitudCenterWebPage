@@ -84,23 +84,14 @@
     header.addEventListener('focusout', function (e) { if (e.relatedTarget && !header.contains(e.relatedTarget)) setMenu(false); });
   }
 
-  /* ---------- Navigation bar on scroll ----------
-     Home: hidden over the full-screen hero, it slides in once the hero starts to leave.
-     Phones (every page): it tucks away while scrolling down and comes back after scrolling
-     up a little. CSS keeps it visible whenever it holds focus or the menu is open. */
+  /* ---------- Navigation bar on the home page ----------
+     Hidden over the full-screen hero, it slides in once the hero starts to leave and stays.
+     CSS keeps it visible whenever it holds focus or the menu is open. */
   var bar = $('.nav__bar');
-  if (bar) {
-    var body = document.body, isHome = body.classList.contains('is-home');
-    var narrow = window.matchMedia('(max-width: 64rem)');
-    var lastY = Math.max(0, scrollY), turnY = lastY;
+  if (bar && document.body.classList.contains('is-home')) {
+    var body = document.body, isHome = true;
     var placeNav = function () {
-      var y = Math.max(0, scrollY);   /* iOS bounces past the top with negative values */
-      if (isHome) body.classList.toggle('nav-shown', y > innerHeight * 0.2);
-      var menuOpen = list && list.classList.contains('is-open');
-      if (!narrow.matches || menuOpen || y < 80) { body.classList.remove('nav-away'); turnY = y; }
-      else if (y > lastY) { body.classList.add('nav-away'); turnY = y; }   /* going down */
-      else if (turnY - y > 60) body.classList.remove('nav-away');          /* back up far enough */
-      lastY = y;
+      if (isHome) body.classList.toggle('nav-shown', Math.max(0, scrollY) > innerHeight * 0.2);   /* iOS bounces past the top with negative values */
     };
     window.addEventListener('scroll', placeNav, { passive: true });
     window.addEventListener('resize', placeNav);
@@ -161,7 +152,7 @@
       while (i < list.length && list[i].getBoundingClientRect().bottom <= top) i++;
       var note = { i: scrollY > 0 && list[i] ? i : -1, d: list[i] ? list[i].getBoundingClientRect().top : 0 };
       try { sessionStorage.setItem('plenitud-lang-switch', JSON.stringify(note)); } catch (err) {}
-      if (reduced) return;
+      if (reduced || !a.classList.contains('toggle')) return;
       e.preventDefault();
       a.classList.toggle('is-end');
       $$('.toggle__opt', a).forEach(function (o) { o.classList.toggle('is-current'); });
