@@ -37,7 +37,7 @@ const UI = {
   es: {
     htmlLang: 'es', dir: '', toRoot: '', switchLabel: 'English', switchLang: 'en',
     skip: 'Saltar al contenido', homeLabel: 'Plenitud Center, inicio', menu: 'Menú', mainNav: 'Principal', reserve: 'Reservar',
-    nav: { terapias: 'Terapias', productos: 'Productos', guias: 'Guías', voces: 'Voces', visita: 'Visita' },
+    nav: { terapias: 'Terapias', productos: 'Productos', guias: 'Guías', visita: 'Visita' },
     tagline: 'Un lugar para volver a ti.', address: 'Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco',
     openHours: 'Abierto de 9:00 a 16:00', attention: 'Atención de 9:00 a 16:00',
     fTherapies: 'Terapias', fSeeAll: 'Ver todas', fRead: 'Leer', fContact: 'Contacto',
@@ -58,7 +58,11 @@ const UI = {
       heroReserve: 'Reservar una terapia', heroSee: 'Ver terapias',
       offerEyebrow: 'Lo que ofrecemos', offerTitle: 'Cinco caminos, tres familias.', seeAllTherapies: 'Ver todas las terapias',
       takeEyebrow: 'Para llevar', takeTitle: 'Lo que sostiene la práctica en casa.', takeLead: 'Incienso, velas, resinas y herramientas rituales para seguir el ritmo entre sesión y sesión.', seeProducts: 'Ver productos',
-      voiceEyebrow: 'Una voz de la casa', moreVoices: 'Leer más voces →',
+      voiceEyebrow: 'Una voz de la casa',
+      howEyebrow: 'Cómo funciona', howTitle: 'Tres pasos, sin prisa.',
+      how: [['Elige tu terapia', 'Revisa qué trabaja cada una. Si dudas entre dos, pregúntanos por WhatsApp.'],
+        ['Reserva por WhatsApp', 'Te armamos el mensaje con tu terapia y tu horario preferido; solo lo envías.'],
+        ['Llega como estás', 'Confirmamos el horario contigo. El día de la sesión, ropa cómoda y unos minutos de margen.']],
       guidesLead: 'Conoce a quienes guían cada terapia.', guidesLink: 'Ver el equipo →',
     },
     quote: '"Llegué cargando una semana. Salí sin ella. La sala misma se sentía paciente."', quoteBy: 'Marisol G. · Miembro desde 2024',
@@ -68,31 +72,42 @@ const UI = {
       prev: (cat) => `Terapias anteriores de ${cat}`, next: (cat) => `Más terapias de ${cat}`,
       note: 'Trae ropa cómoda. Qué traer exactamente depende de cada terapia — lo encuentras en su propia página.',
       price: 'Precio', duration: 'Duración', schedule: 'Horario', reserveThis: 'Reservar', expect: 'Qué esperar', back: '← Ver todas las terapias',
+      guide: 'Te acompaña', helps: 'Ayuda con', filter: '¿Qué buscas hoy?', all: 'Todas', none: 'Ninguna terapia coincide con esa elección.',
     },
     products: {
       title: 'Productos · Plenitud Center', description: 'Incienso, velas, resinas y herramientas rituales de Plenitud Center.',
       eyebrow: 'Productos', h1: 'Para la práctica en casa.', lead: 'Arma tu pedido y envíalo por WhatsApp — todavía no hay pago en línea.',
       search: 'Buscar producto', searchPh: 'Ej. vela, incienso, copal', empty: 'No hay productos que coincidan con esa búsqueda.',
       eyebrowOne: 'Producto', choose: 'Elige', orderWa: 'Pedir por WhatsApp', back: '← Ver todos los productos',
+      group: 'Tipo', all: 'Todos', sort: 'Ordenar', sortFeatured: 'Destacados', sortLow: 'Precio: menor a mayor', sortHigh: 'Precio: mayor a menor',
+      related: 'También te puede gustar', seeAll: 'Ver todos los productos',
     },
     guides: {
       title: 'Guías · Plenitud Center', description: 'El equipo que sostiene las terapias de Plenitud Center.', eyebrow: 'Guías',
       h1: 'Personas que sostienen el espacio, con amabilidad.', lead: 'Nuestro equipo es pequeño por decisión. Cada terapia la guía alguien que ha dedicado mucho tiempo a aprender a escuchar: primero a sí mismo, luego a los demás.',
+      leads: 'Guía',
     },
-    voices: { title: 'Voces · Plenitud Center', description: 'Testimonios de Plenitud Center.', h1: 'Voces de la casa' },
     visit: {
       title: 'Visita · Plenitud Center', description: 'Dirección, horario y contacto de Plenitud Center.', eyebrow: 'Visita', h1: 'Cómo llegar',
       address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco.', contact: 'Contacto', contactLead: 'Por WhatsApp o llamada, en el mismo horario:',
       mapTitle: 'Dónde estamos', mapFrame: 'Mapa de Google con la ubicación de Plenitud Center', mapOpen: 'Abrir en Google Maps →',
       mapOff: 'El mapa de Google está apagado en Ajustes.', mapShow: 'Mostrar el mapa',
       call: 'Llamar', callTo: 'al', reserve: 'Reservar una terapia', spaceAlt: 'Sala amplia y luminosa con grandes ventanales y piso de madera',
+      seeMap: 'Ver en el mapa', directions: 'Trazar ruta', directionsHint: 'abre Google Maps',
+      firstEyebrow: 'Antes de venir', firstTitle: 'Tu primera visita.',
+      first: [['Llega con margen', 'Unos diez minutos antes, para instalarte sin prisa.'],
+        ['Ropa cómoda', 'Lo que haga falta para cada terapia viene en su página.'],
+        ['Cuéntanos cómo llegas', 'Si algo te duele o te preocupa, ajustamos la sesión a ti.'],
+        ['Después, sin correr', 'Tómate un momento antes de volver a la calle.']],
     },
+    toTop: 'Volver arriba',
+    notFound: { title: 'Página no encontrada · Plenitud Center', h1: 'Esta página no está aquí.', lead: 'Puede que el enlace haya cambiado o que la página ya no exista. Desde aquí puedes volver a lo que buscabas.', home: 'Ir al inicio', en: 'This page is not here.', enLink: 'Go to the English site' },
     built: 'Generado',
   },
   en: {
     htmlLang: 'en', dir: 'en/', toRoot: '../', switchLabel: 'Español', switchLang: 'es',
     skip: 'Skip to content', homeLabel: 'Plenitud Center, home', menu: 'Menu', mainNav: 'Main', reserve: 'Book',
-    nav: { terapias: 'Therapies', productos: 'Products', guias: 'Guides', voces: 'Voices', visita: 'Visit' },
+    nav: { terapias: 'Therapies', productos: 'Products', guias: 'Guides', visita: 'Visit' },
     tagline: 'A place to come back to yourself.', address: 'Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco, Mexico',
     openHours: 'Open 9 a.m. to 4 p.m.', attention: 'We answer 9 a.m. to 4 p.m.',
     fTherapies: 'Therapies', fSeeAll: 'See all', fRead: 'Read', fContact: 'Contact',
@@ -114,7 +129,11 @@ const UI = {
       heroReserve: 'Book a therapy', heroSee: 'See therapies',
       offerEyebrow: 'What we offer', offerTitle: 'Five paths, three families.', seeAllTherapies: 'See all therapies',
       takeEyebrow: 'To take home', takeTitle: 'What supports the practice at home.', takeLead: 'Incense, candles, resins and ritual tools to keep the rhythm between sessions.', seeProducts: 'See products',
-      voiceEyebrow: 'A voice from the house', moreVoices: 'Read more voices →',
+      voiceEyebrow: 'A voice from the house',
+      howEyebrow: 'How it works', howTitle: 'Three steps, no rush.',
+      how: [['Choose your therapy', 'See what each one works on. If you are torn between two, ask us on WhatsApp.'],
+        ['Book on WhatsApp', 'We write the message with your therapy and preferred time; you just send it.'],
+        ['Come as you are', 'We confirm the time with you. On the day, wear comfortable clothes and allow a few minutes.']],
       guidesLead: 'Meet the people who guide each therapy.', guidesLink: 'Meet the team →',
     },
     quote: '"I arrived carrying a whole week. I left without it. The room itself felt patient."', quoteBy: 'Marisol G. · Member since 2024',
@@ -124,25 +143,35 @@ const UI = {
       prev: (cat) => `Previous ${cat} therapies`, next: (cat) => `More ${cat} therapies`,
       note: 'Wear comfortable clothes. What exactly to bring depends on each therapy — you will find it on its own page.',
       price: 'Price', duration: 'Duration', schedule: 'Hours', reserveThis: 'Book', expect: 'What to expect', back: '← See all therapies',
+      guide: 'Your guide', helps: 'Helps with', filter: 'What are you looking for today?', all: 'All', none: 'No therapy matches that choice.',
     },
     products: {
       title: 'Products · Plenitud Center', description: 'Incense, candles, resins and ritual tools from Plenitud Center.',
       eyebrow: 'Products', h1: 'For your practice at home.', lead: 'Build your order and send it on WhatsApp — there is no online payment yet.',
       search: 'Search products', searchPh: 'e.g. candle, incense, copal', empty: 'No products match that search.',
       eyebrowOne: 'Product', choose: 'Choose a', orderWa: 'Order on WhatsApp', back: '← See all products',
+      group: 'Type', all: 'All', sort: 'Sort by', sortFeatured: 'Featured', sortLow: 'Price: low to high', sortHigh: 'Price: high to low',
+      related: 'You may also like', seeAll: 'See all products',
     },
     guides: {
       title: 'Guides · Plenitud Center', description: 'The team behind the therapies at Plenitud Center.', eyebrow: 'Guides',
       h1: 'People who hold the space, with kindness.', lead: 'Our team is small by choice. Each therapy is guided by someone who has spent a long time learning to listen: first to themselves, then to others.',
+      leads: 'Guides',
     },
-    voices: { title: 'Voices · Plenitud Center', description: 'Testimonials from Plenitud Center.', h1: 'Voices from the house' },
     visit: {
       title: 'Visit · Plenitud Center', description: 'Address, hours and contact for Plenitud Center.', eyebrow: 'Visit', h1: 'How to get here',
       address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco, Mexico.', contact: 'Contact', contactLead: 'By WhatsApp or phone, during the same hours:',
       mapTitle: 'Where we are', mapFrame: 'Google map showing where Plenitud Center is', mapOpen: 'Open in Google Maps →',
       mapOff: 'The Google map is turned off in Settings.', mapShow: 'Show the map',
       call: 'Call', callTo: '', reserve: 'Book a therapy', spaceAlt: 'Large, bright room with tall windows and a wooden floor',
+      seeMap: 'See on the map', directions: 'Get directions', directionsHint: 'opens Google Maps',
+      firstEyebrow: 'Before you come', firstTitle: 'Your first visit.',
+      first: [['Leave some margin', 'About ten minutes early, so you can settle in without rushing.'],
+        ['Comfortable clothes', 'Anything a therapy needs is listed on its own page.'],
+        ['Tell us how you arrive', 'If something hurts or worries you, we adjust the session to you.'],
+        ['Afterwards, no rush', 'Take a moment before heading back out.']],
     },
+    toTop: 'Back to top',
     built: 'Built',
   },
 };
@@ -202,7 +231,8 @@ function headExtra(prefix, pagePath) {
 <link rel="stylesheet" href="${a}${versioned('site.css')}" />`;
 }
 
-const NAV_KEYS = ['terapias', 'productos', 'guias', 'voces', 'visita'];
+// Voces waits out of the menu until there are real testimonials (one sample quote stays on the home page)
+const NAV_KEYS = ['terapias', 'productos', 'guias', 'visita'];
 
 function nav(prefix, active, pagePath) {
   const home = prefix || './';
@@ -310,7 +340,7 @@ function footerPartial(prefix) {
       </nav>
       <nav aria-labelledby="f-leer">
         <h2 class="footer__heading" id="f-leer">${L.fRead}</h2>
-        <ul class="footer__links" role="list"><li><a href="${prefix}voces/">${L.nav.voces}</a></li><li><a href="${prefix}guias/">${L.nav.guias}</a></li></ul>
+        <ul class="footer__links" role="list"><li><a href="${prefix}guias/">${L.nav.guias}</a></li><li><a href="${prefix}visita/">${L.nav.visita}</a></li></ul>
       </nav>
       <div>
         <h2 class="footer__heading" id="f-contacto">${L.fContact}</h2>
@@ -494,11 +524,50 @@ function variantSummary(p) {
   return `<p class="variants"><span>${vs.length} ${esc(label)}</span></p>`;
 }
 
+/* DEMO: what each therapy helps with (therapy filter), which guide leads it, and how products
+   group (product filter). Illustrative like the rest of the catalog: confirm with the owner. */
+const NEEDS = {
+  es: { estres: 'Estrés', descanso: 'Descanso', dolor: 'Dolor muscular', energia: 'Energía', claridad: 'Claridad' },
+  en: { estres: 'Stress', descanso: 'Rest', dolor: 'Muscle pain', energia: 'Energy', claridad: 'Clarity' },
+};
+const THERAPY_NEEDS = {
+  'masaje-corporal': ['dolor', 'estres', 'descanso'], reiki: ['estres', 'descanso', 'energia'], limpia: ['claridad', 'energia'],
+  'flores-de-bach': ['estres', 'claridad', 'descanso'], biomagnetismo: ['dolor', 'energia'],
+};
+const PRODUCT_GROUPS = {
+  es: { aromas: 'Aromas y resinas', velas: 'Velas', accesorios: 'Portaincienso', cuidado: 'Cuidado personal' },
+  en: { aromas: 'Scents and resins', velas: 'Candles', accesorios: 'Incense holders', cuidado: 'Personal care' },
+};
+const PRODUCT_GROUP = {
+  inciensos: 'aromas', 'copal-resina': 'aromas', 'carbon-compactado': 'aromas', 'velas-de-color': 'velas', 'base-metalica-vela': 'velas',
+  portaincienso: 'accesorios', 'portaincienso-compartimiento': 'accesorios', clorofila: 'cuidado', ozono: 'cuidado',
+};
+const needsOf = (t) => THERAPY_NEEDS[t.slug] || [];
+const guideOf = (t) => GUIAS.find((g) => g.therapies.includes(t.slug));
+
+// Opening hours, as the site states them ("9:00 a 16:00"). Every day is assumed: confirm the days.
+// The open-now line (site.js) and the search-engine data below both read them.
+const HOURS = { open: 9, close: 16 };
+const openStatus = () => `<p class="open-status" data-open-status data-open="${HOURS.open}" data-close="${HOURS.close}" hidden><span class="open-status__dot" aria-hidden="true"></span><span data-open-text></span></p>`;
+
 const GUIAS = [
-  { name: 'Ana Lucía Ríos', focus: 'Masaje corporal', schedule: 'Martes a viernes', en: { focus: 'Body massage', schedule: 'Tuesday to Friday', imageAlt: 'Portrait of Ana Lucía Ríos smiling in natural light' }, image: { file: 'media/guia-corporal.jpg', alt: 'Retrato de Ana Lucía Ríos sonriendo con luz natural' } },
-  { name: 'Valeria Montes', focus: 'Reiki, flores de Bach y biomagnetismo', schedule: 'Miércoles a sábado', en: { focus: 'Reiki, Bach flowers and biomagnetism', schedule: 'Wednesday to Saturday', imageAlt: 'Portrait of Valeria Montes wearing a bead necklace in a bright studio' }, image: { file: 'media/guia-energetica.jpg', alt: 'Retrato de Valeria Montes con collar de cuentas en un estudio luminoso' } },
-  { name: 'Tomás Ibarra', focus: 'Limpias y acompañamiento espiritual', schedule: 'Jueves a domingo', en: { focus: 'Limpias and spiritual guidance', schedule: 'Thursday to Sunday', imageAlt: 'Portrait of Tomás Ibarra smiling outdoors' }, image: { file: 'media/guia-espiritual.jpg', alt: 'Retrato de Tomás Ibarra sonriendo al aire libre' } },
+  { name: 'Ana Lucía Ríos', focus: 'Masaje corporal', schedule: 'Martes a viernes', therapies: ['masaje-corporal'], en: { focus: 'Body massage', schedule: 'Tuesday to Friday', imageAlt: 'Portrait of Ana Lucía Ríos smiling in natural light' }, image: { file: 'media/guia-corporal.jpg', alt: 'Retrato de Ana Lucía Ríos sonriendo con luz natural' } },
+  { name: 'Valeria Montes', focus: 'Reiki, flores de Bach y biomagnetismo', schedule: 'Miércoles a sábado', therapies: ['reiki', 'flores-de-bach', 'biomagnetismo'], en: { focus: 'Reiki, Bach flowers and biomagnetism', schedule: 'Wednesday to Saturday', imageAlt: 'Portrait of Valeria Montes wearing a bead necklace in a bright studio' }, image: { file: 'media/guia-energetica.jpg', alt: 'Retrato de Valeria Montes con collar de cuentas en un estudio luminoso' } },
+  { name: 'Tomás Ibarra', focus: 'Limpias y acompañamiento espiritual', schedule: 'Jueves a domingo', therapies: ['limpia'], en: { focus: 'Limpias and spiritual guidance', schedule: 'Thursday to Sunday', imageAlt: 'Portrait of Tomás Ibarra smiling outdoors' }, image: { file: 'media/guia-espiritual.jpg', alt: 'Retrato de Tomás Ibarra sonriendo al aire libre' } },
 ];
+
+/* Business card for search engines (address, phones, hours), on the home and Visit pages */
+function localBusinessLd() {
+  const pad = (h) => `${String(h).padStart(2, '0')}:00`;
+  const data = {
+    '@context': 'https://schema.org', '@type': 'HealthAndBeautyBusiness', name: 'Plenitud Center', url: SITE_URL,
+    image: `${SITE_URL}media/espacio.jpg`, logo: `${SITE_URL}design-system/assets/logo-emblem.png`,
+    telephone: CONTACTS.map((c) => `+${c.intl}`),
+    address: { '@type': 'PostalAddress', streetAddress: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad', addressLocality: 'Zapopan', addressRegion: 'Jalisco', postalCode: '45110', addressCountry: 'MX' },
+    openingHours: `Mo-Su ${pad(HOURS.open)}-${pad(HOURS.close)}`,
+  };
+  return `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+}
 
 /* Short splash while the page settles: logo and name on the home page; on the rest, a
    vertical line and the page's own name below them. CSS shows it only with JS and fades
@@ -520,7 +589,7 @@ function layout({ prefix, active, pagePath, title, description, bodyHtml, mainId
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}" />
-${headExtra(prefix, pagePath)}
+${headExtra(prefix, pagePath)}${pagePath === '' || pagePath === 'visita/' ? `\n${localBusinessLd()}` : ''}
 </head>
 <body>
 ${loader(prefix, pagePath ? title.split(' · ')[0] : '')}
@@ -534,6 +603,9 @@ ${bodyHtml}
 </main>
 
 ${footerPartial(prefix)}
+
+<!-- Long pages: site.js shows it after a couple of screens of scrolling -->
+<a class="btn btn--secondary icon-btn to-top" href="#${mainId}" data-to-top hidden title="${L.toTop}"><span aria-hidden="true">↑</span><span class="sr-only">${L.toTop}</span></a>
 
 ${reserveDialog()}
 
@@ -558,16 +630,7 @@ function homeBody(prefix) {
     terapias.find((t) => t.category === 'espiritual'),
   ].filter(Boolean);
 
-  const productTiles = productos.filter((p) => p.image).slice(0, 4).map((p) => `        <li>
-          <article class="card card--interactive card--compact">
-            ${cardMedia(imageOf(p), prefix)}
-            <h3 class="card__title card__title--sm">${esc(tr(p, 'name'))}</h3>
-            <div class="card__footer">
-              ${priceBlock(p.price)}
-              <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">${L.see} <span class="sr-only">${esc(tr(p, 'name'))}</span></a>
-            </div>
-          </article>
-        </li>`).join('\n');
+  const productTiles = productos.filter((p) => p.image).slice(0, 4).map((p) => productTile(p, prefix)).join('\n');
 
   const cards = featured.map((t) => terapiaCard(t, prefix, 'h3', true)).join('\n');
 
@@ -583,6 +646,17 @@ function homeBody(prefix) {
         <a class="btn btn--secondary btn--lg" href="${prefix}terapias/">${H.heroSee}</a>
       </div>
       <p class="caption">${L.openHours}</p>
+      ${openStatus()}
+    </div>
+  </section>
+
+  <section class="section section--sage" id="como-funciona" aria-labelledby="how-title">
+    <div class="container">
+      <header class="section__head">
+        <p class="label eyebrow">${H.howEyebrow}</p>
+        <h2 class="display-h2" id="how-title">${H.howTitle}</h2>
+      </header>
+${steps(H.how)}
     </div>
   </section>
 
@@ -621,7 +695,6 @@ ${productTiles}
         <blockquote><p class="display-quote">${L.quote}</p></blockquote>
         <figcaption class="caption">${L.quoteBy}</figcaption>
       </figure>
-      <p class="caption" style="margin-top: var(--space-6)"><a href="${prefix}voces/">${H.moreVoices}</a></p>
     </div>
   </section>
 
@@ -641,20 +714,49 @@ ${guiaCards(prefix, 'h3')}
   </section>`;
 }
 
-function guiaCards(prefix, heading) {
-  return GUIAS.map((g) => `        <li><article class="card">${cardMedia(imageOf(g), prefix, 'portrait')}<${heading} class="card__title card__title--sm">${esc(g.name)}</${heading}><p class="card__body">${esc(tr(g, 'focus'))}</p><p class="card__meta">${esc(tr(g, 'schedule'))}</p></article></li>`).join('\n');
+/* Numbered steps (home "how it works", Visit "first visit"). The number is real text, so a
+   screen reader hears the order even though the list drops its bullets. */
+function steps(items) {
+  return `      <ol class="steps" role="list">
+${items.map(([title, text], i) => `        <li class="step"><span class="step__num">${i + 1}</span><h3 class="h4 step__title">${esc(title)}</h3><p class="small step__text">${esc(text)}</p></li>`).join('\n')}
+      </ol>`;
+}
+
+// Guide cards; on the Guides page each one also links to the therapies that person leads.
+function guiaCards(prefix, heading, withTherapies = false) {
+  return GUIAS.map((g, i) => {
+    const led = withTherapies ? g.therapies.map((slug) => terapias.find((t) => t.slug === slug)).filter(Boolean) : [];
+    const links = led.length ? `<p class="caption guide-links__label" id="leads-${i}">${L.guides.leads}</p><ul class="guide-links" role="list" aria-labelledby="leads-${i}">${led.map((t) => `<li><a href="${prefix}terapias/${t.slug}/">${esc(tr(t, 'name'))}</a></li>`).join('')}</ul>` : '';
+    return `        <li><article class="card">${cardMedia(imageOf(g), prefix, 'portrait')}<${heading} class="card__title card__title--sm">${esc(g.name)}</${heading}><p class="card__body">${esc(tr(g, 'focus'))}</p>${links}<p class="card__meta">${esc(tr(g, 'schedule'))}</p></article></li>`;
+  }).join('\n');
+}
+
+// Compact product card (home page, "you may also like")
+function productTile(p, prefix) {
+  return `        <li>
+          <article class="card card--interactive card--compact">
+            ${cardMedia(imageOf(p), prefix)}
+            <h3 class="card__title card__title--sm">${esc(tr(p, 'name'))}</h3>
+            <div class="card__footer">
+              ${priceBlock(p.price)}
+              <a class="card__action btn btn--ghost" href="${prefix}productos/${p.slug}/">${L.see} <span class="sr-only">${esc(tr(p, 'name'))}</span></a>
+            </div>
+          </article>
+        </li>`;
 }
 
 // One therapy card, shared by the home page and the catalog. The eyebrow names the
 // category only where cards of different categories sit side by side.
 function terapiaCard(t, prefix, heading, showCategory = false) {
   const name = tr(t, 'name');
-  return `          <li>
+  const needs = needsOf(t);
+  return `          <li data-needs="${needs.join(' ')}">
             <article class="card card--interactive">
               ${cardMedia(imageOf(t), prefix, 'wide')}
               ${showCategory ? `<p class="card__eyebrow">${esc(catName(t.category))}</p>` : ''}
               <${heading} class="card__title card__title--sm">${esc(name)}</${heading}>
               <p class="card__body">${esc(tr(t, 'summary'))}</p>
+              ${needs.length ? `<p class="card__needs">${L.therapies.helps}: ${needs.map((n) => NEEDS[LANG][n]).join(' · ')}</p>` : ''}
               <div class="card__footer">
                 ${priceBlock(t.price, t.duration)}
                 <a class="card__action btn btn--ghost" href="${prefix}terapias/${t.slug}/">${L.seeMore} <span class="sr-only">${L.seeMoreAbout} ${esc(name)}</span></a>
@@ -698,6 +800,14 @@ ${cards}
         <h1 class="display-h1" id="terapias-h1">${T.h1}</h1>
         <p class="lead">${T.lead}</p>
       </header>
+      <!-- Filter by need: shown by site.js; without it every therapy is listed -->
+      <fieldset class="filter" data-js-only hidden>
+        <legend class="h4">${T.filter}</legend>
+        <div class="variant-picker__options">
+          ${[['', T.all], ...Object.entries(NEEDS[LANG])].map(([k, v]) => `<label class="variant-chip"><input type="radio" name="need" value="${k}"${k ? '' : ' checked'} /><span class="variant-chip__box">${esc(v)}</span></label>`).join('\n          ')}
+        </div>
+      </fieldset>
+      <p class="small filter-status" role="status" data-therapy-status></p>
 ${byCategory}
       <p class="small note">${T.note}</p>
     </div>
@@ -715,7 +825,8 @@ function terapiaDetailBody(prefix, t) {
         <p class="label eyebrow">${esc(catName(t.category))}</p>
         <h1 class="display-h1" id="t-h1">${esc(name)}</h1>
         <p class="lead">${esc(tr(t, 'body'))}</p>
-        ${facts([[T.price, t.price != null ? money(t.price) : null], [T.duration, t.duration], [T.schedule, tr(t, 'schedule')]])}
+        ${facts([[T.price, t.price != null ? money(t.price) : null], [T.duration, t.duration], [T.schedule, tr(t, 'schedule')], [T.guide, guideOf(t)?.name]])}
+        ${needsOf(t).length ? `<p class="small detail__needs">${T.helps}: ${needsOf(t).map((n) => NEEDS[LANG][n]).join(' · ')}</p>` : ''}
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve data-session="${esc(t.slug)}">${T.reserveThis} ${esc(name)}</button></p>
         ${contactNote()}
         <h2 class="h4">${T.expect}</h2>
@@ -735,7 +846,7 @@ function facts(rows) {
 
 function productosIndexBody(prefix) {
   const P = L.products;
-  const cards = productos.map((p) => `        <li data-name="${esc(tr(p, 'name').toLowerCase())}">
+  const cards = productos.map((p, i) => `        <li data-name="${esc(tr(p, 'name').toLowerCase())}" data-group="${PRODUCT_GROUP[p.slug] || ''}" data-price="${p.price ?? ''}" data-order="${i}">
           <article class="card card--interactive">
             ${cardMedia(imageOf(p), prefix)}
             <h2 class="card__title card__title--sm">${esc(tr(p, 'name'))}</h2>
@@ -755,9 +866,28 @@ function productosIndexBody(prefix) {
         <h1 class="display-h1" id="productos-h1">${P.h1}</h1>
         <p class="lead">${P.lead}</p>
       </header>
-      <div class="field" style="max-width: 24rem; margin-bottom: var(--space-7)">
-        <label class="field__label" for="product-filter">${P.search}</label>
-        <input class="input" id="product-filter" type="search" placeholder="${P.searchPh}" autocomplete="off" />
+      <div class="filters">
+        <div class="filters__row">
+          <div class="field filters__search">
+            <label class="field__label" for="product-filter">${P.search}</label>
+            <input class="input" id="product-filter" type="search" placeholder="${P.searchPh}" autocomplete="off" />
+          </div>
+          <div class="field" data-js-only hidden>
+            <label class="field__label" for="product-sort">${P.sort}</label>
+            <select class="select" id="product-sort">
+              <option value="featured">${P.sortFeatured}</option>
+              <option value="low">${P.sortLow}</option>
+              <option value="high">${P.sortHigh}</option>
+            </select>
+          </div>
+        </div>
+        <fieldset class="filter" data-js-only hidden>
+          <legend class="h4">${P.group}</legend>
+          <div class="variant-picker__options">
+            ${[['', P.all], ...Object.entries(PRODUCT_GROUPS[LANG])].map(([k, v]) => `<label class="variant-chip"><input type="radio" name="group" value="${k}"${k ? '' : ' checked'} /><span class="variant-chip__box">${esc(v)}</span></label>`).join('\n            ')}
+          </div>
+        </fieldset>
+        <p class="small filter-status" role="status" data-product-status></p>
       </div>
       <ul class="grid grid--3" role="list" id="product-grid">
 ${cards}
@@ -814,6 +944,26 @@ function productoDetailBody(prefix, p) {
         <p class="caption"><a href="${prefix}productos/">${P.back}</a></p>
       </div>
     </div>
+  </section>
+${relatedProducts(prefix, p)}`;
+}
+
+// Same group first, then the rest of the catalog, three in all
+function relatedProducts(prefix, p) {
+  const P = L.products;
+  const g = PRODUCT_GROUP[p.slug];
+  const others = productos.filter((x) => x !== p && x.image);
+  const picks = [...others.filter((x) => PRODUCT_GROUP[x.slug] === g), ...others.filter((x) => PRODUCT_GROUP[x.slug] !== g)].slice(0, 3);
+  return `  <section class="section section--sage" aria-labelledby="related-title">
+    <div class="container">
+      <header class="section__head">
+        <h2 class="display-h2" id="related-title">${P.related}</h2>
+      </header>
+      <ul class="grid grid--3" role="list">
+${picks.map((x) => productTile(x, prefix)).join('\n')}
+      </ul>
+      <p class="section__more"><a class="btn btn--secondary btn--lg" href="${prefix}productos/">${P.seeAll}</a></p>
+    </div>
   </section>`;
 }
 
@@ -829,21 +979,8 @@ function guiasBody(prefix) {
         <p class="lead">${G.lead}</p>
       </header>
       <ul class="grid grid--3" role="list">
-${guiaCards(prefix, 'h2')}
+${guiaCards(prefix, 'h2', true)}
       </ul>
-    </div>
-  </section>`;
-}
-
-function vocesBody() {
-  return `  <section class="section section--quote" aria-labelledby="voces-h1">
-    <div class="container container--narrow">
-      <h1 class="display-h1" id="voces-h1">${L.voices.h1}</h1>
-      <!-- PLACEHOLDER: testimonio de ejemplo, NO es un testimonio real -->
-      <figure class="quote" style="margin-top: var(--space-8)">
-        <blockquote><p class="display-quote">${L.quote}</p></blockquote>
-        <figcaption class="caption">${L.quoteBy}</figcaption>
-      </figure>
     </div>
   </section>`;
 }
@@ -860,6 +997,11 @@ function visitaBody(prefix) {
         <!-- Pendiente: política de cancelación -->
         <p class="lead">${V.address}</p>
         <p class="body">${L.openHours}.</p>
+        ${openStatus()}
+        <div class="visit-actions">
+          <a class="btn btn--secondary" href="#mapa">${V.seeMap}</a>
+          <a class="btn btn--secondary" href="https://www.google.com/maps/dir/?api=1&amp;destination=${encodeURIComponent(MAP_QUERY)}">${V.directions} <span class="sr-only">(${V.directionsHint})</span></a>
+        </div>
         <h2 class="h4">${V.contact}</h2>
         <p class="body">${V.contactLead}</p>
         <ul class="body contact-list" role="list">
@@ -869,7 +1011,7 @@ ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.disp
       </div>
     </div>
   </section>
-  <section class="section section--sage" aria-labelledby="mapa-h2">
+  <section class="section section--sage" id="mapa" aria-labelledby="mapa-h2">
     <div class="container">
       <div class="section__head">
         <h2 class="display-h2" id="mapa-h2">${V.mapTitle}</h2>
@@ -879,6 +1021,16 @@ ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.disp
         <iframe src="https://maps.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&amp;z=16&amp;hl=${LANG}&amp;output=embed" title="${V.mapFrame}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
       <p class="small map__link"><a href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(MAP_QUERY)}">${V.mapOpen}</a></p>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="first-title">
+    <div class="container">
+      <header class="section__head">
+        <p class="label eyebrow">${V.firstEyebrow}</p>
+        <h2 class="display-h2" id="first-title">${V.firstTitle}</h2>
+      </header>
+      <!-- PLACEHOLDER: recomendaciones de ejemplo; confirmar con el negocio -->
+${steps(V.first)}
     </div>
   </section>`;
 }
@@ -901,10 +1053,29 @@ function build(lang) {
     page(`productos/${p.slug}/`, 2, { active: 'productos', title: `${tr(p, 'name')} · Plenitud Center`, description: tr(p, 'summary'), bodyHtml: productoDetailBody(prefixFor(2), p) });
   }
   page('guias/', 1, { active: 'guias', title: L.guides.title, description: L.guides.description, bodyHtml: guiasBody(prefixFor(1)) });
-  page('voces/', 1, { active: 'voces', title: L.voices.title, description: L.voices.description, bodyHtml: vocesBody() });
   page('visita/', 1, { active: 'visita', title: L.visit.title, description: L.visit.description, bodyHtml: visitaBody(prefixFor(1)) });
 
-  console.log(`${L.built} (${lang}): 1 inicio, 1 terapias/ + ${terapias.length}, 1 productos/ + ${productos.length}, guías, voces, visita.`);
+  console.log(`${L.built} (${lang}): 1 inicio, 1 terapias/ + ${terapias.length}, 1 productos/ + ${productos.length}, guías, visita.`);
 }
 
 for (const lang of Object.keys(UI)) build(lang);
+
+/* GitHub Pages serves 404.html for any missing address, at whatever depth, so every link
+   on it is absolute (SITE_URL). Spanish page with an English line for English visitors. */
+{
+  LANG = 'es'; L = UI.es;
+  const N = L.notFound;
+  write('404.html', layout({ prefix: SITE_URL, pagePath: '', active: null, title: N.title, description: N.lead, bodyHtml: `  <section class="section" aria-labelledby="nf-h1">
+    <div class="container container--narrow not-found">
+      <p class="label eyebrow">404</p>
+      <h1 class="display-h1" id="nf-h1">${N.h1}</h1>
+      <p class="lead">${N.lead}</p>
+      <div class="hero__actions not-found__actions">
+        <a class="btn btn--primary btn--lg" href="${SITE_URL}">${N.home}</a>
+        <a class="btn btn--secondary btn--lg" href="${SITE_URL}terapias/">${L.home.heroSee}</a>
+        <a class="btn btn--secondary btn--lg" href="${SITE_URL}productos/">${L.home.seeProducts}</a>
+      </div>
+      <p class="body" lang="en">${N.en} <a href="${SITE_URL}en/">${N.enLink}</a>.</p>
+    </div>
+  </section>` }));
+}

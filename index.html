@@ -42,7 +42,8 @@
 <link rel="preload" href="design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="site.css?v=dc6c032e" />
+<link rel="stylesheet" href="site.css?v=87a010bd" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HealthAndBeautyBusiness","name":"Plenitud Center","url":"https://ronferix.github.io/PlenitudCenterWebPage/","image":"https://ronferix.github.io/PlenitudCenterWebPage/media/espacio.jpg","logo":"https://ronferix.github.io/PlenitudCenterWebPage/design-system/assets/logo-emblem.png","telephone":["+523335992034","+523324909550"],"address":{"@type":"PostalAddress","streetAddress":"Av. Naciones Unidas 5461, Col. Vallarta Universidad","addressLocality":"Zapopan","addressRegion":"Jalisco","postalCode":"45110","addressCountry":"MX"},"openingHours":"Mo-Su 09:00-16:00"}</script>
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -71,7 +72,6 @@
         <li><a class="nav__link" href="terapias/">Terapias</a></li>
         <li><a class="nav__link" href="productos/">Productos</a></li>
         <li><a class="nav__link" href="guias/">Guías</a></li>
-        <li><a class="nav__link" href="voces/">Voces</a></li>
         <li><a class="nav__link" href="visita/">Visita</a></li>
         </ul>
         <div class="nav__actions">
@@ -99,6 +99,21 @@
         <a class="btn btn--secondary btn--lg" href="terapias/">Ver terapias</a>
       </div>
       <p class="caption">Abierto de 9:00 a 16:00</p>
+      <p class="open-status" data-open-status data-open="9" data-close="16" hidden><span class="open-status__dot" aria-hidden="true"></span><span data-open-text></span></p>
+    </div>
+  </section>
+
+  <section class="section section--sage" id="como-funciona" aria-labelledby="how-title">
+    <div class="container">
+      <header class="section__head">
+        <p class="label eyebrow">Cómo funciona</p>
+        <h2 class="display-h2" id="how-title">Tres pasos, sin prisa.</h2>
+      </header>
+      <ol class="steps" role="list">
+        <li class="step"><span class="step__num">1</span><h3 class="h4 step__title">Elige tu terapia</h3><p class="small step__text">Revisa qué trabaja cada una. Si dudas entre dos, pregúntanos por WhatsApp.</p></li>
+        <li class="step"><span class="step__num">2</span><h3 class="h4 step__title">Reserva por WhatsApp</h3><p class="small step__text">Te armamos el mensaje con tu terapia y tu horario preferido; solo lo envías.</p></li>
+        <li class="step"><span class="step__num">3</span><h3 class="h4 step__title">Llega como estás</h3><p class="small step__text">Confirmamos el horario contigo. El día de la sesión, ropa cómoda y unos minutos de margen.</p></li>
+      </ol>
     </div>
   </section>
 
@@ -109,36 +124,39 @@
         <h2 class="display-h2" id="terapias-title">Cinco caminos, tres familias.</h2>
       </header>
       <ul class="grid grid--3" role="list">
-          <li>
+          <li data-needs="dolor estres descanso">
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="media/masaje-corporal.jpg" srcset="media/w/masaje-corporal-480.webp 480w, media/w/masaje-corporal-800.webp 800w, media/w/masaje-corporal-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Manos dando un masaje en la espalda" decoding="async" loading="lazy" />
               <p class="card__eyebrow">Corporal</p>
               <h3 class="card__title card__title--sm">Masaje corporal</h3>
               <p class="card__body">Trabajo manual sobre el cuerpo para liberar la tensión acumulada.</p>
+              <p class="card__needs">Ayuda con: Dolor muscular · Estrés · Descanso</p>
               <div class="card__footer">
                 <p class="price">$750 MXN <span class="price__note">60 min</span></p>
                 <a class="card__action btn btn--ghost" href="terapias/masaje-corporal/">Ver más <span class="sr-only">sobre Masaje corporal</span></a>
               </div>
             </article>
           </li>
-          <li>
+          <li data-needs="estres descanso energia">
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="media/reiki.jpg" srcset="media/w/reiki-480.webp 480w, media/w/reiki-800.webp 800w, media/w/reiki-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Manos abiertas con las palmas hacia arriba" decoding="async" loading="lazy" />
               <p class="card__eyebrow">Energética</p>
               <h3 class="card__title card__title--sm">Reiki</h3>
               <p class="card__body">Sanación energética canalizada con las manos, sin contacto invasivo.</p>
+              <p class="card__needs">Ayuda con: Estrés · Descanso · Energía</p>
               <div class="card__footer">
                 <p class="price">$600 MXN <span class="price__note">50 min</span></p>
                 <a class="card__action btn btn--ghost" href="terapias/reiki/">Ver más <span class="sr-only">sobre Reiki</span></a>
               </div>
             </article>
           </li>
-          <li>
+          <li data-needs="claridad energia">
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="media/limpia.jpg" srcset="media/w/limpia-480.webp 480w, media/w/limpia-800.webp 800w, media/w/limpia-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Atado de salvia blanca en un cuenco de cerámica" decoding="async" loading="lazy" />
               <p class="card__eyebrow">Espiritual</p>
               <h3 class="card__title card__title--sm">Limpia</h3>
               <p class="card__body">Ritual de limpieza energética del espacio personal.</p>
+              <p class="card__needs">Ayuda con: Claridad · Energía</p>
               <div class="card__footer">
                 <p class="price">$450 MXN <span class="price__note">40 min</span></p>
                 <a class="card__action btn btn--ghost" href="terapias/limpia/">Ver más <span class="sr-only">sobre Limpia</span></a>
@@ -211,7 +229,6 @@
         <blockquote><p class="display-quote">"Llegué cargando una semana. Salí sin ella. La sala misma se sentía paciente."</p></blockquote>
         <figcaption class="caption">Marisol G. · Miembro desde 2024</figcaption>
       </figure>
-      <p class="caption" style="margin-top: var(--space-6)"><a href="voces/">Leer más voces →</a></p>
     </div>
   </section>
 
@@ -247,7 +264,7 @@
       </nav>
       <nav aria-labelledby="f-leer">
         <h2 class="footer__heading" id="f-leer">Leer</h2>
-        <ul class="footer__links" role="list"><li><a href="voces/">Voces</a></li><li><a href="guias/">Guías</a></li></ul>
+        <ul class="footer__links" role="list"><li><a href="guias/">Guías</a></li><li><a href="visita/">Visita</a></li></ul>
       </nav>
       <div>
         <h2 class="footer__heading" id="f-contacto">Contacto</h2>
@@ -264,6 +281,9 @@
     </div>
   </div>
 </footer>
+
+<!-- Long pages: site.js shows it after a couple of screens of scrolling -->
+<a class="btn btn--secondary icon-btn to-top" href="#contenido" data-to-top hidden title="Volver arriba"><span aria-hidden="true">↑</span><span class="sr-only">Volver arriba</span></a>
 
 <dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
   <form class="dialog__panel" id="reserve-form" novalidate>
@@ -374,7 +394,7 @@
   </div>
 </dialog>
 
-<script src="site.js?v=82f8b520"></script>
+<script src="site.js?v=e6520ba0"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

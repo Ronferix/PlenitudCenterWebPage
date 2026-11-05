@@ -22,7 +22,13 @@
       cartLabel: function (n) { return 'Pedido, ' + (n === 1 ? '1 artículo' : n + ' artículos'); },
       added: function (item, n) { return 'Agregado: ' + item + '. Llevas ' + (n === 1 ? '1 artículo' : n + ' artículos') + ' en tu pedido.'; },
       less: 'Quitar uno de', more: 'Agregar uno de', remove: 'Quitar', qty: 'Cantidad de', view: 'Ver pedido →',
-      changed: function (item, q) { return item + ': ' + q; }, removed: function (item) { return item + ' quitado del pedido.'; }, cleared: 'Pedido vacío.'
+      changed: function (item, q) { return item + ': ' + q; }, removed: function (item) { return item + ' quitado del pedido.'; }, cleared: 'Pedido vacío.',
+      hour: function (h) { return h + ':00'; },
+      openNow: function (c) { return 'Abierto ahora · cierra a las ' + c; },
+      opensToday: function (o) { return 'Cerrado ahora · abre hoy a las ' + o; },
+      opensTomorrow: function (o) { return 'Cerrado ahora · abre mañana a las ' + o; },
+      therapies: function (n, need) { return (n === 1 ? '1 terapia' : n + ' terapias') + (need ? ' para ' + need.toLowerCase() : ''); },
+      products: function (n) { return n === 1 ? '1 producto' : n + ' productos'; }
     },
     en: {
       errors: function (n) { return n === 1 ? '1 field needs fixing.' : n + ' fields need fixing.'; },
@@ -30,7 +36,13 @@
       cartLabel: function (n) { return 'Order, ' + (n === 1 ? '1 item' : n + ' items'); },
       added: function (item, n) { return 'Added: ' + item + '. Your order has ' + (n === 1 ? '1 item' : n + ' items') + '.'; },
       less: 'One less', more: 'One more', remove: 'Remove', qty: 'Quantity of', view: 'View order →',
-      changed: function (item, q) { return item + ': ' + q; }, removed: function (item) { return item + ' removed from the order.'; }, cleared: 'Order emptied.'
+      changed: function (item, q) { return item + ': ' + q; }, removed: function (item) { return item + ' removed from the order.'; }, cleared: 'Order emptied.',
+      hour: function (h) { h = Number(h); return (h % 12 || 12) + (h < 12 ? ' a.m.' : ' p.m.'); },
+      openNow: function (c) { return 'Open now · closes at ' + c; },
+      opensToday: function (o) { return 'Closed now · opens today at ' + o; },
+      opensTomorrow: function (o) { return 'Closed now · opens tomorrow at ' + o; },
+      therapies: function (n, need) { return (n === 1 ? '1 therapy' : n + ' therapies') + (need ? ' for ' + need.toLowerCase() : ''); },
+      products: function (n) { return n === 1 ? '1 product' : n + ' products'; }
     }
   };
   var LANG = MESSAGES[document.documentElement.lang] ? document.documentElement.lang : 'es';
@@ -348,6 +360,95 @@
   }
   renderCart();
 
+  /* Controls that only work with script (filters, sorting) stay hidden without it */
+  $$('[data-js-only]').forEach(function (el) { el.hidden = false; });
+
+  /* ---------- Open now (home hero, Visit) ----------
+     Hours come from the page; the clock is the business's own time zone, so someone
+     looking from elsewhere still sees whether the doors are open in Zapopan. */
+  var openLines = $$('[data-open-status]');
+  if (openLines.length) {
+    var now = -1;
+    try {
+      var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Mexico_City', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date());
+      var part = function (t) { return Number(parts.filter(function (x) { return x.type === t; })[0].value); };
+      now = (part('hour') % 24) * 60 + part('minute');
+    } catch (e) {}
+    if (now >= 0) openLines.forEach(function (p) {
+      var o = Number(p.dataset.open), c = Number(p.dataset.close), isOpen = now >= o * 60 && now < c * 60;
+      $('[data-open-text]', p).textContent = isOpen ? T.openNow(T.hour(c)) : now < o * 60 ? T.opensToday(T.hour(o)) : T.opensTomorrow(T.hour(o));
+      p.classList.toggle('is-open', isOpen);
+      p.hidden = false;
+    });
+  }
+
+  /* ---------- Therapy filter by need ----------
+     Hides the cards that don't match, and a whole category when none of its cards is left */
+  var needRadios = $$('input[name=need]');
+  if (needRadios.length) {
+    var therapyStatus = $('[data-therapy-status]');
+    needRadios.forEach(function (r) {
+      r.addEventListener('change', function () {
+        var n = 0;
+        $$('.category').forEach(function (cat) {
+          var shown = 0;
+          $$('li[data-needs]', cat).forEach(function (li) {
+            var ok = !r.value || (' ' + li.dataset.needs + ' ').indexOf(' ' + r.value + ' ') !== -1;
+            li.hidden = !ok;
+            if (ok) shown++;
+          });
+          cat.hidden = shown === 0;
+          n += shown;
+          var track = $('.carousel__track', cat);   /* back to the start, and let the arrows re-check the overflow */
+          if (track) { track.scrollLeft = 0; track.dispatchEvent(new Event('scroll')); }
+        });
+        therapyStatus.textContent = T.therapies(n, r.value ? r.parentNode.textContent.trim() : '');
+      });
+    });
+  }
+
+  /* ---------- Product catalog: search, type and sort (progressive enhancement) ---------- */
+  var filter = $('#product-filter'), grid = $('#product-grid');
+  if (filter && grid) {
+    var items = $$('li', grid), empty = $('#product-empty'), sort = $('#product-sort'), productStatus = $('[data-product-status]');
+    var applyFilter = function () {
+      var q = filter.value.trim().toLowerCase(), g = ($('input[name=group]:checked') || {}).value || '', shown = 0;
+      items.forEach(function (li) {
+        var match = (!q || li.dataset.name.indexOf(q) !== -1) && (!g || li.dataset.group === g);
+        li.hidden = !match;
+        if (match) shown++;
+      });
+      if (empty) empty.hidden = shown !== 0;
+      if (productStatus) productStatus.textContent = shown ? T.products(shown) : (empty ? empty.textContent : '');
+    };
+    /* Sorting moves the cards themselves, so the reading and Tab order match what is on screen */
+    var applySort = function () {
+      var how = sort.value;
+      var price = function (li) { return li.dataset.price === '' ? null : Number(li.dataset.price); };
+      items.slice().sort(function (a, b) {
+        var pa = price(a), pb = price(b);
+        if (how !== 'featured' && pa !== pb) {
+          if (pa === null) return 1;   /* "price to be confirmed" goes last either way */
+          if (pb === null) return -1;
+          return how === 'low' ? pa - pb : pb - pa;
+        }
+        return a.dataset.order - b.dataset.order;
+      }).forEach(function (li) { grid.appendChild(li); });
+    };
+    filter.addEventListener('input', applyFilter);
+    $$('input[name=group]').forEach(function (r) { r.addEventListener('change', applyFilter); });
+    if (sort) sort.addEventListener('change', applySort);
+  }
+
+  /* ---------- Back to top: only on long pages, once the visitor is well down ---------- */
+  var toTop = $('[data-to-top]');
+  if (toTop) {
+    var placeToTop = function () { toTop.hidden = !(html.scrollHeight > innerHeight * 3 && scrollY > innerHeight * 1.5); };
+    window.addEventListener('scroll', placeToTop, { passive: true });
+    window.addEventListener('resize', placeToTop);
+    placeToTop();
+  }
+
   /* ---------- Booking dialog (native <dialog>) ---------- */
   var dlg = $('#reserve'), form = $('#reserve-form');
   if (!dlg || typeof dlg.showModal !== 'function') return;
@@ -402,19 +503,4 @@
   /* Light dismiss: a click on the backdrop closes the dialog. Esc is built in. */
   dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
 
-  /* ---------- Product catalog filter (progressive enhancement) ---------- */
-  var filter = $('#product-filter'), grid = $('#product-grid');
-  if (filter && grid) {
-    var items = $$('li', grid), empty = $('#product-empty');
-    filter.addEventListener('input', function () {
-      var q = filter.value.trim().toLowerCase();
-      var shown = 0;
-      items.forEach(function (li) {
-        var match = !q || li.dataset.name.indexOf(q) !== -1;
-        li.hidden = !match;
-        if (match) shown++;
-      });
-      if (empty) empty.hidden = shown !== 0;
-    });
-  }
 })();

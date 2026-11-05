@@ -42,7 +42,7 @@
 <link rel="preload" href="../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../../site.css?v=dc6c032e" />
+<link rel="stylesheet" href="../../site.css?v=87a010bd" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -73,7 +73,6 @@
         <li><a class="nav__link" href="../../terapias/">Terapias</a></li>
         <li><a class="nav__link" href="../../productos/" aria-current="page">Productos</a></li>
         <li><a class="nav__link" href="../../guias/">Guías</a></li>
-        <li><a class="nav__link" href="../../voces/">Voces</a></li>
         <li><a class="nav__link" href="../../visita/">Visita</a></li>
         </ul>
         <div class="nav__actions">
@@ -111,6 +110,46 @@
       </div>
     </div>
   </section>
+  <section class="section section--sage" aria-labelledby="related-title">
+    <div class="container">
+      <header class="section__head">
+        <h2 class="display-h2" id="related-title">También te puede gustar</h2>
+      </header>
+      <ul class="grid grid--3" role="list">
+        <li>
+          <article class="card card--interactive card--compact">
+            <img class="card__media card__media--square" src="../../media/inciensos.jpg" srcset="../../media/w/inciensos-480.webp 480w, ../../media/w/inciensos-800.webp 800w, ../../media/w/inciensos-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Manojos de varillas de incienso de colores" decoding="async" loading="lazy" />
+            <h3 class="card__title card__title--sm">Inciensos</h3>
+            <div class="card__footer">
+              <p class="price">$45 MXN</p>
+              <a class="card__action btn btn--ghost" href="../../productos/inciensos/">Ver <span class="sr-only">Inciensos</span></a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="card card--interactive card--compact">
+            <img class="card__media card__media--square" src="../../media/copal-resina.jpg" srcset="../../media/w/copal-resina-480.webp 480w, ../../media/w/copal-resina-800.webp 800w, ../../media/w/copal-resina-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Trozos de resina ámbar sobre gránulos" decoding="async" loading="lazy" />
+            <h3 class="card__title card__title--sm">Copal en resina</h3>
+            <div class="card__footer">
+              <p class="price">$90 MXN</p>
+              <a class="card__action btn btn--ghost" href="../../productos/copal-resina/">Ver <span class="sr-only">Copal en resina</span></a>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="card card--interactive card--compact">
+            <img class="card__media card__media--square" src="../../media/clorofila.jpg" srcset="../../media/w/clorofila-480.webp 480w, ../../media/w/clorofila-800.webp 800w, ../../media/w/clorofila-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Bebida verde vertida en un vaso de vidrio" decoding="async" loading="lazy" />
+            <h3 class="card__title card__title--sm">Clorofila</h3>
+            <div class="card__footer">
+              <p class="price">$180 MXN</p>
+              <a class="card__action btn btn--ghost" href="../../productos/clorofila/">Ver <span class="sr-only">Clorofila</span></a>
+            </div>
+          </article>
+        </li>
+      </ul>
+      <p class="section__more"><a class="btn btn--secondary btn--lg" href="../../productos/">Ver todos los productos</a></p>
+    </div>
+  </section>
 </main>
 
 <footer class="footer" id="visita">
@@ -127,7 +166,7 @@
       </nav>
       <nav aria-labelledby="f-leer">
         <h2 class="footer__heading" id="f-leer">Leer</h2>
-        <ul class="footer__links" role="list"><li><a href="../../voces/">Voces</a></li><li><a href="../../guias/">Guías</a></li></ul>
+        <ul class="footer__links" role="list"><li><a href="../../guias/">Guías</a></li><li><a href="../../visita/">Visita</a></li></ul>
       </nav>
       <div>
         <h2 class="footer__heading" id="f-contacto">Contacto</h2>
@@ -144,6 +183,9 @@
     </div>
   </div>
 </footer>
+
+<!-- Long pages: site.js shows it after a couple of screens of scrolling -->
+<a class="btn btn--secondary icon-btn to-top" href="#contenido" data-to-top hidden title="Volver arriba"><span aria-hidden="true">↑</span><span class="sr-only">Volver arriba</span></a>
 
 <dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
   <form class="dialog__panel" id="reserve-form" novalidate>
@@ -254,7 +296,7 @@
   </div>
 </dialog>
 
-<script src="../../site.js?v=82f8b520"></script>
+<script src="../../site.js?v=e6520ba0"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

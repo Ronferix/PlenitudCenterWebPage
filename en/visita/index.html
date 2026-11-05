@@ -42,7 +42,8 @@
 <link rel="preload" href="../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../../site.css?v=dc6c032e" />
+<link rel="stylesheet" href="../../site.css?v=87a010bd" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HealthAndBeautyBusiness","name":"Plenitud Center","url":"https://ronferix.github.io/PlenitudCenterWebPage/","image":"https://ronferix.github.io/PlenitudCenterWebPage/media/espacio.jpg","logo":"https://ronferix.github.io/PlenitudCenterWebPage/design-system/assets/logo-emblem.png","telephone":["+523335992034","+523324909550"],"address":{"@type":"PostalAddress","streetAddress":"Av. Naciones Unidas 5461, Col. Vallarta Universidad","addressLocality":"Zapopan","addressRegion":"Jalisco","postalCode":"45110","addressCountry":"MX"},"openingHours":"Mo-Su 09:00-16:00"}</script>
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -73,7 +74,6 @@
         <li><a class="nav__link" href="../terapias/">Therapies</a></li>
         <li><a class="nav__link" href="../productos/">Products</a></li>
         <li><a class="nav__link" href="../guias/">Guides</a></li>
-        <li><a class="nav__link" href="../voces/">Voices</a></li>
         <li><a class="nav__link" href="../visita/" aria-current="page">Visit</a></li>
         </ul>
         <div class="nav__actions">
@@ -98,6 +98,11 @@
         <!-- Pendiente: política de cancelación -->
         <p class="lead">Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco, Mexico.</p>
         <p class="body">Open 9 a.m. to 4 p.m..</p>
+        <p class="open-status" data-open-status data-open="9" data-close="16" hidden><span class="open-status__dot" aria-hidden="true"></span><span data-open-text></span></p>
+        <div class="visit-actions">
+          <a class="btn btn--secondary" href="#mapa">See on the map</a>
+          <a class="btn btn--secondary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.%20Naciones%20Unidas%205461%2C%20Vallarta%20Universidad%2C%2045110%20Zapopan%2C%20Jalisco%2C%20M%C3%A9xico">Get directions <span class="sr-only">(opens Google Maps)</span></a>
+        </div>
         <h2 class="h4">Contact</h2>
         <p class="body">By WhatsApp or phone, during the same hours:</p>
         <ul class="body contact-list" role="list">
@@ -108,7 +113,7 @@
       </div>
     </div>
   </section>
-  <section class="section section--sage" aria-labelledby="mapa-h2">
+  <section class="section section--sage" id="mapa" aria-labelledby="mapa-h2">
     <div class="container">
       <div class="section__head">
         <h2 class="display-h2" id="mapa-h2">Where we are</h2>
@@ -118,6 +123,21 @@
         <iframe src="https://maps.google.com/maps?q=Av.%20Naciones%20Unidas%205461%2C%20Vallarta%20Universidad%2C%2045110%20Zapopan%2C%20Jalisco%2C%20M%C3%A9xico&amp;z=16&amp;hl=en&amp;output=embed" title="Google map showing where Plenitud Center is" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
       <p class="small map__link"><a href="https://www.google.com/maps/search/?api=1&amp;query=Av.%20Naciones%20Unidas%205461%2C%20Vallarta%20Universidad%2C%2045110%20Zapopan%2C%20Jalisco%2C%20M%C3%A9xico">Open in Google Maps →</a></p>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="first-title">
+    <div class="container">
+      <header class="section__head">
+        <p class="label eyebrow">Before you come</p>
+        <h2 class="display-h2" id="first-title">Your first visit.</h2>
+      </header>
+      <!-- PLACEHOLDER: recomendaciones de ejemplo; confirmar con el negocio -->
+      <ol class="steps" role="list">
+        <li class="step"><span class="step__num">1</span><h3 class="h4 step__title">Leave some margin</h3><p class="small step__text">About ten minutes early, so you can settle in without rushing.</p></li>
+        <li class="step"><span class="step__num">2</span><h3 class="h4 step__title">Comfortable clothes</h3><p class="small step__text">Anything a therapy needs is listed on its own page.</p></li>
+        <li class="step"><span class="step__num">3</span><h3 class="h4 step__title">Tell us how you arrive</h3><p class="small step__text">If something hurts or worries you, we adjust the session to you.</p></li>
+        <li class="step"><span class="step__num">4</span><h3 class="h4 step__title">Afterwards, no rush</h3><p class="small step__text">Take a moment before heading back out.</p></li>
+      </ol>
     </div>
   </section>
 </main>
@@ -136,7 +156,7 @@
       </nav>
       <nav aria-labelledby="f-leer">
         <h2 class="footer__heading" id="f-leer">Read</h2>
-        <ul class="footer__links" role="list"><li><a href="../voces/">Voices</a></li><li><a href="../guias/">Guides</a></li></ul>
+        <ul class="footer__links" role="list"><li><a href="../guias/">Guides</a></li><li><a href="../visita/">Visit</a></li></ul>
       </nav>
       <div>
         <h2 class="footer__heading" id="f-contacto">Contact</h2>
@@ -153,6 +173,9 @@
     </div>
   </div>
 </footer>
+
+<!-- Long pages: site.js shows it after a couple of screens of scrolling -->
+<a class="btn btn--secondary icon-btn to-top" href="#contenido" data-to-top hidden title="Back to top"><span aria-hidden="true">↑</span><span class="sr-only">Back to top</span></a>
 
 <dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
   <form class="dialog__panel" id="reserve-form" novalidate>
@@ -263,7 +286,7 @@
   </div>
 </dialog>
 
-<script src="../../site.js?v=82f8b520"></script>
+<script src="../../site.js?v=e6520ba0"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

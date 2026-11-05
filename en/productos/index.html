@@ -42,7 +42,7 @@
 <link rel="preload" href="../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../../site.css?v=dc6c032e" />
+<link rel="stylesheet" href="../../site.css?v=87a010bd" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -73,7 +73,6 @@
         <li><a class="nav__link" href="../terapias/">Therapies</a></li>
         <li><a class="nav__link" href="../productos/" aria-current="page">Products</a></li>
         <li><a class="nav__link" href="../guias/">Guides</a></li>
-        <li><a class="nav__link" href="../voces/">Voices</a></li>
         <li><a class="nav__link" href="../visita/">Visit</a></li>
         </ul>
         <div class="nav__actions">
@@ -96,12 +95,35 @@
         <h1 class="display-h1" id="productos-h1">For your practice at home.</h1>
         <p class="lead">Build your order and send it on WhatsApp — there is no online payment yet.</p>
       </header>
-      <div class="field" style="max-width: 24rem; margin-bottom: var(--space-7)">
-        <label class="field__label" for="product-filter">Search products</label>
-        <input class="input" id="product-filter" type="search" placeholder="e.g. candle, incense, copal" autocomplete="off" />
+      <div class="filters">
+        <div class="filters__row">
+          <div class="field filters__search">
+            <label class="field__label" for="product-filter">Search products</label>
+            <input class="input" id="product-filter" type="search" placeholder="e.g. candle, incense, copal" autocomplete="off" />
+          </div>
+          <div class="field" data-js-only hidden>
+            <label class="field__label" for="product-sort">Sort by</label>
+            <select class="select" id="product-sort">
+              <option value="featured">Featured</option>
+              <option value="low">Price: low to high</option>
+              <option value="high">Price: high to low</option>
+            </select>
+          </div>
+        </div>
+        <fieldset class="filter" data-js-only hidden>
+          <legend class="h4">Type</legend>
+          <div class="variant-picker__options">
+            <label class="variant-chip"><input type="radio" name="group" value="" checked /><span class="variant-chip__box">All</span></label>
+            <label class="variant-chip"><input type="radio" name="group" value="aromas" /><span class="variant-chip__box">Scents and resins</span></label>
+            <label class="variant-chip"><input type="radio" name="group" value="velas" /><span class="variant-chip__box">Candles</span></label>
+            <label class="variant-chip"><input type="radio" name="group" value="accesorios" /><span class="variant-chip__box">Incense holders</span></label>
+            <label class="variant-chip"><input type="radio" name="group" value="cuidado" /><span class="variant-chip__box">Personal care</span></label>
+          </div>
+        </fieldset>
+        <p class="small filter-status" role="status" data-product-status></p>
       </div>
       <ul class="grid grid--3" role="list" id="product-grid">
-        <li data-name="incense sticks">
+        <li data-name="incense sticks" data-group="aromas" data-price="45" data-order="0">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../../media/inciensos.jpg" srcset="../../media/w/inciensos-480.webp 480w, ../../media/w/inciensos-800.webp 800w, ../../media/w/inciensos-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Bundles of colorful incense sticks" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Incense sticks</h2>
@@ -113,7 +135,7 @@
             </div>
           </article>
         </li>
-        <li data-name="chlorophyll">
+        <li data-name="chlorophyll" data-group="cuidado" data-price="180" data-order="1">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../../media/clorofila.jpg" srcset="../../media/w/clorofila-480.webp 480w, ../../media/w/clorofila-800.webp 800w, ../../media/w/clorofila-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Green drink being poured into a glass" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Chlorophyll</h2>
@@ -125,7 +147,7 @@
             </div>
           </article>
         </li>
-        <li data-name="colored candles">
+        <li data-name="colored candles" data-group="velas" data-price="35" data-order="2">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../../media/velas-de-color.jpg" srcset="../../media/w/velas-de-color-480.webp 480w, ../../media/w/velas-de-color-800.webp 800w, ../../media/w/velas-de-color-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Lit colored candles" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Colored candles</h2>
@@ -137,7 +159,7 @@
             </div>
           </article>
         </li>
-        <li data-name="copal resin">
+        <li data-name="copal resin" data-group="aromas" data-price="90" data-order="3">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../../media/copal-resina.jpg" srcset="../../media/w/copal-resina-480.webp 480w, ../../media/w/copal-resina-800.webp 800w, ../../media/w/copal-resina-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Amber resin pieces on granules" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Copal resin</h2>
@@ -149,7 +171,7 @@
             </div>
           </article>
         </li>
-        <li data-name="charcoal tablets">
+        <li data-name="charcoal tablets" data-group="aromas" data-price="60" data-order="4">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../../media/carbon-compactado.jpg" srcset="../../media/w/carbon-compactado-480.webp 480w, ../../media/w/carbon-compactado-800.webp 800w, ../../media/w/carbon-compactado-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Metal bowl with smoking embers" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Charcoal tablets</h2>
@@ -161,7 +183,7 @@
             </div>
           </article>
         </li>
-        <li data-name="metal candle base">
+        <li data-name="metal candle base" data-group="velas" data-price="120" data-order="5">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../../media/base-metalica-vela.jpg" srcset="../../media/w/base-metalica-vela-480.webp 480w, ../../media/w/base-metalica-vela-800.webp 800w, ../../media/w/base-metalica-vela-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Lit candle on a brass base" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Metal candle base</h2>
@@ -173,7 +195,7 @@
             </div>
           </article>
         </li>
-        <li data-name="incense holder">
+        <li data-name="incense holder" data-group="accesorios" data-price="80" data-order="6">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../../media/portaincienso.jpg" srcset="../../media/w/portaincienso-480.webp 480w, ../../media/w/portaincienso-800.webp 800w, ../../media/w/portaincienso-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Lit incense stick in a holder" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Incense holder</h2>
@@ -185,7 +207,7 @@
             </div>
           </article>
         </li>
-        <li data-name="incense holder with compartment">
+        <li data-name="incense holder with compartment" data-group="accesorios" data-price="220" data-order="7">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../../media/portaincienso-compartimiento.jpg" srcset="../../media/w/portaincienso-compartimiento-480.webp 480w, ../../media/w/portaincienso-compartimiento-800.webp 800w, ../../media/w/portaincienso-compartimiento-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Incense smoking on a lotus-shaped holder" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Incense holder with compartment</h2>
@@ -197,7 +219,7 @@
             </div>
           </article>
         </li>
-        <li data-name="ozonated oil">
+        <li data-name="ozonated oil" data-group="cuidado" data-price="260" data-order="8">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../../media/ozono.jpg" srcset="../../media/w/ozono-480.webp 480w, ../../media/w/ozono-800.webp 800w, ../../media/w/ozono-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Air bubbles under water" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Ozonated oil</h2>
@@ -229,7 +251,7 @@
       </nav>
       <nav aria-labelledby="f-leer">
         <h2 class="footer__heading" id="f-leer">Read</h2>
-        <ul class="footer__links" role="list"><li><a href="../voces/">Voices</a></li><li><a href="../guias/">Guides</a></li></ul>
+        <ul class="footer__links" role="list"><li><a href="../guias/">Guides</a></li><li><a href="../visita/">Visit</a></li></ul>
       </nav>
       <div>
         <h2 class="footer__heading" id="f-contacto">Contact</h2>
@@ -246,6 +268,9 @@
     </div>
   </div>
 </footer>
+
+<!-- Long pages: site.js shows it after a couple of screens of scrolling -->
+<a class="btn btn--secondary icon-btn to-top" href="#contenido" data-to-top hidden title="Back to top"><span aria-hidden="true">↑</span><span class="sr-only">Back to top</span></a>
 
 <dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
   <form class="dialog__panel" id="reserve-form" novalidate>
@@ -356,7 +381,7 @@
   </div>
 </dialog>
 
-<script src="../../site.js?v=82f8b520"></script>
+<script src="../../site.js?v=e6520ba0"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

@@ -42,7 +42,7 @@
 <link rel="preload" href="../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../../site.css?v=dc6c032e" />
+<link rel="stylesheet" href="../../site.css?v=87a010bd" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -73,7 +73,6 @@
         <li><a class="nav__link" href="../../terapias/" aria-current="page">Terapias</a></li>
         <li><a class="nav__link" href="../../productos/">Productos</a></li>
         <li><a class="nav__link" href="../../guias/">Guías</a></li>
-        <li><a class="nav__link" href="../../voces/">Voces</a></li>
         <li><a class="nav__link" href="../../visita/">Visita</a></li>
         </ul>
         <div class="nav__actions">
@@ -96,7 +95,8 @@
         <p class="label eyebrow">Energética</p>
         <h1 class="display-h1" id="t-h1">Flores de Bach</h1>
         <p class="lead">Un sistema de esencias florales pensado para acompañar estados de ánimo y procesos emocionales, elegidas junto con la guía según lo que estés atravesando.</p>
-        <dl class="facts"><div><dt>Precio</dt><dd>$550 MXN</dd></div><div><dt>Duración</dt><dd>45 min</dd></div><div><dt>Horario</dt><dd>Con cita, de 9:00 a 16:00</dd></div></dl>
+        <dl class="facts"><div><dt>Precio</dt><dd>$550 MXN</dd></div><div><dt>Duración</dt><dd>45 min</dd></div><div><dt>Horario</dt><dd>Con cita, de 9:00 a 16:00</dd></div><div><dt>Te acompaña</dt><dd>Valeria Montes</dd></div></dl>
+        <p class="small detail__needs">Ayuda con: Estrés · Claridad · Descanso</p>
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve data-session="flores-de-bach">Reservar Flores de Bach</button></p>
         <p class="caption contact-note">Atención de 9:00 a 16:00 · WhatsApp <a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">33 3599 2034</a> o <a href="https://wa.me/523324909550?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">33 2490 9550</a></p>
         <h2 class="h4">Qué esperar</h2>
@@ -125,7 +125,7 @@
       </nav>
       <nav aria-labelledby="f-leer">
         <h2 class="footer__heading" id="f-leer">Leer</h2>
-        <ul class="footer__links" role="list"><li><a href="../../voces/">Voces</a></li><li><a href="../../guias/">Guías</a></li></ul>
+        <ul class="footer__links" role="list"><li><a href="../../guias/">Guías</a></li><li><a href="../../visita/">Visita</a></li></ul>
       </nav>
       <div>
         <h2 class="footer__heading" id="f-contacto">Contacto</h2>
@@ -142,6 +142,9 @@
     </div>
   </div>
 </footer>
+
+<!-- Long pages: site.js shows it after a couple of screens of scrolling -->
+<a class="btn btn--secondary icon-btn to-top" href="#contenido" data-to-top hidden title="Volver arriba"><span aria-hidden="true">↑</span><span class="sr-only">Volver arriba</span></a>
 
 <dialog class="dialog" id="reserve" aria-labelledby="reserve-t1">
   <form class="dialog__panel" id="reserve-form" novalidate>
@@ -252,7 +255,7 @@
   </div>
 </dialog>
 
-<script src="../../site.js?v=82f8b520"></script>
+<script src="../../site.js?v=e6520ba0"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>
