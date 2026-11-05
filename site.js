@@ -27,6 +27,7 @@
       openNow: function (c) { return 'Abierto ahora · cierra a las ' + c; },
       opensToday: function (o) { return 'Cerrado ahora · abre hoy a las ' + o; },
       opensTomorrow: function (o) { return 'Cerrado ahora · abre mañana a las ' + o; },
+      opensOn: function (d, o) { return 'Cerrado ahora · abre el ' + ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'][d] + ' a las ' + o; },
       therapies: function (n, need) { return (n === 1 ? '1 terapia' : n + ' terapias') + (need ? ' para ' + need.toLowerCase() : ''); },
       products: function (n) { return n === 1 ? '1 producto' : n + ' productos'; }
     },
@@ -41,6 +42,7 @@
       openNow: function (c) { return 'Open now · closes at ' + c; },
       opensToday: function (o) { return 'Closed now · opens today at ' + o; },
       opensTomorrow: function (o) { return 'Closed now · opens tomorrow at ' + o; },
+      opensOn: function (d, o) { return 'Closed now · opens ' + ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][d] + ' at ' + o; },
       therapies: function (n, need) { return (n === 1 ? '1 therapy' : n + ' therapies') + (need ? ' for ' + need.toLowerCase() : ''); },
       products: function (n) { return n === 1 ? '1 product' : n + ' products'; }
     }
@@ -368,15 +370,25 @@
      looking from elsewhere still sees whether the doors are open in Zapopan. */
   var openLines = $$('[data-open-status]');
   if (openLines.length) {
-    var now = -1;
+    var now = -1, day = -1;
     try {
-      var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Mexico_City', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date());
-      var part = function (t) { return Number(parts.filter(function (x) { return x.type === t; })[0].value); };
-      now = (part('hour') % 24) * 60 + part('minute');
+      var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Mexico_City', weekday: 'short', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date());
+      var part = function (t) { return parts.filter(function (x) { return x.type === t; })[0].value; };
+      now = (Number(part('hour')) % 24) * 60 + Number(part('minute'));
+      day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(part('weekday'));
     } catch (e) {}
-    if (now >= 0) openLines.forEach(function (p) {
-      var o = Number(p.dataset.open), c = Number(p.dataset.close), isOpen = now >= o * 60 && now < c * 60;
-      $('[data-open-text]', p).textContent = isOpen ? T.openNow(T.hour(c)) : now < o * 60 ? T.opensToday(T.hour(o)) : T.opensTomorrow(T.hour(o));
+    if (now >= 0 && day >= 0) openLines.forEach(function (p) {
+      var o = Number(p.dataset.open), c = Number(p.dataset.close), days = p.dataset.days.split(' ').map(Number);
+      var openToday = days.indexOf(day) !== -1, isOpen = openToday && now >= o * 60 && now < c * 60;
+      var text;
+      if (isOpen) text = T.openNow(T.hour(c));
+      else if (openToday && now < o * 60) text = T.opensToday(T.hour(o));
+      else {   /* the next day it opens: tomorrow, or a named day after a closed one */
+        var ahead = 1;
+        while (ahead < 7 && days.indexOf((day + ahead) % 7) === -1) ahead++;
+        text = ahead === 1 ? T.opensTomorrow(T.hour(o)) : T.opensOn((day + ahead) % 7, T.hour(o));
+      }
+      $('[data-open-text]', p).textContent = text;
       p.classList.toggle('is-open', isOpen);
       p.hidden = false;
     });
@@ -407,14 +419,14 @@
     });
   }
 
-  /* ---------- Product catalog: search, type and sort (progressive enhancement) ---------- */
+  /* ---------- Product catalog: search and sort (progressive enhancement) ---------- */
   var filter = $('#product-filter'), grid = $('#product-grid');
   if (filter && grid) {
     var items = $$('li', grid), empty = $('#product-empty'), sort = $('#product-sort'), productStatus = $('[data-product-status]');
     var applyFilter = function () {
-      var q = filter.value.trim().toLowerCase(), g = ($('input[name=group]:checked') || {}).value || '', shown = 0;
+      var q = filter.value.trim().toLowerCase(), shown = 0;
       items.forEach(function (li) {
-        var match = (!q || li.dataset.name.indexOf(q) !== -1) && (!g || li.dataset.group === g);
+        var match = !q || li.dataset.name.indexOf(q) !== -1;
         li.hidden = !match;
         if (match) shown++;
       });
@@ -436,7 +448,6 @@
       }).forEach(function (li) { grid.appendChild(li); });
     };
     filter.addEventListener('input', applyFilter);
-    $$('input[name=group]').forEach(function (r) { r.addEventListener('change', applyFilter); });
     if (sort) sort.addEventListener('change', applySort);
   }
 

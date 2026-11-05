@@ -39,7 +39,7 @@ const UI = {
     skip: 'Saltar al contenido', homeLabel: 'Plenitud Center, inicio', menu: 'Menú', mainNav: 'Principal', reserve: 'Reservar',
     nav: { terapias: 'Terapias', productos: 'Productos', guias: 'Guías', visita: 'Visita' },
     tagline: 'Un lugar para volver a ti.', address: 'Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco',
-    openHours: 'Abierto de 9:00 a 16:00', attention: 'Atención de 9:00 a 16:00',
+    openHours: 'Abierto de lunes a sábado, de 9:00 a 16:00', attention: 'Atención de lunes a sábado, de 9:00 a 16:00',
     fTherapies: 'Terapias', fSeeAll: 'Ver todas', fRead: 'Leer', fContact: 'Contacto',
     demo: { label: 'Aviso de sitio de demostración', title: 'Sitio de demostración.', text: 'Productos, servicios, precios, fotos y testimonios son de ejemplo y aún no reflejan la oferta real.', wa: 'Para información actual, escríbenos por WhatsApp.', ok: 'Entendido, cerrar aviso', footer: 'Sitio de demostración: el contenido es ilustrativo y no refleja todavía la oferta real del negocio.' },
     settings: { open: 'Ajustes', title: 'Ajustes', lang: 'Idioma', langTo: 'Cambiar a inglés', dark: 'Modo oscuro', contrast: 'Alto contraste',
@@ -79,7 +79,7 @@ const UI = {
       eyebrow: 'Productos', h1: 'Para la práctica en casa.', lead: 'Arma tu pedido y envíalo por WhatsApp — todavía no hay pago en línea.',
       search: 'Buscar producto', searchPh: 'Ej. vela, incienso, copal', empty: 'No hay productos que coincidan con esa búsqueda.',
       eyebrowOne: 'Producto', choose: 'Elige', orderWa: 'Pedir por WhatsApp', back: '← Ver todos los productos',
-      group: 'Tipo', all: 'Todos', sort: 'Ordenar', sortFeatured: 'Destacados', sortLow: 'Precio: menor a mayor', sortHigh: 'Precio: mayor a menor',
+      sort: 'Ordenar', sortFeatured: 'Destacados', sortLow: 'Precio: menor a mayor', sortHigh: 'Precio: mayor a menor',
       related: 'También te puede gustar', seeAll: 'Ver todos los productos',
     },
     guides: {
@@ -89,16 +89,15 @@ const UI = {
     },
     visit: {
       title: 'Visita · Plenitud Center', description: 'Dirección, horario y contacto de Plenitud Center.', eyebrow: 'Visita', h1: 'Cómo llegar',
-      address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco.', contact: 'Contacto', contactLead: 'Por WhatsApp o llamada, en el mismo horario:',
-      mapTitle: 'Dónde estamos', mapFrame: 'Mapa de Google con la ubicación de Plenitud Center', mapOpen: 'Abrir en Google Maps →',
+      address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco.', contact: 'Contacto', contactLead: 'Por WhatsApp o llamada:',
+      mapFrame: 'Mapa de Google con la ubicación de Plenitud Center', mapOpen: 'Abrir en Google Maps →',
       mapOff: 'El mapa de Google está apagado en Ajustes.', mapShow: 'Mostrar el mapa',
       call: 'Llamar', callTo: 'al', reserve: 'Reservar una terapia', spaceAlt: 'Sala amplia y luminosa con grandes ventanales y piso de madera',
-      seeMap: 'Ver en el mapa', directions: 'Trazar ruta', directionsHint: 'abre Google Maps',
+      directions: 'Trazar ruta', directionsHint: 'abre Google Maps',
       firstEyebrow: 'Antes de venir', firstTitle: 'Tu primera visita.',
-      first: [['Llega con margen', 'Unos diez minutos antes, para instalarte sin prisa.'],
-        ['Ropa cómoda', 'Lo que haga falta para cada terapia viene en su página.'],
-        ['Cuéntanos cómo llegas', 'Si algo te duele o te preocupa, ajustamos la sesión a ti.'],
-        ['Después, sin correr', 'Tómate un momento antes de volver a la calle.']],
+      first: [['Confirma tu cita', 'Corrobora la ubicación y el horario de tu cita antes de salir.'],
+        ['Llega con tiempo', 'Unos minutos de margen para instalarte sin prisa.'],
+        ['Pregunta lo que necesites', 'En recepción te damos indicaciones, o haz tus preguntas directamente a la persona que te atiende.']],
     },
     toTop: 'Volver arriba',
     notFound: { title: 'Página no encontrada · Plenitud Center', h1: 'Esta página no está aquí.', lead: 'Puede que el enlace haya cambiado o que la página ya no exista. Desde aquí puedes volver a lo que buscabas.', home: 'Ir al inicio', en: 'This page is not here.', enLink: 'Go to the English site' },
@@ -109,7 +108,7 @@ const UI = {
     skip: 'Skip to content', homeLabel: 'Plenitud Center, home', menu: 'Menu', mainNav: 'Main', reserve: 'Book',
     nav: { terapias: 'Therapies', productos: 'Products', guias: 'Guides', visita: 'Visit' },
     tagline: 'A place to come back to yourself.', address: 'Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco, Mexico',
-    openHours: 'Open 9 a.m. to 4 p.m.', attention: 'We answer 9 a.m. to 4 p.m.',
+    openHours: 'Open Monday to Saturday, 9 a.m. to 4 p.m.', attention: 'We answer Monday to Saturday, 9 a.m. to 4 p.m.',
     fTherapies: 'Therapies', fSeeAll: 'See all', fRead: 'Read', fContact: 'Contact',
     demo: { label: 'Demo site notice', title: 'This is a demo site.', text: 'Products, services, prices, photos and testimonials are examples and do not yet reflect the real offer.', wa: 'For current information, message us on WhatsApp.', ok: 'Got it, close notice', footer: 'Demo site: content is illustrative and does not yet reflect what the business actually offers.' },
     settings: { open: 'Settings', title: 'Settings', lang: 'Language', langTo: 'Switch to Spanish', dark: 'Dark mode', contrast: 'High contrast',
@@ -150,7 +149,7 @@ const UI = {
       eyebrow: 'Products', h1: 'For your practice at home.', lead: 'Build your order and send it on WhatsApp — there is no online payment yet.',
       search: 'Search products', searchPh: 'e.g. candle, incense, copal', empty: 'No products match that search.',
       eyebrowOne: 'Product', choose: 'Choose a', orderWa: 'Order on WhatsApp', back: '← See all products',
-      group: 'Type', all: 'All', sort: 'Sort by', sortFeatured: 'Featured', sortLow: 'Price: low to high', sortHigh: 'Price: high to low',
+      sort: 'Sort by', sortFeatured: 'Featured', sortLow: 'Price: low to high', sortHigh: 'Price: high to low',
       related: 'You may also like', seeAll: 'See all products',
     },
     guides: {
@@ -160,16 +159,15 @@ const UI = {
     },
     visit: {
       title: 'Visit · Plenitud Center', description: 'Address, hours and contact for Plenitud Center.', eyebrow: 'Visit', h1: 'How to get here',
-      address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco, Mexico.', contact: 'Contact', contactLead: 'By WhatsApp or phone, during the same hours:',
-      mapTitle: 'Where we are', mapFrame: 'Google map showing where Plenitud Center is', mapOpen: 'Open in Google Maps →',
+      address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco, Mexico.', contact: 'Contact', contactLead: 'By WhatsApp or phone:',
+      mapFrame: 'Google map showing where Plenitud Center is', mapOpen: 'Open in Google Maps →',
       mapOff: 'The Google map is turned off in Settings.', mapShow: 'Show the map',
       call: 'Call', callTo: '', reserve: 'Book a therapy', spaceAlt: 'Large, bright room with tall windows and a wooden floor',
-      seeMap: 'See on the map', directions: 'Get directions', directionsHint: 'opens Google Maps',
+      directions: 'Get directions', directionsHint: 'opens Google Maps',
       firstEyebrow: 'Before you come', firstTitle: 'Your first visit.',
-      first: [['Leave some margin', 'About ten minutes early, so you can settle in without rushing.'],
-        ['Comfortable clothes', 'Anything a therapy needs is listed on its own page.'],
-        ['Tell us how you arrive', 'If something hurts or worries you, we adjust the session to you.'],
-        ['Afterwards, no rush', 'Take a moment before heading back out.']],
+      first: [['Confirm your appointment', 'Check the location and time of your appointment before you leave.'],
+        ['Arrive with time to spare', 'A few minutes of margin so you can settle in without rushing.'],
+        ['Ask whatever you need', 'Reception can give you directions, or ask the person attending you directly.']],
     },
     toTop: 'Back to top',
     built: 'Built',
@@ -474,9 +472,10 @@ function cardMedia(image, prefix, ratio = 'square') {
 }
 
 // The page's main photo is usually the largest thing on screen: fetch it first
-function detailMedia(image, prefix) {
+// (`lead = false` for a photo further down the page, which loads lazily instead)
+function detailMedia(image, prefix, lead = true) {
   if (!image) return `<div class="detail__media detail__media--empty" aria-hidden="true"></div>`;
-  return `<figure class="detail__media"><img ${photoAttrs(image, prefix, '(min-width: 60rem) 34rem, 92vw')} fetchpriority="high" /></figure>`;
+  return `<figure class="detail__media"><img ${photoAttrs(image, prefix, '(min-width: 60rem) 34rem, 92vw')} ${lead ? 'fetchpriority="high"' : 'loading="lazy"'} /></figure>`;
 }
 
 // Business address as given by the owner; the map and the "open in Google Maps" link search for it.
@@ -524,8 +523,8 @@ function variantSummary(p) {
   return `<p class="variants"><span>${vs.length} ${esc(label)}</span></p>`;
 }
 
-/* DEMO: what each therapy helps with (therapy filter), which guide leads it, and how products
-   group (product filter). Illustrative like the rest of the catalog: confirm with the owner. */
+/* DEMO, generic until the owner fills them in: what each therapy helps with (therapy filter)
+   and which guide leads it. */
 const NEEDS = {
   es: { estres: 'Estrés', descanso: 'Descanso', dolor: 'Dolor muscular', energia: 'Energía', claridad: 'Claridad' },
   en: { estres: 'Stress', descanso: 'Rest', dolor: 'Muscle pain', energia: 'Energy', claridad: 'Clarity' },
@@ -534,26 +533,18 @@ const THERAPY_NEEDS = {
   'masaje-corporal': ['dolor', 'estres', 'descanso'], reiki: ['estres', 'descanso', 'energia'], limpia: ['claridad', 'energia'],
   'flores-de-bach': ['estres', 'claridad', 'descanso'], biomagnetismo: ['dolor', 'energia'],
 };
-const PRODUCT_GROUPS = {
-  es: { aromas: 'Aromas y resinas', velas: 'Velas', accesorios: 'Portaincienso', cuidado: 'Cuidado personal' },
-  en: { aromas: 'Scents and resins', velas: 'Candles', accesorios: 'Incense holders', cuidado: 'Personal care' },
-};
-const PRODUCT_GROUP = {
-  inciensos: 'aromas', 'copal-resina': 'aromas', 'carbon-compactado': 'aromas', 'velas-de-color': 'velas', 'base-metalica-vela': 'velas',
-  portaincienso: 'accesorios', 'portaincienso-compartimiento': 'accesorios', clorofila: 'cuidado', ozono: 'cuidado',
-};
 const needsOf = (t) => THERAPY_NEEDS[t.slug] || [];
 const guideOf = (t) => GUIAS.find((g) => g.therapies.includes(t.slug));
 
-// Opening hours, as the site states them ("9:00 a 16:00"). Every day is assumed: confirm the days.
-// The open-now line (site.js) and the search-engine data below both read them.
-const HOURS = { open: 9, close: 16 };
-const openStatus = () => `<p class="open-status" data-open-status data-open="${HOURS.open}" data-close="${HOURS.close}" hidden><span class="open-status__dot" aria-hidden="true"></span><span data-open-text></span></p>`;
+// Opening hours as given by the owner: Monday to Saturday, 9:00 to 16:00; closed on Sunday.
+// Days count from Sunday = 0. The open-now line (site.js) and the search-engine data both read them.
+const HOURS = { open: 9, close: 16, days: [1, 2, 3, 4, 5, 6] };
+const openStatus = () => `<p class="open-status" data-open-status data-open="${HOURS.open}" data-close="${HOURS.close}" data-days="${HOURS.days.join(' ')}" hidden><span class="open-status__dot" aria-hidden="true"></span><span data-open-text></span></p>`;
 
 const GUIAS = [
   { name: 'Ana Lucía Ríos', focus: 'Masaje corporal', schedule: 'Martes a viernes', therapies: ['masaje-corporal'], en: { focus: 'Body massage', schedule: 'Tuesday to Friday', imageAlt: 'Portrait of Ana Lucía Ríos smiling in natural light' }, image: { file: 'media/guia-corporal.jpg', alt: 'Retrato de Ana Lucía Ríos sonriendo con luz natural' } },
   { name: 'Valeria Montes', focus: 'Reiki, flores de Bach y biomagnetismo', schedule: 'Miércoles a sábado', therapies: ['reiki', 'flores-de-bach', 'biomagnetismo'], en: { focus: 'Reiki, Bach flowers and biomagnetism', schedule: 'Wednesday to Saturday', imageAlt: 'Portrait of Valeria Montes wearing a bead necklace in a bright studio' }, image: { file: 'media/guia-energetica.jpg', alt: 'Retrato de Valeria Montes con collar de cuentas en un estudio luminoso' } },
-  { name: 'Tomás Ibarra', focus: 'Limpias y acompañamiento espiritual', schedule: 'Jueves a domingo', therapies: ['limpia'], en: { focus: 'Limpias and spiritual guidance', schedule: 'Thursday to Sunday', imageAlt: 'Portrait of Tomás Ibarra smiling outdoors' }, image: { file: 'media/guia-espiritual.jpg', alt: 'Retrato de Tomás Ibarra sonriendo al aire libre' } },
+  { name: 'Tomás Ibarra', focus: 'Limpias y acompañamiento espiritual', schedule: 'Jueves a sábado', therapies: ['limpia'], en: { focus: 'Limpias and spiritual guidance', schedule: 'Thursday to Saturday', imageAlt: 'Portrait of Tomás Ibarra smiling outdoors' }, image: { file: 'media/guia-espiritual.jpg', alt: 'Retrato de Tomás Ibarra sonriendo al aire libre' } },
 ];
 
 /* Business card for search engines (address, phones, hours), on the home and Visit pages */
@@ -564,7 +555,7 @@ function localBusinessLd() {
     image: `${SITE_URL}media/espacio.jpg`, logo: `${SITE_URL}design-system/assets/logo-emblem.png`,
     telephone: CONTACTS.map((c) => `+${c.intl}`),
     address: { '@type': 'PostalAddress', streetAddress: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad', addressLocality: 'Zapopan', addressRegion: 'Jalisco', postalCode: '45110', addressCountry: 'MX' },
-    openingHours: `Mo-Su ${pad(HOURS.open)}-${pad(HOURS.close)}`,
+    openingHours: `Mo-Sa ${pad(HOURS.open)}-${pad(HOURS.close)}`,
   };
   return `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
 }
@@ -846,7 +837,7 @@ function facts(rows) {
 
 function productosIndexBody(prefix) {
   const P = L.products;
-  const cards = productos.map((p, i) => `        <li data-name="${esc(tr(p, 'name').toLowerCase())}" data-group="${PRODUCT_GROUP[p.slug] || ''}" data-price="${p.price ?? ''}" data-order="${i}">
+  const cards = productos.map((p, i) => `        <li data-name="${esc(tr(p, 'name').toLowerCase())}" data-price="${p.price ?? ''}" data-order="${i}">
           <article class="card card--interactive">
             ${cardMedia(imageOf(p), prefix)}
             <h2 class="card__title card__title--sm">${esc(tr(p, 'name'))}</h2>
@@ -881,12 +872,6 @@ function productosIndexBody(prefix) {
             </select>
           </div>
         </div>
-        <fieldset class="filter" data-js-only hidden>
-          <legend class="h4">${P.group}</legend>
-          <div class="variant-picker__options">
-            ${[['', P.all], ...Object.entries(PRODUCT_GROUPS[LANG])].map(([k, v]) => `<label class="variant-chip"><input type="radio" name="group" value="${k}"${k ? '' : ' checked'} /><span class="variant-chip__box">${esc(v)}</span></label>`).join('\n            ')}
-          </div>
-        </fieldset>
         <p class="small filter-status" role="status" data-product-status></p>
       </div>
       <ul class="grid grid--3" role="list" id="product-grid">
@@ -948,12 +933,12 @@ function productoDetailBody(prefix, p) {
 ${relatedProducts(prefix, p)}`;
 }
 
-// Same group first, then the rest of the catalog, three in all
+// Products aren't grouped (the catalog is varied), so "you may also like" shows the next three
+// in catalog order, wrapping around: every product page points somewhere different.
 function relatedProducts(prefix, p) {
   const P = L.products;
-  const g = PRODUCT_GROUP[p.slug];
-  const others = productos.filter((x) => x !== p && x.image);
-  const picks = [...others.filter((x) => PRODUCT_GROUP[x.slug] === g), ...others.filter((x) => PRODUCT_GROUP[x.slug] !== g)].slice(0, 3);
+  const i = productos.indexOf(p);
+  const picks = [...productos.slice(i + 1), ...productos.slice(0, i)].filter((x) => x.image).slice(0, 3);
   return `  <section class="section section--sage" aria-labelledby="related-title">
     <div class="container">
       <header class="section__head">
@@ -985,12 +970,13 @@ ${guiaCards(prefix, 'h2', true)}
   </section>`;
 }
 
+/* Visit: how to get here beside the map (text first on phones), then contact with the photo
+   of the space, then what to know before a first visit. */
 function visitaBody(prefix) {
   const V = L.visit;
   const espacio = { file: 'media/espacio.jpg', alt: V.spaceAlt };
   return `  <section class="section" aria-labelledby="visita-h1">
-    <div class="container detail">
-      ${detailMedia(espacio, prefix)}
+    <div class="container visit">
       <div class="detail__body">
         <p class="label eyebrow">${V.eyebrow}</p>
         <h1 class="display-h1" id="visita-h1">${V.h1}</h1>
@@ -998,29 +984,29 @@ function visitaBody(prefix) {
         <p class="lead">${V.address}</p>
         <p class="body">${L.openHours}.</p>
         ${openStatus()}
-        <div class="visit-actions">
-          <a class="btn btn--secondary" href="#mapa">${V.seeMap}</a>
-          <a class="btn btn--secondary" href="https://www.google.com/maps/dir/?api=1&amp;destination=${encodeURIComponent(MAP_QUERY)}">${V.directions} <span class="sr-only">(${V.directionsHint})</span></a>
+        <p class="visit-actions"><a class="btn btn--secondary btn--lg" href="https://www.google.com/maps/dir/?api=1&amp;destination=${encodeURIComponent(MAP_QUERY)}">${V.directions} <span class="sr-only">(${V.directionsHint})</span></a></p>
+      </div>
+      <div class="visit__map">
+        <div class="map" data-map>
+          <div class="map__off" hidden><p class="body">${V.mapOff}</p><button class="btn btn--secondary" type="button" data-map-show>${V.mapShow}</button></div>
+          <iframe src="https://maps.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&amp;z=16&amp;hl=${LANG}&amp;output=embed" title="${V.mapFrame}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <h2 class="h4">${V.contact}</h2>
+        <p class="small map__link"><a href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(MAP_QUERY)}">${V.mapOpen}</a></p>
+      </div>
+    </div>
+  </section>
+  <section class="section section--sage" aria-labelledby="contacto-h2">
+    <div class="container detail">
+      ${detailMedia(espacio, prefix, false)}
+      <div class="detail__body">
+        <h2 class="display-h2" id="contacto-h2">${V.contact}</h2>
         <p class="body">${V.contactLead}</p>
         <ul class="body contact-list" role="list">
 ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.display}</a> · <a href="tel:+${c.intl}">${V.call} <span class="sr-only">${V.callTo} ${c.display}</span></a></li>`).join('\n')}
         </ul>
+        <p class="caption">${L.attention}</p>
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve>${V.reserve}</button></p>
       </div>
-    </div>
-  </section>
-  <section class="section section--sage" id="mapa" aria-labelledby="mapa-h2">
-    <div class="container">
-      <div class="section__head">
-        <h2 class="display-h2" id="mapa-h2">${V.mapTitle}</h2>
-      </div>
-      <div class="map" data-map>
-        <div class="map__off" hidden><p class="body">${V.mapOff}</p><button class="btn btn--secondary" type="button" data-map-show>${V.mapShow}</button></div>
-        <iframe src="https://maps.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&amp;z=16&amp;hl=${LANG}&amp;output=embed" title="${V.mapFrame}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-      <p class="small map__link"><a href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(MAP_QUERY)}">${V.mapOpen}</a></p>
     </div>
   </section>
   <section class="section" aria-labelledby="first-title">
@@ -1029,7 +1015,6 @@ ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.disp
         <p class="label eyebrow">${V.firstEyebrow}</p>
         <h2 class="display-h2" id="first-title">${V.firstTitle}</h2>
       </header>
-      <!-- PLACEHOLDER: recomendaciones de ejemplo; confirmar con el negocio -->
 ${steps(V.first)}
     </div>
   </section>`;

@@ -39,7 +39,7 @@
         "Sales con tiempo para moverte despacio antes de volver a tu ritmo."
       ],
       "duration": "60 min",
-      "schedule": "Con cita, de 9:00 a 16:00",
+      "schedule": "Con cita, de lunes a sábado, 9:00 a 16:00",
       "price": 750,
       "image": {
         "file": "media/masaje-corporal.jpg",
@@ -55,7 +55,7 @@
           "The session adapts to the areas that need it most that day.",
           "You leave with time to move slowly before returning to your pace."
         ],
-        "schedule": "By appointment, 9:00 to 16:00",
+        "schedule": "By appointment, Monday to Saturday, 9:00 to 16:00",
         "imageAlt": "Hands massaging a back"
       }
     },
@@ -72,7 +72,7 @@
         "Es común salir con una sensación de calma poco habitual."
       ],
       "duration": "50 min",
-      "schedule": "Con cita, de 9:00 a 16:00",
+      "schedule": "Con cita, de lunes a sábado, 9:00 a 16:00",
       "price": 600,
       "image": {
         "file": "media/reiki.jpg",
@@ -88,7 +88,7 @@
           "Your guide places their hands over different points of the body.",
           "Many people leave with an unusual sense of calm."
         ],
-        "schedule": "By appointment, 9:00 to 16:00",
+        "schedule": "By appointment, Monday to Saturday, 9:00 to 16:00",
         "imageAlt": "Open hands with palms facing up"
       }
     },
@@ -105,7 +105,7 @@
         "Se cierra con unos minutos de silencio antes de volver afuera."
       ],
       "duration": "40 min",
-      "schedule": "Con cita, de 9:00 a 16:00",
+      "schedule": "Con cita, de lunes a sábado, 9:00 a 16:00",
       "price": 450,
       "image": {
         "file": "media/limpia.jpg",
@@ -121,7 +121,7 @@
           "The ritual adapts to what you need to let go of.",
           "It closes with a few minutes of silence before you step back outside."
         ],
-        "schedule": "By appointment, 9:00 to 16:00",
+        "schedule": "By appointment, Monday to Saturday, 9:00 to 16:00",
         "imageAlt": "Bundle of white sage in a ceramic bowl"
       }
     },
@@ -138,7 +138,7 @@
         "El acompañamiento suele incluir una revisión a las semanas."
       ],
       "duration": "45 min",
-      "schedule": "Con cita, de 9:00 a 16:00",
+      "schedule": "Con cita, de lunes a sábado, 9:00 a 16:00",
       "price": 550,
       "image": {
         "file": "media/flores-de-bach.jpg",
@@ -154,7 +154,7 @@
           "A personal blend is prepared for you to take at home.",
           "Follow-up usually includes a check-in a few weeks later."
         ],
-        "schedule": "By appointment, 9:00 to 16:00",
+        "schedule": "By appointment, Monday to Saturday, 9:00 to 16:00",
         "imageAlt": "Dropper bottles with dried flowers inside"
       }
     },
@@ -171,7 +171,7 @@
         "La sesión suele incluir varios minutos de reposo con los imanes puestos."
       ],
       "duration": "60 min",
-      "schedule": "Con cita, de 9:00 a 16:00",
+      "schedule": "Con cita, de lunes a sábado, 9:00 a 16:00",
       "price": 700,
       "image": {
         "file": "media/biomagnetismo.jpg",
@@ -187,7 +187,7 @@
           "Magnets are placed in pairs, according to the points checked that day.",
           "The session usually includes several minutes of rest with the magnets in place."
         ],
-        "schedule": "By appointment, 9:00 to 16:00",
+        "schedule": "By appointment, Monday to Saturday, 9:00 to 16:00",
         "imageAlt": "Cluster of silver magnetic spheres"
       }
     }

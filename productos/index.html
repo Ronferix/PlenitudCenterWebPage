@@ -42,7 +42,7 @@
 <link rel="preload" href="../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../site.css?v=87a010bd" />
+<link rel="stylesheet" href="../site.css?v=5ca03c20" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -79,7 +79,7 @@
           <button class="btn btn--primary" type="button" data-reserve>Reservar</button>
           <button class="btn btn--ghost icon-btn nav__settings nav__settings--panel" type="button" data-settings-open aria-haspopup="dialog" title="Ajustes"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">Ajustes</span></button>
         </div>
-        <p class="caption nav__hours">Atención de 9:00 a 16:00</p>
+        <p class="caption nav__hours">Atención de lunes a sábado, de 9:00 a 16:00</p>
       </div>
     </nav>
   </div>
@@ -110,20 +110,10 @@
             </select>
           </div>
         </div>
-        <fieldset class="filter" data-js-only hidden>
-          <legend class="h4">Tipo</legend>
-          <div class="variant-picker__options">
-            <label class="variant-chip"><input type="radio" name="group" value="" checked /><span class="variant-chip__box">Todos</span></label>
-            <label class="variant-chip"><input type="radio" name="group" value="aromas" /><span class="variant-chip__box">Aromas y resinas</span></label>
-            <label class="variant-chip"><input type="radio" name="group" value="velas" /><span class="variant-chip__box">Velas</span></label>
-            <label class="variant-chip"><input type="radio" name="group" value="accesorios" /><span class="variant-chip__box">Portaincienso</span></label>
-            <label class="variant-chip"><input type="radio" name="group" value="cuidado" /><span class="variant-chip__box">Cuidado personal</span></label>
-          </div>
-        </fieldset>
         <p class="small filter-status" role="status" data-product-status></p>
       </div>
       <ul class="grid grid--3" role="list" id="product-grid">
-        <li data-name="inciensos" data-group="aromas" data-price="45" data-order="0">
+        <li data-name="inciensos" data-price="45" data-order="0">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../media/inciensos.jpg" srcset="../media/w/inciensos-480.webp 480w, ../media/w/inciensos-800.webp 800w, ../media/w/inciensos-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Manojos de varillas de incienso de colores" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Inciensos</h2>
@@ -135,7 +125,7 @@
             </div>
           </article>
         </li>
-        <li data-name="clorofila" data-group="cuidado" data-price="180" data-order="1">
+        <li data-name="clorofila" data-price="180" data-order="1">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../media/clorofila.jpg" srcset="../media/w/clorofila-480.webp 480w, ../media/w/clorofila-800.webp 800w, ../media/w/clorofila-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Bebida verde vertida en un vaso de vidrio" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Clorofila</h2>
@@ -147,7 +137,7 @@
             </div>
           </article>
         </li>
-        <li data-name="velas de color" data-group="velas" data-price="35" data-order="2">
+        <li data-name="velas de color" data-price="35" data-order="2">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../media/velas-de-color.jpg" srcset="../media/w/velas-de-color-480.webp 480w, ../media/w/velas-de-color-800.webp 800w, ../media/w/velas-de-color-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Velas de colores encendidas" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Velas de color</h2>
@@ -159,7 +149,7 @@
             </div>
           </article>
         </li>
-        <li data-name="copal en resina" data-group="aromas" data-price="90" data-order="3">
+        <li data-name="copal en resina" data-price="90" data-order="3">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../media/copal-resina.jpg" srcset="../media/w/copal-resina-480.webp 480w, ../media/w/copal-resina-800.webp 800w, ../media/w/copal-resina-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Trozos de resina ámbar sobre gránulos" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Copal en resina</h2>
@@ -171,7 +161,7 @@
             </div>
           </article>
         </li>
-        <li data-name="carbón compactado" data-group="aromas" data-price="60" data-order="4">
+        <li data-name="carbón compactado" data-price="60" data-order="4">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../media/carbon-compactado.jpg" srcset="../media/w/carbon-compactado-480.webp 480w, ../media/w/carbon-compactado-800.webp 800w, ../media/w/carbon-compactado-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Cuenco metálico con brasas que desprenden humo" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Carbón compactado</h2>
@@ -183,7 +173,7 @@
             </div>
           </article>
         </li>
-        <li data-name="base metálica para vela" data-group="velas" data-price="120" data-order="5">
+        <li data-name="base metálica para vela" data-price="120" data-order="5">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../media/base-metalica-vela.jpg" srcset="../media/w/base-metalica-vela-480.webp 480w, ../media/w/base-metalica-vela-800.webp 800w, ../media/w/base-metalica-vela-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Vela encendida sobre una base de latón" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Base metálica para vela</h2>
@@ -195,7 +185,7 @@
             </div>
           </article>
         </li>
-        <li data-name="portaincienso" data-group="accesorios" data-price="80" data-order="6">
+        <li data-name="portaincienso" data-price="80" data-order="6">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../media/portaincienso.jpg" srcset="../media/w/portaincienso-480.webp 480w, ../media/w/portaincienso-800.webp 800w, ../media/w/portaincienso-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Varilla de incienso encendida en un soporte" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Portaincienso</h2>
@@ -207,7 +197,7 @@
             </div>
           </article>
         </li>
-        <li data-name="portaincienso con compartimiento" data-group="accesorios" data-price="220" data-order="7">
+        <li data-name="portaincienso con compartimiento" data-price="220" data-order="7">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../media/portaincienso-compartimiento.jpg" srcset="../media/w/portaincienso-compartimiento-480.webp 480w, ../media/w/portaincienso-compartimiento-800.webp 800w, ../media/w/portaincienso-compartimiento-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Incienso humeando sobre un soporte en forma de loto" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Portaincienso con compartimiento</h2>
@@ -219,7 +209,7 @@
             </div>
           </article>
         </li>
-        <li data-name="aceite ozonizado" data-group="cuidado" data-price="260" data-order="8">
+        <li data-name="aceite ozonizado" data-price="260" data-order="8">
           <article class="card card--interactive">
             <img class="card__media card__media--square" src="../media/ozono.jpg" srcset="../media/w/ozono-480.webp 480w, ../media/w/ozono-800.webp 800w, ../media/w/ozono-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Burbujas de aire bajo el agua" decoding="async" loading="lazy" />
             <h2 class="card__title card__title--sm">Aceite ozonizado</h2>
@@ -243,7 +233,7 @@
       <div>
         <p class="footer__word">Plenitud</p>
         <p class="footer__tag">Un lugar para volver a ti.</p>
-        <address class="footer__muted">Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco<br />Abierto de 9:00 a 16:00</address>
+        <address class="footer__muted">Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco<br />Abierto de lunes a sábado, de 9:00 a 16:00</address>
       </div>
       <nav aria-labelledby="f-terapias">
         <h2 class="footer__heading" id="f-terapias">Terapias</h2>
@@ -259,7 +249,7 @@
           <li><a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">WhatsApp 33 3599 2034</a></li>
           <li><a href="https://wa.me/523324909550?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">WhatsApp 33 2490 9550</a></li>
         </ul>
-        <p class="footer__muted footer__hours">Atención de 9:00 a 16:00</p>
+        <p class="footer__muted footer__hours">Atención de lunes a sábado, de 9:00 a 16:00</p>
       </div>
     </div>
     <div class="footer__bottom">
@@ -326,7 +316,7 @@
         <button class="btn btn--ghost" type="button" data-close>Cerrar</button>
         <a class="btn btn--primary" data-booking-send href="https://wa.me/523335992034">Enviar por WhatsApp</a>
       </div>
-      <p class="caption contact-note dialog__note">Atención de 9:00 a 16:00 · también por <a data-booking-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
+      <p class="caption contact-note dialog__note">Atención de lunes a sábado, de 9:00 a 16:00 · también por <a data-booking-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
     </div>
   </form>
 </dialog>
@@ -345,7 +335,7 @@
       <button class="btn btn--ghost" type="button" data-cart-clear>Vaciar pedido</button>
       <a class="btn btn--primary" data-cart-send href="https://wa.me/523335992034">Enviar pedido por WhatsApp</a>
     </div>
-    <p class="caption contact-note dialog__note">Atención de 9:00 a 16:00 · también por <a data-cart-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
+    <p class="caption contact-note dialog__note">Atención de lunes a sábado, de 9:00 a 16:00 · también por <a data-cart-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
   </div>
 </dialog>
 
@@ -381,7 +371,7 @@
   </div>
 </dialog>
 
-<script src="../site.js?v=e6520ba0"></script>
+<script src="../site.js?v=f7c6bd91"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

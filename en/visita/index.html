@@ -42,8 +42,8 @@
 <link rel="preload" href="../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../../site.css?v=87a010bd" />
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"HealthAndBeautyBusiness","name":"Plenitud Center","url":"https://ronferix.github.io/PlenitudCenterWebPage/","image":"https://ronferix.github.io/PlenitudCenterWebPage/media/espacio.jpg","logo":"https://ronferix.github.io/PlenitudCenterWebPage/design-system/assets/logo-emblem.png","telephone":["+523335992034","+523324909550"],"address":{"@type":"PostalAddress","streetAddress":"Av. Naciones Unidas 5461, Col. Vallarta Universidad","addressLocality":"Zapopan","addressRegion":"Jalisco","postalCode":"45110","addressCountry":"MX"},"openingHours":"Mo-Su 09:00-16:00"}</script>
+<link rel="stylesheet" href="../../site.css?v=5ca03c20" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HealthAndBeautyBusiness","name":"Plenitud Center","url":"https://ronferix.github.io/PlenitudCenterWebPage/","image":"https://ronferix.github.io/PlenitudCenterWebPage/media/espacio.jpg","logo":"https://ronferix.github.io/PlenitudCenterWebPage/design-system/assets/logo-emblem.png","telephone":["+523335992034","+523324909550"],"address":{"@type":"PostalAddress","streetAddress":"Av. Naciones Unidas 5461, Col. Vallarta Universidad","addressLocality":"Zapopan","addressRegion":"Jalisco","postalCode":"45110","addressCountry":"MX"},"openingHours":"Mo-Sa 09:00-16:00"}</script>
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -80,7 +80,7 @@
           <button class="btn btn--primary" type="button" data-reserve>Book</button>
           <button class="btn btn--ghost icon-btn nav__settings nav__settings--panel" type="button" data-settings-open aria-haspopup="dialog" title="Settings"><span class="icon icon--settings" aria-hidden="true"></span><span class="sr-only">Settings</span></button>
         </div>
-        <p class="caption nav__hours">We answer 9 a.m. to 4 p.m.</p>
+        <p class="caption nav__hours">We answer Monday to Saturday, 9 a.m. to 4 p.m.</p>
       </div>
     </nav>
   </div>
@@ -90,39 +90,38 @@
 
 <main id="contenido" tabindex="-1">
   <section class="section" aria-labelledby="visita-h1">
-    <div class="container detail">
-      <figure class="detail__media"><img src="../../media/espacio.jpg" srcset="../../media/w/espacio-480.webp 480w, ../../media/w/espacio-800.webp 800w, ../../media/w/espacio-1200.webp 1200w" sizes="(min-width: 60rem) 34rem, 92vw" alt="Large, bright room with tall windows and a wooden floor" decoding="async" fetchpriority="high" /></figure>
+    <div class="container visit">
       <div class="detail__body">
         <p class="label eyebrow">Visit</p>
         <h1 class="display-h1" id="visita-h1">How to get here</h1>
         <!-- Pendiente: política de cancelación -->
         <p class="lead">Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco, Mexico.</p>
-        <p class="body">Open 9 a.m. to 4 p.m..</p>
-        <p class="open-status" data-open-status data-open="9" data-close="16" hidden><span class="open-status__dot" aria-hidden="true"></span><span data-open-text></span></p>
-        <div class="visit-actions">
-          <a class="btn btn--secondary" href="#mapa">See on the map</a>
-          <a class="btn btn--secondary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.%20Naciones%20Unidas%205461%2C%20Vallarta%20Universidad%2C%2045110%20Zapopan%2C%20Jalisco%2C%20M%C3%A9xico">Get directions <span class="sr-only">(opens Google Maps)</span></a>
+        <p class="body">Open Monday to Saturday, 9 a.m. to 4 p.m..</p>
+        <p class="open-status" data-open-status data-open="9" data-close="16" data-days="1 2 3 4 5 6" hidden><span class="open-status__dot" aria-hidden="true"></span><span data-open-text></span></p>
+        <p class="visit-actions"><a class="btn btn--secondary btn--lg" href="https://www.google.com/maps/dir/?api=1&amp;destination=Av.%20Naciones%20Unidas%205461%2C%20Vallarta%20Universidad%2C%2045110%20Zapopan%2C%20Jalisco%2C%20M%C3%A9xico">Get directions <span class="sr-only">(opens Google Maps)</span></a></p>
+      </div>
+      <div class="visit__map">
+        <div class="map" data-map>
+          <div class="map__off" hidden><p class="body">The Google map is turned off in Settings.</p><button class="btn btn--secondary" type="button" data-map-show>Show the map</button></div>
+          <iframe src="https://maps.google.com/maps?q=Av.%20Naciones%20Unidas%205461%2C%20Vallarta%20Universidad%2C%2045110%20Zapopan%2C%20Jalisco%2C%20M%C3%A9xico&amp;z=16&amp;hl=en&amp;output=embed" title="Google map showing where Plenitud Center is" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <h2 class="h4">Contact</h2>
-        <p class="body">By WhatsApp or phone, during the same hours:</p>
+        <p class="small map__link"><a href="https://www.google.com/maps/search/?api=1&amp;query=Av.%20Naciones%20Unidas%205461%2C%20Vallarta%20Universidad%2C%2045110%20Zapopan%2C%20Jalisco%2C%20M%C3%A9xico">Open in Google Maps →</a></p>
+      </div>
+    </div>
+  </section>
+  <section class="section section--sage" aria-labelledby="contacto-h2">
+    <div class="container detail">
+      <figure class="detail__media"><img src="../../media/espacio.jpg" srcset="../../media/w/espacio-480.webp 480w, ../../media/w/espacio-800.webp 800w, ../../media/w/espacio-1200.webp 1200w" sizes="(min-width: 60rem) 34rem, 92vw" alt="Large, bright room with tall windows and a wooden floor" decoding="async" loading="lazy" /></figure>
+      <div class="detail__body">
+        <h2 class="display-h2" id="contacto-h2">Contact</h2>
+        <p class="body">By WhatsApp or phone:</p>
         <ul class="body contact-list" role="list">
           <li><a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">WhatsApp 33 3599 2034</a> · <a href="tel:+523335992034">Call <span class="sr-only"> 33 3599 2034</span></a></li>
           <li><a href="https://wa.me/523324909550?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">WhatsApp 33 2490 9550</a> · <a href="tel:+523324909550">Call <span class="sr-only"> 33 2490 9550</span></a></li>
         </ul>
+        <p class="caption">We answer Monday to Saturday, 9 a.m. to 4 p.m.</p>
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve>Book a therapy</button></p>
       </div>
-    </div>
-  </section>
-  <section class="section section--sage" id="mapa" aria-labelledby="mapa-h2">
-    <div class="container">
-      <div class="section__head">
-        <h2 class="display-h2" id="mapa-h2">Where we are</h2>
-      </div>
-      <div class="map" data-map>
-        <div class="map__off" hidden><p class="body">The Google map is turned off in Settings.</p><button class="btn btn--secondary" type="button" data-map-show>Show the map</button></div>
-        <iframe src="https://maps.google.com/maps?q=Av.%20Naciones%20Unidas%205461%2C%20Vallarta%20Universidad%2C%2045110%20Zapopan%2C%20Jalisco%2C%20M%C3%A9xico&amp;z=16&amp;hl=en&amp;output=embed" title="Google map showing where Plenitud Center is" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-      <p class="small map__link"><a href="https://www.google.com/maps/search/?api=1&amp;query=Av.%20Naciones%20Unidas%205461%2C%20Vallarta%20Universidad%2C%2045110%20Zapopan%2C%20Jalisco%2C%20M%C3%A9xico">Open in Google Maps →</a></p>
     </div>
   </section>
   <section class="section" aria-labelledby="first-title">
@@ -131,12 +130,10 @@
         <p class="label eyebrow">Before you come</p>
         <h2 class="display-h2" id="first-title">Your first visit.</h2>
       </header>
-      <!-- PLACEHOLDER: recomendaciones de ejemplo; confirmar con el negocio -->
       <ol class="steps" role="list">
-        <li class="step"><span class="step__num">1</span><h3 class="h4 step__title">Leave some margin</h3><p class="small step__text">About ten minutes early, so you can settle in without rushing.</p></li>
-        <li class="step"><span class="step__num">2</span><h3 class="h4 step__title">Comfortable clothes</h3><p class="small step__text">Anything a therapy needs is listed on its own page.</p></li>
-        <li class="step"><span class="step__num">3</span><h3 class="h4 step__title">Tell us how you arrive</h3><p class="small step__text">If something hurts or worries you, we adjust the session to you.</p></li>
-        <li class="step"><span class="step__num">4</span><h3 class="h4 step__title">Afterwards, no rush</h3><p class="small step__text">Take a moment before heading back out.</p></li>
+        <li class="step"><span class="step__num">1</span><h3 class="h4 step__title">Confirm your appointment</h3><p class="small step__text">Check the location and time of your appointment before you leave.</p></li>
+        <li class="step"><span class="step__num">2</span><h3 class="h4 step__title">Arrive with time to spare</h3><p class="small step__text">A few minutes of margin so you can settle in without rushing.</p></li>
+        <li class="step"><span class="step__num">3</span><h3 class="h4 step__title">Ask whatever you need</h3><p class="small step__text">Reception can give you directions, or ask the person attending you directly.</p></li>
       </ol>
     </div>
   </section>
@@ -148,7 +145,7 @@
       <div>
         <p class="footer__word">Plenitud</p>
         <p class="footer__tag">A place to come back to yourself.</p>
-        <address class="footer__muted">Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco, Mexico<br />Open 9 a.m. to 4 p.m.</address>
+        <address class="footer__muted">Av. Naciones Unidas 5461<br />Col. Vallarta Universidad<br />45110 Zapopan, Jalisco, Mexico<br />Open Monday to Saturday, 9 a.m. to 4 p.m.</address>
       </div>
       <nav aria-labelledby="f-terapias">
         <h2 class="footer__heading" id="f-terapias">Therapies</h2>
@@ -164,7 +161,7 @@
           <li><a href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">WhatsApp 33 3599 2034</a></li>
           <li><a href="https://wa.me/523324909550?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center.">WhatsApp 33 2490 9550</a></li>
         </ul>
-        <p class="footer__muted footer__hours">We answer 9 a.m. to 4 p.m.</p>
+        <p class="footer__muted footer__hours">We answer Monday to Saturday, 9 a.m. to 4 p.m.</p>
       </div>
     </div>
     <div class="footer__bottom">
@@ -231,7 +228,7 @@
         <button class="btn btn--ghost" type="button" data-close>Close</button>
         <a class="btn btn--primary" data-booking-send href="https://wa.me/523335992034">Send on WhatsApp</a>
       </div>
-      <p class="caption contact-note dialog__note">We answer 9 a.m. to 4 p.m. · also on <a data-booking-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
+      <p class="caption contact-note dialog__note">We answer Monday to Saturday, 9 a.m. to 4 p.m. · also on <a data-booking-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
     </div>
   </form>
 </dialog>
@@ -250,7 +247,7 @@
       <button class="btn btn--ghost" type="button" data-cart-clear>Empty order</button>
       <a class="btn btn--primary" data-cart-send href="https://wa.me/523335992034">Send order on WhatsApp</a>
     </div>
-    <p class="caption contact-note dialog__note">We answer 9 a.m. to 4 p.m. · also on <a data-cart-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
+    <p class="caption contact-note dialog__note">We answer Monday to Saturday, 9 a.m. to 4 p.m. · also on <a data-cart-send href="https://wa.me/523324909550">WhatsApp 33 2490 9550</a></p>
   </div>
 </dialog>
 
@@ -286,7 +283,7 @@
   </div>
 </dialog>
 
-<script src="../../site.js?v=e6520ba0"></script>
+<script src="../../site.js?v=f7c6bd91"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>
