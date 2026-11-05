@@ -187,33 +187,6 @@
   if (showMap) showMap.addEventListener('click', function () { store('plenitud-maps', 'on'); applyMaps(); });
   applyMaps();
 
-  /* ---------- Carousels (therapy groups) ----------
-     The track scrolls natively; JS only adds the arrows, and only when the row overflows.
-     aria-disabled (not disabled) at the ends so a focused arrow keeps focus. */
-  $$('.carousel').forEach(function (c) {
-    var track = $('.carousel__track', c), ctr = $('.carousel__controls', c);
-    if (!track || !ctr) return;
-    var prev = $('[data-dir="-1"]', ctr), next = $('[data-dir="1"]', ctr);
-    var update = function () {
-      var max = track.scrollWidth - track.clientWidth;
-      ctr.hidden = max <= 1;
-      prev.setAttribute('aria-disabled', String(track.scrollLeft <= 1));
-      next.setAttribute('aria-disabled', String(track.scrollLeft >= max - 1));
-    };
-    var step = function (dir) {
-      var li = track.firstElementChild;
-      var w = li ? li.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0) : track.clientWidth;
-      track.scrollBy({ left: dir * w });   /* smoothness comes from CSS, which drops it under reduced motion */
-    };
-    [prev, next].forEach(function (b) {
-      b.addEventListener('click', function () { if (b.getAttribute('aria-disabled') !== 'true') step(Number(b.dataset.dir)); });
-    });
-    track.addEventListener('scroll', update, { passive: true });
-    if ('ResizeObserver' in window) new ResizeObserver(update).observe(track);   /* catches layout changes a window resize misses */
-    else window.addEventListener('resize', update);
-    update();
-  });
-
   /* ---------- WhatsApp order link follows the chosen variant ---------- */
   var waLinks = $$('[data-whatsapp]');   /* the order button plus each reception line */
   if (waLinks.length) {
@@ -394,25 +367,17 @@
     });
   }
 
-  /* ---------- Therapy filter by need ----------
-     Hides the cards that don't match, and a whole category when none of its cards is left */
+  /* ---------- Therapy filter by need: hides the cards that don't match ---------- */
   var needRadios = $$('input[name=need]');
   if (needRadios.length) {
     var therapyStatus = $('[data-therapy-status]');
     needRadios.forEach(function (r) {
       r.addEventListener('change', function () {
         var n = 0;
-        $$('.category').forEach(function (cat) {
-          var shown = 0;
-          $$('li[data-needs]', cat).forEach(function (li) {
-            var ok = !r.value || (' ' + li.dataset.needs + ' ').indexOf(' ' + r.value + ' ') !== -1;
-            li.hidden = !ok;
-            if (ok) shown++;
-          });
-          cat.hidden = shown === 0;
-          n += shown;
-          var track = $('.carousel__track', cat);   /* back to the start, and let the arrows re-check the overflow */
-          if (track) { track.scrollLeft = 0; track.dispatchEvent(new Event('scroll')); }
+        $$('#therapy-grid > li').forEach(function (li) {
+          var ok = !r.value || (' ' + li.dataset.needs + ' ').indexOf(' ' + r.value + ' ') !== -1;
+          li.hidden = !ok;
+          if (ok) n++;
         });
         therapyStatus.textContent = T.therapies(n, r.value ? r.parentNode.textContent.trim() : '');
       });

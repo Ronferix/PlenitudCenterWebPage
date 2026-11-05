@@ -69,7 +69,6 @@ const UI = {
     therapies: {
       title: 'Terapias · Plenitud Center', description: 'Terapias corporales, energéticas y espirituales en Plenitud Center.',
       h1: 'Corporal, energética, espiritual.', lead: 'Cinco formas de volver al cuerpo y al espacio personal, agrupadas por lo que trabajan primero.',
-      prev: (cat) => `Terapias anteriores de ${cat}`, next: (cat) => `Más terapias de ${cat}`,
       note: 'Trae ropa cómoda. Qué traer exactamente depende de cada terapia — lo encuentras en su propia página.',
       price: 'Precio', duration: 'Duración', schedule: 'Horario', reserveThis: 'Reservar', expect: 'Qué esperar', back: '← Ver todas las terapias',
       guide: 'Te acompaña', helps: 'Ayuda con', filter: '¿Qué buscas hoy?', all: 'Todas', none: 'Ninguna terapia coincide con esa elección.',
@@ -139,7 +138,6 @@ const UI = {
     therapies: {
       title: 'Therapies · Plenitud Center', description: 'Body, energy and spiritual therapies at Plenitud Center.',
       h1: 'Body, energy, spirit.', lead: 'Five ways to come back to your body and your personal space, grouped by what they work on first.',
-      prev: (cat) => `Previous ${cat} therapies`, next: (cat) => `More ${cat} therapies`,
       note: 'Wear comfortable clothes. What exactly to bring depends on each therapy — you will find it on its own page.',
       price: 'Price', duration: 'Duration', schedule: 'Hours', reserveThis: 'Book', expect: 'What to expect', back: '← See all therapies',
       guide: 'Your guide', helps: 'Helps with', filter: 'What are you looking for today?', all: 'All', none: 'No therapy matches that choice.',
@@ -756,33 +754,14 @@ function terapiaCard(t, prefix, heading, showCategory = false) {
           </li>`;
 }
 
+/* Therapy catalog: one grid, every card the same size (3 columns on desktop, 2 on tablets,
+   1 on phones), ordered by family. Each card names its family; the three families are
+   explained once above the filter. */
 function terapiasIndexBody(prefix) {
   const T = L.therapies;
-  const byCategory = Object.keys(categories).map((catKey) => {
-    const name = catName(catKey);
-    const items = terapias.filter((t) => t.category === catKey);
-    const cards = items.map((t) => terapiaCard(t, prefix, 'h3')).join('\n');
-    // Each group is a horizontal carousel: one card plus a peek on phones, two on
-    // tablets, three on desktop. A group with a single therapy shows it as one wide
-    // card instead. Arrows appear (site.js) only when the row actually overflows.
-    const single = items.length === 1;
-    const controls = single ? '' : `
-          <div class="carousel__controls" hidden>
-            <button class="btn btn--secondary carousel__btn" type="button" data-dir="-1" aria-label="${esc(T.prev(name))}"><span aria-hidden="true">←</span></button>
-            <button class="btn btn--secondary carousel__btn" type="button" data-dir="1" aria-label="${esc(T.next(name))}"><span aria-hidden="true">→</span></button>
-          </div>`;
-    return `      <section class="category carousel${single ? ' carousel--single' : ''}" aria-labelledby="cat-${catKey}">
-        <header class="category__head">
-          <div class="category__text">
-            <h2 class="display-h2" id="cat-${catKey}">${esc(name)}</h2>
-            <p class="category__summary">${esc(tr(categories[catKey], 'summary'))}</p>
-          </div>${controls}
-        </header>
-        <ul class="carousel__track" role="list">
-${cards}
-        </ul>
-      </section>`;
-  }).join('\n');
+  const order = Object.keys(categories);
+  const sorted = [...terapias].sort((a, b) => order.indexOf(a.category) - order.indexOf(b.category));
+  const families = order.map((k) => `        <div class="family"><dt class="family__name">${esc(catName(k))}</dt><dd class="family__text">${esc(tr(categories[k], 'summary'))}</dd></div>`).join('\n');
 
   return `  <section class="section" aria-labelledby="terapias-h1">
     <div class="container">
@@ -791,6 +770,9 @@ ${cards}
         <h1 class="display-h1" id="terapias-h1">${T.h1}</h1>
         <p class="lead">${T.lead}</p>
       </header>
+      <dl class="families">
+${families}
+      </dl>
       <!-- Filter by need: shown by site.js; without it every therapy is listed -->
       <fieldset class="filter" data-js-only hidden>
         <legend class="h4">${T.filter}</legend>
@@ -799,7 +781,9 @@ ${cards}
         </div>
       </fieldset>
       <p class="small filter-status" role="status" data-therapy-status></p>
-${byCategory}
+      <ul class="grid grid--3" role="list" id="therapy-grid">
+${sorted.map((t) => terapiaCard(t, prefix, 'h2', true)).join('\n')}
+      </ul>
       <p class="small note">${T.note}</p>
     </div>
   </section>`;
@@ -970,8 +954,8 @@ ${guiaCards(prefix, 'h2', true)}
   </section>`;
 }
 
-/* Visit: how to get here beside the map (text first on phones), then contact with the photo
-   of the space, then what to know before a first visit. */
+/* Visit: how to get here beside the map (text first on phones), then what to know before a
+   first visit, then contact with the photo of the space, ending on the Book button. */
 function visitaBody(prefix) {
   const V = L.visit;
   const espacio = { file: 'media/espacio.jpg', alt: V.spaceAlt };
@@ -995,7 +979,16 @@ function visitaBody(prefix) {
       </div>
     </div>
   </section>
-  <section class="section section--sage" aria-labelledby="contacto-h2">
+  <section class="section section--sage" aria-labelledby="first-title">
+    <div class="container">
+      <header class="section__head">
+        <p class="label eyebrow">${V.firstEyebrow}</p>
+        <h2 class="display-h2" id="first-title">${V.firstTitle}</h2>
+      </header>
+${steps(V.first)}
+    </div>
+  </section>
+  <section class="section" aria-labelledby="contacto-h2">
     <div class="container detail">
       ${detailMedia(espacio, prefix, false)}
       <div class="detail__body">
@@ -1007,15 +1000,6 @@ ${CONTACTS.map((c) => `          <li><a href="${waGeneral(c)}">WhatsApp ${c.disp
         <p class="caption">${L.attention}</p>
         <p class="detail__cta"><button class="btn btn--primary btn--lg" type="button" data-reserve>${V.reserve}</button></p>
       </div>
-    </div>
-  </section>
-  <section class="section" aria-labelledby="first-title">
-    <div class="container">
-      <header class="section__head">
-        <p class="label eyebrow">${V.firstEyebrow}</p>
-        <h2 class="display-h2" id="first-title">${V.firstTitle}</h2>
-      </header>
-${steps(V.first)}
     </div>
   </section>`;
 }

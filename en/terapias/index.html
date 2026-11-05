@@ -42,7 +42,7 @@
 <link rel="preload" href="../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../../site.css?v=5ca03c20" />
+<link rel="stylesheet" href="../../site.css?v=f5afc17a" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -95,6 +95,11 @@
         <h1 class="display-h1" id="terapias-h1">Body, energy, spirit.</h1>
         <p class="lead">Five ways to come back to your body and your personal space, grouped by what they work on first.</p>
       </header>
+      <dl class="families">
+        <div class="family"><dt class="family__name">Body</dt><dd class="family__text">Hands-on work with the body: touch, pressure, movement.</dd></div>
+        <div class="family"><dt class="family__name">Energy</dt><dd class="family__text">Balancing the energy field: Reiki, magnets, flower essences.</dd></div>
+        <div class="family"><dt class="family__name">Spiritual</dt><dd class="family__text">Cleansing and care for your personal and ritual space.</dd></div>
+      </dl>
       <!-- Filter by need: shown by site.js; without it every therapy is listed -->
       <fieldset class="filter" data-js-only hidden>
         <legend class="h4">What are you looking for today?</legend>
@@ -108,19 +113,12 @@
         </div>
       </fieldset>
       <p class="small filter-status" role="status" data-therapy-status></p>
-      <section class="category carousel carousel--single" aria-labelledby="cat-corporal">
-        <header class="category__head">
-          <div class="category__text">
-            <h2 class="display-h2" id="cat-corporal">Body</h2>
-            <p class="category__summary">Hands-on work with the body: touch, pressure, movement.</p>
-          </div>
-        </header>
-        <ul class="carousel__track" role="list">
+      <ul class="grid grid--3" role="list" id="therapy-grid">
           <li data-needs="dolor estres descanso">
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="../../media/masaje-corporal.jpg" srcset="../../media/w/masaje-corporal-480.webp 480w, ../../media/w/masaje-corporal-800.webp 800w, ../../media/w/masaje-corporal-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Hands massaging a back" decoding="async" loading="lazy" />
-              
-              <h3 class="card__title card__title--sm">Body massage</h3>
+              <p class="card__eyebrow">Body</p>
+              <h2 class="card__title card__title--sm">Body massage</h2>
               <p class="card__body">Hands-on work to release built-up tension.</p>
               <p class="card__needs">Helps with: Muscle pain · Stress · Rest</p>
               <div class="card__footer">
@@ -129,25 +127,11 @@
               </div>
             </article>
           </li>
-        </ul>
-      </section>
-      <section class="category carousel" aria-labelledby="cat-energetica">
-        <header class="category__head">
-          <div class="category__text">
-            <h2 class="display-h2" id="cat-energetica">Energy</h2>
-            <p class="category__summary">Balancing the energy field: Reiki, magnets, flower essences.</p>
-          </div>
-          <div class="carousel__controls" hidden>
-            <button class="btn btn--secondary carousel__btn" type="button" data-dir="-1" aria-label="Previous Energy therapies"><span aria-hidden="true">←</span></button>
-            <button class="btn btn--secondary carousel__btn" type="button" data-dir="1" aria-label="More Energy therapies"><span aria-hidden="true">→</span></button>
-          </div>
-        </header>
-        <ul class="carousel__track" role="list">
           <li data-needs="estres descanso energia">
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="../../media/reiki.jpg" srcset="../../media/w/reiki-480.webp 480w, ../../media/w/reiki-800.webp 800w, ../../media/w/reiki-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Open hands with palms facing up" decoding="async" loading="lazy" />
-              
-              <h3 class="card__title card__title--sm">Reiki</h3>
+              <p class="card__eyebrow">Energy</p>
+              <h2 class="card__title card__title--sm">Reiki</h2>
               <p class="card__body">Energy healing channeled through the hands, with no invasive contact.</p>
               <p class="card__needs">Helps with: Stress · Rest · Energy</p>
               <div class="card__footer">
@@ -159,8 +143,8 @@
           <li data-needs="estres claridad descanso">
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="../../media/flores-de-bach.jpg" srcset="../../media/w/flores-de-bach-480.webp 480w, ../../media/w/flores-de-bach-800.webp 800w, ../../media/w/flores-de-bach-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Dropper bottles with dried flowers inside" decoding="async" loading="lazy" />
-              
-              <h3 class="card__title card__title--sm">Bach flower remedies</h3>
+              <p class="card__eyebrow">Energy</p>
+              <h2 class="card__title card__title--sm">Bach flower remedies</h2>
               <p class="card__body">Flower essences to support emotional states.</p>
               <p class="card__needs">Helps with: Stress · Clarity · Rest</p>
               <div class="card__footer">
@@ -172,8 +156,8 @@
           <li data-needs="dolor energia">
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="../../media/biomagnetismo.jpg" srcset="../../media/w/biomagnetismo-480.webp 480w, ../../media/w/biomagnetismo-800.webp 800w, ../../media/w/biomagnetismo-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Cluster of silver magnetic spheres" decoding="async" loading="lazy" />
-              
-              <h3 class="card__title card__title--sm">Biomagnetism therapy</h3>
+              <p class="card__eyebrow">Energy</p>
+              <h2 class="card__title card__title--sm">Biomagnetism therapy</h2>
               <p class="card__body">Pairs of magnets placed on specific points to seek bodily balance.</p>
               <p class="card__needs">Helps with: Muscle pain · Energy</p>
               <div class="card__footer">
@@ -182,21 +166,11 @@
               </div>
             </article>
           </li>
-        </ul>
-      </section>
-      <section class="category carousel carousel--single" aria-labelledby="cat-espiritual">
-        <header class="category__head">
-          <div class="category__text">
-            <h2 class="display-h2" id="cat-espiritual">Spiritual</h2>
-            <p class="category__summary">Cleansing and care for your personal and ritual space.</p>
-          </div>
-        </header>
-        <ul class="carousel__track" role="list">
           <li data-needs="claridad energia">
             <article class="card card--interactive">
               <img class="card__media card__media--wide" src="../../media/limpia.jpg" srcset="../../media/w/limpia-480.webp 480w, ../../media/w/limpia-800.webp 800w, ../../media/w/limpia-1200.webp 1200w" sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 46vw, 92vw" alt="Bundle of white sage in a ceramic bowl" decoding="async" loading="lazy" />
-              
-              <h3 class="card__title card__title--sm">Limpia (energy cleansing)</h3>
+              <p class="card__eyebrow">Spiritual</p>
+              <h2 class="card__title card__title--sm">Limpia (energy cleansing)</h2>
               <p class="card__body">A ritual cleansing of your personal energy space.</p>
               <p class="card__needs">Helps with: Clarity · Energy</p>
               <div class="card__footer">
@@ -205,8 +179,7 @@
               </div>
             </article>
           </li>
-        </ul>
-      </section>
+      </ul>
       <p class="small note">Wear comfortable clothes. What exactly to bring depends on each therapy — you will find it on its own page.</p>
     </div>
   </section>
@@ -356,7 +329,7 @@
   </div>
 </dialog>
 
-<script src="../../site.js?v=f7c6bd91"></script>
+<script src="../../site.js?v=019f1d09"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

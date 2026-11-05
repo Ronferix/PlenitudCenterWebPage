@@ -103,40 +103,12 @@
 .grid > li > .card { flex: 1; }
 .section__more { margin-top: var(--space-7); }
 
-/* Catalog groups. Type steps down one level at a time: page h1 (display-h1) →
-   group h2 (display-h2) → card title (1.75rem). The rule above each group and the
-   wide gap between groups make the heading belong to the cards below it. */
-.category + .category { margin-top: var(--space-9); }
-.category + .note { margin-top: var(--space-8); }
-.category__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-4); padding-top: var(--space-6); margin-bottom: var(--space-6); border-top: 1px solid var(--border); }
-.category__text { display: grid; gap: var(--space-2); }
-.category__summary { color: var(--fg-muted); }
-
-/* Carousel: native horizontal scroll with snap, so swipe, trackpad and Tab all work
-   without JS. Visible cards adapt to the width: 1 + a peek of the next, then 2, then 3. */
-.carousel { --carousel-gap: var(--space-5); }
-.carousel__controls { display: flex; gap: var(--space-2); }
-.carousel__btn { width: var(--target-min); min-width: var(--target-min); height: var(--target-min); padding: 0; font-size: 1.25rem; letter-spacing: 0; }
-.carousel__btn[aria-disabled="true"] { opacity: 0.4; cursor: default; }
-/* The padding keeps each card's 3 px focus ring and hover shadow from being clipped by the scroll box */
-.carousel__track { display: flex; gap: var(--carousel-gap); margin: calc(-1 * var(--space-3)); padding: var(--space-3); list-style: none;
-  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--space-3); scrollbar-width: thin; }
-.carousel__track > li { display: flex; flex: 0 0 85%; scroll-snap-align: start; }
-.carousel__track > li > .card { flex: 1; }
-@media (min-width: 40rem) { .carousel__track > li { flex-basis: calc((100% - var(--carousel-gap)) / 2); } }
-@media (min-width: 64rem) { .carousel__track > li { flex-basis: calc((100% - 2 * var(--carousel-gap)) / 3); } }
-@media (prefers-reduced-motion: no-preference) { .carousel__track { scroll-behavior: smooth; } }
-
-/* A group with one therapy: a single wide card, photo beside the text from tablet up */
-.carousel--single .carousel__track > li { flex-basis: 100%; }
-@media (min-width: 48rem) {
-  .carousel--single .card { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-rows: auto 1fr auto; column-gap: var(--space-7); row-gap: var(--space-3); }
-  .carousel--single .card > * { grid-column: 2; }
-  .carousel--single .card > .card__media { grid-column: 1; grid-row: 1 / -1; width: calc(100% + var(--space-6)); height: calc(100% + 2 * var(--space-6)); min-height: 18rem; aspect-ratio: auto;
-    margin: calc(-1 * var(--space-6)) 0 calc(-1 * var(--space-6)) calc(-1 * var(--space-6)); border-radius: var(--r-lg) 0 0 var(--r-lg); }
-  .carousel--single .card > .card__title { align-self: end; }
-  .carousel--single .card__footer { margin-top: 0; }
-}
+/* Therapy families: three short definitions above the catalog, a hairline before each */
+.families { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--space-5) var(--space-7); margin: 0 0 var(--space-7); }
+.family { padding-top: var(--space-4); border-top: 1px solid var(--border); }
+.family__name { font-family: var(--font-display); font-size: 1.75rem; font-weight: 500; line-height: 1.2; color: var(--fg); }
+.family__text { margin: var(--space-2) 0 0; color: var(--fg-muted); }
+#therapy-grid + .note { margin-top: var(--space-8); }
 
 /* Card footer: price on the left, the card's one action on the right */
 .card__footer { margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); }
