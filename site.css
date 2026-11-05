@@ -113,9 +113,12 @@
 /* Card footer: price on the left, the card's one action on the right */
 .card__footer { margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); }
 .card__footer .card__action { margin: 0 calc(-1 * var(--space-4)) 0 0; align-self: center; }
-.price { display: grid; margin: 0; font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; line-height: 1.2; color: var(--fg); }
+/* Figures (prices, durations, totals) are set in Jost with lining, equal-width numerals: Cormorant's
+   old-style figures rise and drop, which reads well in a title and oddly in a price */
+.price, .facts dd, .cart-item__total, .cart-total, .qty-value { font-variant-numeric: lining-nums tabular-nums; }
+.price { display: grid; margin: 0; font-family: var(--font-body); font-size: 1.25rem; font-weight: 500; line-height: 1.3; letter-spacing: 0.01em; color: var(--fg); }
 .price__note { font-family: var(--font-body); font-size: 0.875rem; font-weight: 400; line-height: 1.4; color: var(--fg-soft); }
-.price--lg { font-size: 2.25rem; }
+.price--lg { font-size: 1.75rem; }
 .price--pending { font-family: var(--font-body); font-size: 0.9375rem; font-weight: 400; color: var(--fg-soft); }
 
 /* Variants: cards show a one-line summary, detail pages the full list */
@@ -171,10 +174,10 @@ body:has(.cart-fab:not([hidden])) { padding-bottom: 5rem; }
 .qty-btn { width: var(--target-min); min-width: var(--target-min); height: var(--target-min); padding: 0; font-size: 1.125rem; letter-spacing: 0; }
 .qty-btn[aria-disabled="true"] { opacity: 0.4; cursor: default; }
 .qty-value { min-width: 2ch; text-align: center; font-weight: 500; }
-.cart-item__total { font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; text-align: right; }
+.cart-item__total { font-size: 1.0625rem; font-weight: 500; text-align: right; }
 .cart-item__remove { justify-self: end; grid-column: 2; }
 .cart-item__info { grid-column: 1 / -1; }
-.cart-total { margin-top: var(--space-4); font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; text-align: right; }
+.cart-total { margin-top: var(--space-4); font-size: 1.25rem; font-weight: 500; text-align: right; }
 .dialog__note { margin-top: var(--space-4); text-align: right; max-width: none; }
 
 /* Booking step 3: the WhatsApp text, shown exactly as it will be sent */
@@ -206,7 +209,7 @@ body:has(.cart-fab:not([hidden])) { padding-bottom: 5rem; }
 .detail__list { padding-left: 1.25em; }
 .facts { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-7); margin: 0; padding-block: var(--space-4); border-block: 1px solid var(--border); }
 .facts dt { font-size: 0.8125rem; font-weight: 500; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--fg-soft); }
-.facts dd { margin: 0; font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; line-height: 1.3; color: var(--fg); }
+.facts dd { margin: 0; font-size: 1.25rem; font-weight: 500; line-height: 1.35; color: var(--fg); }
 .card__title--sm { font-size: 1.75rem; }
 .card__action { align-self: flex-start; margin: var(--space-2) 0 calc(-1 * var(--space-2)) calc(-1 * var(--space-4)); }
 
