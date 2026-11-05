@@ -98,7 +98,7 @@ const UI = {
         ['Llega con tiempo', 'Unos minutos de margen para instalarte sin prisa.'],
         ['Pregunta lo que necesites', 'En recepción te damos indicaciones, o haz tus preguntas directamente a la persona que te atiende.']],
     },
-    toTop: 'Volver arriba',
+    toTop: 'Volver arriba', waFab: 'escríbenos',
     notFound: { title: 'Página no encontrada · Plenitud Center', h1: 'Esta página no está aquí.', lead: 'Puede que el enlace haya cambiado o que la página ya no exista. Desde aquí puedes volver a lo que buscabas.', home: 'Ir al inicio', en: 'This page is not here.', enLink: 'Go to the English site' },
     built: 'Generado',
   },
@@ -167,7 +167,7 @@ const UI = {
         ['Arrive with time to spare', 'A few minutes of margin so you can settle in without rushing.'],
         ['Ask whatever you need', 'Reception can give you directions, or ask the person attending you directly.']],
     },
-    toTop: 'Back to top',
+    toTop: 'Back to top', waFab: 'message us (in Spanish)',
     built: 'Built',
   },
 };
@@ -264,6 +264,8 @@ function nav(prefix, active, pagePath) {
   </div>
   <!-- Order cart: floating, early in tab order; site.js shows it once something has been added -->
   <button class="btn btn--secondary cart-fab" type="button" data-cart-open hidden>${L.cart.open} <span class="cart-fab__count" data-cart-count aria-hidden="true">0</span></button>
+  <!-- WhatsApp shares that corner: CSS hides it while the order button shows, so one button sits there at a time -->
+  <a class="btn btn--secondary wa-fab" href="${waGeneral(CONTACTS[0])}"><span class="icon icon--chat" aria-hidden="true"></span>WhatsApp<span class="sr-only">, ${L.waFab}</span></a>
 </header>`;
 }
 

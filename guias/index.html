@@ -42,7 +42,7 @@
 <link rel="preload" href="../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../site.css?v=f313bd81" />
+<link rel="stylesheet" href="../site.css?v=0b21f359" />
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -85,6 +85,8 @@
   </div>
   <!-- Order cart: floating, early in tab order; site.js shows it once something has been added -->
   <button class="btn btn--secondary cart-fab" type="button" data-cart-open hidden>Pedido <span class="cart-fab__count" data-cart-count aria-hidden="true">0</span></button>
+  <!-- WhatsApp shares that corner: CSS hides it while the order button shows, so one button sits there at a time -->
+  <a class="btn btn--secondary wa-fab" href="https://wa.me/523335992034?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20Plenitud%20Center."><span class="icon icon--chat" aria-hidden="true"></span>WhatsApp<span class="sr-only">, escríbenos</span></a>
 </header>
 
 <main id="contenido" tabindex="-1">
