@@ -252,6 +252,11 @@ body:has(.cart-fab:not([hidden]), .wa-fab) { padding-bottom: 5rem; }
 .detail__body > * + * { margin-top: var(--space-5); }
 .detail__body > .eyebrow + h1 { margin-top: var(--space-3); }
 .detail__body > h2 { margin-top: var(--space-8); }
+.detail__body > h2:first-child { margin-top: 0; }   /* a section that opens on its h2 (Visit · Contact) sits right under the photo */
+@media (max-width: 55.99rem) { .detail { gap: var(--space-6); } }
+/* Contact: lead, numbers and hours read as one block (each link already has 44px of height) */
+.detail__body > .contact-list { margin-top: var(--space-2); }
+.detail__body > .contact-list + .caption { margin-top: var(--space-3); }
 .detail__body > h2 + * { margin-top: var(--space-4); }
 .detail__body > .detail__cta { margin-top: var(--space-6); }
 .detail__body > .caption:last-child { margin-top: var(--space-7); }
@@ -386,13 +391,25 @@ html.lang-switched .loader { display: none; }
 @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
 
 /* ---------- Demo notice ----------
-   A quiet strip above the navigation; it scrolls away with the page. */
+   With JS: a card floating at the bottom of the screen, above the page, so it takes no room
+   and never pushes the full-screen hero down (nor sits under the hidden nav bar). It stays until
+   dismissed. Without JS there is no close button, so it stays a quiet strip in the flow. */
 .demo-note { display: flex; align-items: center; justify-content: center; gap: var(--space-3);
   margin-bottom: var(--space-3); padding: var(--space-2) var(--space-3) var(--space-2) var(--space-5);
   background: var(--bg-sage); color: var(--fg); border-bottom: 1px solid var(--border); }
-.demo-note__text { flex: 0 1 60rem; font-size: 0.875rem; line-height: 1.5; }
+.demo-note__text { flex: 0 1 60rem; margin: 0; font-size: 0.875rem; line-height: 1.5; }
 .demo-note__ok { display: none; flex: none; }
 .js .demo-note__ok { display: inline-flex; }
+.js .demo-note { position: fixed; z-index: 70; inset-inline: var(--space-4); bottom: var(--space-4);
+  max-width: 34rem; margin: 0 auto; align-items: flex-start; padding: var(--space-4) var(--space-2) var(--space-4) var(--space-5);
+  background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); }
+.js .demo-note__ok { margin-top: calc(-1 * var(--space-2)); }
+/* While the card is up, the floating WhatsApp and back-to-top buttons step aside (the card links to WhatsApp itself) */
+.js:not(.demo-ok) .wa-fab, .js:not(.demo-ok) .to-top { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .js .demo-note { animation: demo-rise var(--dur-slow) var(--ease-rise) both; }
+  @keyframes demo-rise { from { opacity: 0; transform: translateY(1rem); } }
+}
 .demo-ok .demo-note { display: none; }
 
 /* ---------- Open now (home hero, Visit): a dot plus words, never the colour alone ---------- */

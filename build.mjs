@@ -320,8 +320,9 @@ function settingsDialog(prefix, pagePath) {
 </dialog>`;
 }
 
-/* Demo notice: a strip above the navigation until the visitor dismisses it (remembered in this
-   browser; the pre-paint script hides it on later pages). Without JS it stays, without the button.
+/* Demo notice: a card floating at the bottom of the screen until the visitor dismisses it (remembered
+   in this browser; the pre-paint script hides it on later pages). Without JS it is a strip above the
+   navigation, without the button.
    The footer repeats it in one quiet line on every page. */
 function demoNotice() {
   const D = L.demo;
