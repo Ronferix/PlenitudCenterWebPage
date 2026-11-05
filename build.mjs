@@ -55,7 +55,7 @@ const UI = {
     home: {
       title: 'Plenitud Center · Un lugar para volver a ti', description: 'Plenitud Center: terapias corporales, energéticas y espirituales, y productos para la práctica en casa.',
       heroTitle: 'Un lugar para volver <em>a ti.</em>', heroLead: 'Un espacio de terapias corporales, energéticas y espirituales, y de productos para sostener esa práctica en casa. Llega como estás.',
-      heroReserve: 'Reservar una terapia', heroSee: 'Ver terapias',
+      heroReserve: 'Reservar una terapia', heroSee: 'Ver terapias', more: 'Descubre más',
       offerEyebrow: 'Lo que ofrecemos', offerTitle: 'Cinco caminos, tres familias.', seeAllTherapies: 'Ver todas las terapias',
       takeEyebrow: 'Para llevar', takeTitle: 'Lo que sostiene la práctica en casa.', takeLead: 'Incienso, velas, resinas y herramientas rituales para seguir el ritmo entre sesión y sesión.', seeProducts: 'Ver productos',
       voiceEyebrow: 'Una voz de la casa',
@@ -124,7 +124,7 @@ const UI = {
     home: {
       title: 'Plenitud Center · A place to come back to yourself', description: 'Plenitud Center: body, energy and spiritual therapies, and products for your practice at home.',
       heroTitle: 'A place to come back <em>to yourself.</em>', heroLead: 'A space for body, energy and spiritual therapies, and for products that support that practice at home. Come as you are.',
-      heroReserve: 'Book a therapy', heroSee: 'See therapies',
+      heroReserve: 'Book a therapy', heroSee: 'See therapies', more: 'Discover more',
       offerEyebrow: 'What we offer', offerTitle: 'Five paths, three families.', seeAllTherapies: 'See all therapies',
       takeEyebrow: 'To take home', takeTitle: 'What supports the practice at home.', takeLead: 'Incense, candles, resins and ritual tools to keep the rhythm between sessions.', seeProducts: 'See products',
       voiceEyebrow: 'A voice from the house',
@@ -570,7 +570,7 @@ function loader(prefix, pageName) {
 </div>`;
 }
 
-function layout({ prefix, active, pagePath, title, description, bodyHtml, mainId = 'contenido' }) {
+function layout({ prefix, active, pagePath, title, description, bodyHtml, mainId = 'contenido', home = false }) {
   return `<!doctype html>
 <html lang="${L.htmlLang}" data-theme="light">
 <head>
@@ -580,7 +580,7 @@ function layout({ prefix, active, pagePath, title, description, bodyHtml, mainId
 <meta name="description" content="${esc(description)}" />
 ${headExtra(prefix, pagePath)}${pagePath === '' || pagePath === 'visita/' ? `\n${localBusinessLd()}` : ''}
 </head>
-<body>
+<body${home ? ' class="is-home"' : ''}>
 ${loader(prefix, pagePath ? title.split(' · ')[0] : '')}
 <a class="skip-link" href="#${mainId}">${L.skip}</a>
 ${demoNotice()}
@@ -637,6 +637,8 @@ function homeBody(prefix) {
       <p class="caption">${L.openHours}</p>
       ${openStatus()}
     </div>
+    <!-- Cue that the page goes on below the full-screen hero -->
+    <a class="hero__more" href="#como-funciona">${H.more} <span class="hero__more-arrow" aria-hidden="true">↓</span></a>
   </section>
 
   <section class="section section--sage" id="como-funciona" aria-labelledby="how-title">
@@ -1012,7 +1014,7 @@ function build(lang) {
   const out = (p) => `${L.dir}${p}index.html`;
   const page = (pagePath, depth, opts) => write(out(pagePath), layout({ prefix: prefixFor(depth), pagePath, ...opts }));
 
-  page('', 0, { active: null, title: L.home.title, description: L.home.description, bodyHtml: homeBody(prefixFor(0)) });
+  page('', 0, { active: null, title: L.home.title, description: L.home.description, bodyHtml: homeBody(prefixFor(0)), home: true });
   page('terapias/', 1, { active: 'terapias', title: L.therapies.title, description: L.therapies.description, bodyHtml: terapiasIndexBody(prefixFor(1)) });
   for (const t of terapias) {
     page(`terapias/${t.slug}/`, 2, { active: 'terapias', title: `${tr(t, 'name')} · Plenitud Center`, description: tr(t, 'summary'), bodyHtml: terapiaDetailBody(prefixFor(2), t) });
