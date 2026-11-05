@@ -596,7 +596,7 @@ ${bodyHtml}
 ${footerPartial(prefix)}
 
 <!-- Long pages: site.js shows it after a couple of screens of scrolling -->
-<a class="btn btn--secondary icon-btn to-top" href="#${mainId}" data-to-top hidden title="${L.toTop}"><span aria-hidden="true">↑</span><span class="sr-only">${L.toTop}</span></a>
+<a class="btn btn--secondary icon-btn to-top" href="#${mainId}" data-to-top hidden title="${L.toTop}"><span class="icon icon--up" aria-hidden="true"></span><span class="sr-only">${L.toTop}</span></a>
 
 ${reserveDialog()}
 
