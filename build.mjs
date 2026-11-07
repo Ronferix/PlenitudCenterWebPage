@@ -13,6 +13,10 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const SITE_URL = 'https://ronferix.github.io/PlenitudCenterWebPage/';
+/* While prices, photos and testimonials are samples, search engines are asked not to index
+   the site (so sample content never shows next to the real name, address and phones).
+   Set to false the day the content is real. */
+const DEMO = true;
 const terapiasData = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/terapias.json'), 'utf8'));
 const productosData = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/productos.json'), 'utf8'));
 const { categories, terapias } = terapiasData;
@@ -51,9 +55,14 @@ const UI = {
     waOrder: (prod, variant, price) => `Hola, quiero pedir: ${prod}${variant ? ` (${variant})` : ''}${price ? ` · ${price}` : ''}. ¿Está disponible?`,
     waHello: 'Hola, quisiera información sobre Plenitud Center.',
     waLangNote: '',
+    seo: { locale: 'es_MX', home: 'Inicio', city: 'Zapopan',
+      therapyTitle: (n) => `${n} en Zapopan · Plenitud Center`,
+      therapyDesc: (summary, duration, price) => `${summary} Sesión de ${duration}${price ? ` · ${price}` : ''}, con cita de lunes a sábado en Zapopan. Reserva por WhatsApp.`,
+      productTitle: (n) => `${n} · Plenitud Center, Zapopan`,
+      productDesc: (summary, price) => `${summary}${price ? ` ${price}.` : ''} Pídelo por WhatsApp a Plenitud Center, en Zapopan, Jalisco.` },
     seeMore: 'Ver más', seeMoreAbout: 'sobre', see: 'Ver',
     home: {
-      title: 'Plenitud Center · Un lugar para volver a ti', description: 'Plenitud Center: terapias corporales, energéticas y espirituales, y productos para la práctica en casa.',
+      title: 'Terapias y bienestar en Zapopan · Plenitud Center', description: 'Masaje corporal, reiki, limpias y flores de Bach en Zapopan, Jalisco. Terapias con cita de lunes a sábado y productos para tu práctica en casa.',
       heroTitle: 'Un lugar para volver <em>a ti.</em>', heroLead: 'Un espacio de terapias corporales, energéticas y espirituales, y de productos para sostener esa práctica en casa. Llega como estás.',
       heroReserve: 'Reservar una terapia', heroSee: 'Ver terapias', more: 'Descubre más',
       offerEyebrow: 'Lo que ofrecemos', offerTitle: 'Cinco caminos, tres familias.', seeAllTherapies: 'Ver todas las terapias',
@@ -67,14 +76,14 @@ const UI = {
     },
     quote: '"Llegué cargando una semana. Salí sin ella. La sala misma se sentía paciente."', quoteBy: 'Marisol G. · Miembro desde 2024',
     therapies: {
-      title: 'Terapias · Plenitud Center', description: 'Terapias corporales, energéticas y espirituales en Plenitud Center.',
+      title: 'Terapias en Zapopan: masaje, reiki y limpias · Plenitud Center', description: 'Masaje corporal, reiki, limpia, flores de Bach y biomagnetismo en Zapopan. Precio, duración y qué esperar de cada terapia; reserva por WhatsApp.',
       h1: 'Corporal, energética, espiritual.', lead: 'Cinco formas de volver al cuerpo y al espacio personal, agrupadas por lo que trabajan primero.',
       note: 'Trae ropa cómoda. Qué traer exactamente depende de cada terapia — lo encuentras en su propia página.',
       price: 'Precio', duration: 'Duración', schedule: 'Horario', reserveThis: 'Reservar', expect: 'Qué esperar', back: '← Ver todas las terapias',
       guide: 'Te acompaña', helps: 'Ayuda con', filter: '¿Qué buscas hoy?', all: 'Todas', none: 'Ninguna terapia coincide con esa elección.',
     },
     products: {
-      title: 'Productos · Plenitud Center', description: 'Incienso, velas, resinas y herramientas rituales de Plenitud Center.',
+      title: 'Incienso, velas y copal en Zapopan · Plenitud Center', description: 'Inciensos, velas de color, copal, carbón y portainciensos para tu práctica en casa. Arma tu pedido y envíalo por WhatsApp a Plenitud Center, en Zapopan.',
       eyebrow: 'Productos', h1: 'Para la práctica en casa.', lead: 'Arma tu pedido y envíalo por WhatsApp — todavía no hay pago en línea.',
       search: 'Buscar producto', searchPh: 'Ej. vela, incienso, copal', empty: 'No hay productos que coincidan con esa búsqueda.',
       eyebrowOne: 'Producto', choose: 'Elige', orderWa: 'Pedir por WhatsApp', back: '← Ver todos los productos',
@@ -82,12 +91,12 @@ const UI = {
       related: 'También te puede gustar', seeAll: 'Ver todos los productos',
     },
     guides: {
-      title: 'Guías · Plenitud Center', description: 'El equipo que sostiene las terapias de Plenitud Center.', eyebrow: 'Guías',
+      title: 'Guías y terapeutas · Plenitud Center', description: 'Conoce a quienes guían el masaje, el reiki, las limpias y las flores de Bach en Plenitud Center, en Zapopan: su enfoque y los días en que atienden.', eyebrow: 'Guías',
       h1: 'Personas que sostienen el espacio, con amabilidad.', lead: 'Nuestro equipo es pequeño por decisión. Cada terapia la guía alguien que ha dedicado mucho tiempo a aprender a escuchar: primero a sí mismo, luego a los demás.',
       leads: 'Guía',
     },
     visit: {
-      title: 'Visita · Plenitud Center', description: 'Dirección, horario y contacto de Plenitud Center.', eyebrow: 'Visita', h1: 'Cómo llegar',
+      title: 'Cómo llegar a Plenitud Center · Zapopan', description: 'Av. Naciones Unidas 5461, Vallarta Universidad, Zapopan. Abierto de lunes a sábado de 9:00 a 16:00. Mapa, ruta, WhatsApp y teléfono.', eyebrow: 'Visita', h1: 'Cómo llegar',
       address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco.', contact: 'Contacto', contactLead: 'Por WhatsApp o llamada:',
       mapFrame: 'Mapa de Google con la ubicación de Plenitud Center', mapOpen: 'Abrir en Google Maps →',
       mapOff: 'El mapa de Google está apagado en Ajustes.', mapShow: 'Mostrar el mapa',
@@ -120,9 +129,14 @@ const UI = {
     waHello: 'Hi, I would like some information about Plenitud Center.',
     // WhatsApp messages always go out in Spanish (see whatsappLink); English pages say so next to each send button
     waLangNote: 'The message is sent in Spanish, the language our team works in.',
+    seo: { locale: 'en_US', home: 'Home', city: 'Zapopan',
+      therapyTitle: (n) => `${n} in Zapopan · Plenitud Center`,
+      therapyDesc: (summary, duration, price) => `${summary} ${duration} session${price ? ` · ${price}` : ''}, by appointment Monday to Saturday in Zapopan, Mexico. Book on WhatsApp.`,
+      productTitle: (n) => `${n} · Plenitud Center, Zapopan`,
+      productDesc: (summary, price) => `${summary}${price ? ` ${price}.` : ''} Order it on WhatsApp from Plenitud Center in Zapopan, Mexico.` },
     seeMore: 'See more', seeMoreAbout: 'about', see: 'See',
     home: {
-      title: 'Plenitud Center · A place to come back to yourself', description: 'Plenitud Center: body, energy and spiritual therapies, and products for your practice at home.',
+      title: 'Therapies and wellbeing in Zapopan · Plenitud Center', description: 'Massage, reiki, limpias and Bach flower remedies in Zapopan, Jalisco, Mexico. Therapies by appointment Monday to Saturday, and products for your practice at home.',
       heroTitle: 'A place to come back <em>to yourself.</em>', heroLead: 'A space for body, energy and spiritual therapies, and for products that support that practice at home. Come as you are.',
       heroReserve: 'Book a therapy', heroSee: 'See therapies', more: 'Discover more',
       offerEyebrow: 'What we offer', offerTitle: 'Five paths, three families.', seeAllTherapies: 'See all therapies',
@@ -136,14 +150,14 @@ const UI = {
     },
     quote: '"I arrived carrying a whole week. I left without it. The room itself felt patient."', quoteBy: 'Marisol G. · Member since 2024',
     therapies: {
-      title: 'Therapies · Plenitud Center', description: 'Body, energy and spiritual therapies at Plenitud Center.',
+      title: 'Therapies in Zapopan: massage, reiki, limpias · Plenitud Center', description: 'Body massage, reiki, limpia, Bach flowers and biomagnetism in Zapopan, Mexico. Price, length and what to expect from each therapy; book on WhatsApp.',
       h1: 'Body, energy, spirit.', lead: 'Five ways to come back to your body and your personal space, grouped by what they work on first.',
       note: 'Wear comfortable clothes. What exactly to bring depends on each therapy — you will find it on its own page.',
       price: 'Price', duration: 'Duration', schedule: 'Hours', reserveThis: 'Book', expect: 'What to expect', back: '← See all therapies',
       guide: 'Your guide', helps: 'Helps with', filter: 'What are you looking for today?', all: 'All', none: 'No therapy matches that choice.',
     },
     products: {
-      title: 'Products · Plenitud Center', description: 'Incense, candles, resins and ritual tools from Plenitud Center.',
+      title: 'Incense, candles and copal in Zapopan · Plenitud Center', description: 'Incense, colored candles, copal, charcoal and incense holders for your practice at home. Build your order and send it on WhatsApp to Plenitud Center, Zapopan.',
       eyebrow: 'Products', h1: 'For your practice at home.', lead: 'Build your order and send it on WhatsApp — there is no online payment yet.',
       search: 'Search products', searchPh: 'e.g. candle, incense, copal', empty: 'No products match that search.',
       eyebrowOne: 'Product', choose: 'Choose a', orderWa: 'Order on WhatsApp', back: '← See all products',
@@ -151,12 +165,12 @@ const UI = {
       related: 'You may also like', seeAll: 'See all products',
     },
     guides: {
-      title: 'Guides · Plenitud Center', description: 'The team behind the therapies at Plenitud Center.', eyebrow: 'Guides',
+      title: 'Guides and therapists · Plenitud Center', description: 'Meet the people who guide massage, reiki, limpias and Bach flowers at Plenitud Center in Zapopan: their focus and the days they see clients.', eyebrow: 'Guides',
       h1: 'People who hold the space, with kindness.', lead: 'Our team is small by choice. Each therapy is guided by someone who has spent a long time learning to listen: first to themselves, then to others.',
       leads: 'Guides',
     },
     visit: {
-      title: 'Visit · Plenitud Center', description: 'Address, hours and contact for Plenitud Center.', eyebrow: 'Visit', h1: 'How to get here',
+      title: 'How to get to Plenitud Center · Zapopan', description: 'Av. Naciones Unidas 5461, Vallarta Universidad, Zapopan, Mexico. Open Monday to Saturday, 9:00 to 16:00. Map, directions, WhatsApp and phone.', eyebrow: 'Visit', h1: 'How to get here',
       address: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad, 45110 Zapopan, Jalisco, Mexico.', contact: 'Contact', contactLead: 'By WhatsApp or phone:',
       mapFrame: 'Google map showing where Plenitud Center is', mapOpen: 'Open in Google Maps →',
       mapOff: 'The Google map is turned off in Settings.', mapShow: 'Show the map',
@@ -196,8 +210,11 @@ function headExtra(prefix, pagePath) {
     d.dataset.theme = (s === 'light' || s === 'dark' || s === 'high-contrast') ? s
       : (s === 'auto') ? (m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light')
       : 'light';
+    // The splash plays once per visit (browser tab session); moving between pages after that
+    // shows the page straight away.
+    try { if (sessionStorage.getItem('plenitud-seen')) d.classList.add('no-loader'); sessionStorage.setItem('plenitud-seen', '1'); } catch (e) {}
     // Arriving from the language toggle (site.js leaves a note): no splash, and the page
-    // cross-fades in; any other arrival skips the cross-fade and gets the splash as usual.
+    // cross-fades in; any other arrival skips the cross-fade.
     try { if (localStorage.getItem('plenitud-demo-ok')) d.classList.add('demo-ok'); } catch (e) {}
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
     if (sw) {
@@ -565,8 +582,13 @@ function localBusinessLd() {
     telephone: CONTACTS.map((c) => `+${c.intl}`),
     address: { '@type': 'PostalAddress', streetAddress: 'Av. Naciones Unidas 5461, Col. Vallarta Universidad', addressLocality: 'Zapopan', addressRegion: 'Jalisco', postalCode: '45110', addressCountry: 'MX' },
     openingHours: `Mo-Sa ${pad(HOURS.open)}-${pad(HOURS.close)}`,
+    openingHoursSpecification: { '@type': 'OpeningHoursSpecification', opens: pad(HOURS.open), closes: pad(HOURS.close),
+      dayOfWeek: HOURS.days.map((d) => ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][d]) },
+    hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_QUERY)}`,
+    priceRange: (() => { const ps = [...terapias, ...productos].map((x) => x.price).filter((n) => n != null); return `$${Math.min(...ps)}–$${Math.max(...ps)} MXN`; })(),
+    currenciesAccepted: 'MXN',
   };
-  return `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+  return jsonLd(data);
 }
 
 /* Short splash while the page settles: logo and name on the home page; on the rest, a
@@ -581,7 +603,51 @@ function loader(prefix, pageName) {
 </div>`;
 }
 
-function layout({ prefix, active, pagePath, title, description, bodyHtml, mainId = 'contenido', home = false }) {
+/* Search and sharing: canonical address, the demo's noindex, and the preview card that
+   WhatsApp, Facebook and others draw when someone shares a link (title, text, photo). */
+function seoHead({ pagePath, title, description, image, canonical = true }) {
+  const url = `${SITE_URL}${L.dir}${pagePath}`;
+  const big = image || 'media/espacio.jpg';   /* the original JPG: WhatsApp's preview reads JPG reliably, WebP not always */
+  const tags = [
+    DEMO ? '<meta name="robots" content="noindex, follow" />' : '',
+    canonical ? `<link rel="canonical" href="${url}" />` : '',
+    '<meta property="og:type" content="website" />',
+    '<meta property="og:site_name" content="Plenitud Center" />',
+    `<meta property="og:locale" content="${L.seo.locale}" />`,
+    `<meta property="og:title" content="${esc(title)}" />`,
+    `<meta property="og:description" content="${esc(description)}" />`,
+    canonical ? `<meta property="og:url" content="${url}" />` : '',
+    `<meta property="og:image" content="${SITE_URL}${big}" />`,
+    '<meta name="twitter:card" content="summary_large_image" />',
+  ];
+  return tags.filter(Boolean).join('\n');
+}
+
+const jsonLd = (data) => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+
+/* Home › Section › Page trail for search results, on detail pages */
+function breadcrumbLd(trail) {
+  return jsonLd({ '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: trail.map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, item: `${SITE_URL}${L.dir}${p}` })) });
+}
+
+const BUSINESS_REF = { '@type': 'HealthAndBeautyBusiness', name: 'Plenitud Center', url: SITE_URL };
+
+function serviceLd(t) {
+  return jsonLd({ '@context': 'https://schema.org', '@type': 'Service', name: tr(t, 'name'), description: tr(t, 'body'),
+    serviceType: catName(t.category), provider: BUSINESS_REF, areaServed: { '@type': 'City', name: 'Zapopan' },
+    url: `${SITE_URL}${L.dir}terapias/${t.slug}/`, ...(t.image ? { image: `${SITE_URL}${t.image.file}` } : {}),
+    ...(t.price != null ? { offers: { '@type': 'Offer', price: t.price, priceCurrency: 'MXN' } } : {}) });
+}
+
+function productLd(p) {
+  return jsonLd({ '@context': 'https://schema.org', '@type': 'Product', name: tr(p, 'name'), description: tr(p, 'summary'),
+    brand: { '@type': 'Brand', name: 'Plenitud Center' }, url: `${SITE_URL}${L.dir}productos/${p.slug}/`,
+    ...(p.image ? { image: `${SITE_URL}${p.image.file}` } : {}),
+    ...(p.price != null ? { offers: { '@type': 'Offer', price: p.price, priceCurrency: 'MXN', seller: BUSINESS_REF } } : {}) });
+}
+
+function layout({ prefix, active, pagePath, title, description, bodyHtml, mainId = 'contenido', home = false, name, image, ld = '', canonical = true }) {
   return `<!doctype html>
 <html lang="${L.htmlLang}" data-theme="light">
 <head>
@@ -589,10 +655,11 @@ function layout({ prefix, active, pagePath, title, description, bodyHtml, mainId
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}" />
-${headExtra(prefix, pagePath)}${pagePath === '' || pagePath === 'visita/' ? `\n${localBusinessLd()}` : ''}
+${seoHead({ pagePath, title, description, image, canonical })}
+${headExtra(prefix, pagePath)}${pagePath === '' || pagePath === 'visita/' ? `\n${localBusinessLd()}` : ''}${ld ? `\n${ld}` : ''}
 </head>
 <body${home ? ' class="is-home"' : ''}>
-${loader(prefix, pagePath ? title.split(' · ')[0] : '')}
+${loader(prefix, pagePath ? (name ?? title.split(' · ')[0]) : '')}
 <a class="skip-link" href="#${mainId}">${L.skip}</a>
 ${demoNotice()}
 
@@ -824,6 +891,10 @@ ${expectItems}
         <p class="caption"><a href="${prefix}terapias/">${T.back}</a></p>
       </div>
     </div>
+    <div class="reserve-bar" data-reserve-bar hidden>
+      <p class="reserve-bar__meta">${t.price != null ? `<span>${money(t.price)}</span>` : ''}${t.duration ? `<span class="reserve-bar__time">${esc(t.duration)}</span>` : ''}</p>
+      <button class="btn btn--primary" type="button" data-reserve data-session="${esc(t.slug)}">${T.reserveThis}<span class="sr-only"> ${esc(name)}</span></button>
+    </div>
   </section>`;
 }
 
@@ -1026,16 +1097,25 @@ function build(lang) {
   const page = (pagePath, depth, opts) => write(out(pagePath), layout({ prefix: prefixFor(depth), pagePath, ...opts }));
 
   page('', 0, { active: null, title: L.home.title, description: L.home.description, bodyHtml: homeBody(prefixFor(0)), home: true });
-  page('terapias/', 1, { active: 'terapias', title: L.therapies.title, description: L.therapies.description, bodyHtml: terapiasIndexBody(prefixFor(1)) });
+  page('terapias/', 1, { active: 'terapias', name: L.nav.terapias, title: L.therapies.title, description: L.therapies.description, bodyHtml: terapiasIndexBody(prefixFor(1)) });
+  const S = L.seo;
   for (const t of terapias) {
-    page(`terapias/${t.slug}/`, 2, { active: 'terapias', title: `${tr(t, 'name')} · Plenitud Center`, description: tr(t, 'summary'), bodyHtml: terapiaDetailBody(prefixFor(2), t) });
+    const n = tr(t, 'name');
+    page(`terapias/${t.slug}/`, 2, { active: 'terapias', name: n, title: S.therapyTitle(n), image: t.image?.file,
+      description: S.therapyDesc(tr(t, 'summary'), t.duration, t.price != null ? money(t.price) : ''),
+      ld: `${serviceLd(t)}\n${breadcrumbLd([[S.home, ''], [L.nav.terapias, 'terapias/'], [n, `terapias/${t.slug}/`]])}`,
+      bodyHtml: terapiaDetailBody(prefixFor(2), t) });
   }
-  page('productos/', 1, { active: 'productos', title: L.products.title, description: L.products.description, bodyHtml: productosIndexBody(prefixFor(1)) });
+  page('productos/', 1, { active: 'productos', name: L.nav.productos, title: L.products.title, description: L.products.description, bodyHtml: productosIndexBody(prefixFor(1)) });
   for (const p of productos) {
-    page(`productos/${p.slug}/`, 2, { active: 'productos', title: `${tr(p, 'name')} · Plenitud Center`, description: tr(p, 'summary'), bodyHtml: productoDetailBody(prefixFor(2), p) });
+    const n = tr(p, 'name');
+    page(`productos/${p.slug}/`, 2, { active: 'productos', name: n, title: S.productTitle(n), image: p.image?.file,
+      description: S.productDesc(tr(p, 'summary'), p.price != null ? money(p.price) : ''),
+      ld: `${productLd(p)}\n${breadcrumbLd([[S.home, ''], [L.nav.productos, 'productos/'], [n, `productos/${p.slug}/`]])}`,
+      bodyHtml: productoDetailBody(prefixFor(2), p) });
   }
-  page('guias/', 1, { active: 'guias', title: L.guides.title, description: L.guides.description, bodyHtml: guiasBody(prefixFor(1)) });
-  page('visita/', 1, { active: 'visita', title: L.visit.title, description: L.visit.description, bodyHtml: visitaBody(prefixFor(1)) });
+  page('guias/', 1, { active: 'guias', name: L.nav.guias, title: L.guides.title, description: L.guides.description, bodyHtml: guiasBody(prefixFor(1)) });
+  page('visita/', 1, { active: 'visita', name: L.nav.visita, title: L.visit.title, description: L.visit.description, bodyHtml: visitaBody(prefixFor(1)) });
 
   console.log(`${L.built} (${lang}): 1 inicio, 1 terapias/ + ${terapias.length}, 1 productos/ + ${productos.length}, guías, visita.`);
 }
@@ -1047,7 +1127,7 @@ for (const lang of Object.keys(UI)) build(lang);
 {
   LANG = 'es'; L = UI.es;
   const N = L.notFound;
-  write('404.html', layout({ prefix: SITE_URL, pagePath: '', active: null, title: N.title, description: N.lead, bodyHtml: `  <section class="section" aria-labelledby="nf-h1">
+  write('404.html', layout({ prefix: SITE_URL, pagePath: '', active: null, canonical: false, title: N.title, description: N.lead, bodyHtml: `  <section class="section" aria-labelledby="nf-h1">
     <div class="container container--narrow not-found">
       <p class="label eyebrow">404</p>
       <h1 class="display-h1" id="nf-h1">${N.h1}</h1>
@@ -1060,4 +1140,16 @@ for (const lang of Object.keys(UI)) build(lang);
       <p class="body" lang="en">${N.en} <a href="${SITE_URL}en/">${N.enLink}</a>.</p>
     </div>
   </section>` }));
+}
+
+/* Sitemap (with each page's Spanish/English pair) and robots.txt. On GitHub Pages the site
+   lives in a subfolder, so search engines only read robots.txt at the domain root: submit
+   sitemap.xml in Search Console instead. Both work as they are once the site has its own domain. */
+{
+  const paths = ['', 'terapias/', ...terapias.map((t) => `terapias/${t.slug}/`), 'productos/', ...productos.map((p) => `productos/${p.slug}/`), 'guias/', 'visita/'];
+  const today = new Date().toISOString().slice(0, 10);
+  const alt = (p) => ['es', 'en'].map((l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${SITE_URL}${UI[l].dir}${p}"/>`).join('\n');
+  const urls = paths.flatMap((p) => ['es', 'en'].map((l) => `  <url>\n    <loc>${SITE_URL}${UI[l].dir}${p}</loc>\n    <lastmod>${today}</lastmod>\n${alt(p)}\n  </url>`));
+  write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`);
+  write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}sitemap.xml\n`);
 }

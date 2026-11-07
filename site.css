@@ -382,7 +382,7 @@ code { font-size: 0.9em; }
    The pre-paint script marks <html> when the visitor arrives from the language toggle:
    no splash, no re-opening animation for Settings, and the two pages cross-fade
    (cross-document view transition; browsers without it simply change page). */
-html.lang-switched .loader { display: none; }
+html.lang-switched .loader, html.no-loader .loader { display: none; }
 /* Settings fades away before the language changes (site.js adds .is-closing) */
 .dialog.is-closing, .dialog.is-closing::backdrop { animation: settings-out 220ms var(--ease-calm) forwards; }
 @keyframes settings-out { to { opacity: 0; } }
@@ -467,3 +467,23 @@ html.lang-switched .loader { display: none; }
 .to-top { position: fixed; right: var(--space-4); bottom: var(--space-4); z-index: 60; background: var(--bg-elevated); box-shadow: var(--shadow-lg); height: var(--target-min); }
 body:has(.cart-fab:not([hidden]), .wa-fab) .to-top { bottom: calc(var(--space-4) + 4rem); }
 body:has(.nav__panel.is-open) .to-top { display: none; }
+/* Below wide screens the page runs edge to edge, so a second floating button would sit on top
+   of cards and buttons; phones also scroll to the top by tapping the status bar. */
+@media (max-width: 63.99rem) { .to-top { display: none; } }
+
+/* ---------- Therapy pages on phones: a Book bar once the main button scrolls away ----------
+   site.js shows it (removes [hidden]) while the main button is above the screen. */
+.reserve-bar { display: none; }
+@media (max-width: 55.99rem) {
+  .reserve-bar:not([hidden]) { position: fixed; z-index: 60; inset-inline: var(--space-4); bottom: var(--space-4);
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-5);
+    background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--r-pill); box-shadow: var(--shadow-lg); }
+  .reserve-bar__meta { display: grid; margin: 0; font-size: 1rem; font-weight: 500; line-height: 1.3; color: var(--fg); font-variant-numeric: lining-nums tabular-nums; }
+  .reserve-bar__time { font-size: 0.875rem; font-weight: 400; color: var(--fg-soft); }
+  .reserve-bar .btn { flex: none; }
+  body:has(.reserve-bar:not([hidden])) .wa-fab { display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .reserve-bar:not([hidden]) { animation: demo-rise var(--dur-base) var(--ease-rise) both; }
+  }
+}

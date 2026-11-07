@@ -3,8 +3,18 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Incense sticks · Plenitud Center</title>
-<meta name="description" content="Incense sticks in three scents." />
+<title>Incense sticks · Plenitud Center, Zapopan</title>
+<meta name="description" content="Incense sticks in three scents. $45 MXN. Order it on WhatsApp from Plenitud Center in Zapopan, Mexico." />
+<meta name="robots" content="noindex, follow" />
+<link rel="canonical" href="https://ronferix.github.io/PlenitudCenterWebPage/en/productos/inciensos/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Plenitud Center" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Incense sticks · Plenitud Center, Zapopan" />
+<meta property="og:description" content="Incense sticks in three scents. $45 MXN. Order it on WhatsApp from Plenitud Center in Zapopan, Mexico." />
+<meta property="og:url" content="https://ronferix.github.io/PlenitudCenterWebPage/en/productos/inciensos/" />
+<meta property="og:image" content="https://ronferix.github.io/PlenitudCenterWebPage/media/inciensos.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
 <script>
   (function () {
     var d = document.documentElement, s = null;
@@ -14,8 +24,11 @@
     d.dataset.theme = (s === 'light' || s === 'dark' || s === 'high-contrast') ? s
       : (s === 'auto') ? (m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light')
       : 'light';
+    // The splash plays once per visit (browser tab session); moving between pages after that
+    // shows the page straight away.
+    try { if (sessionStorage.getItem('plenitud-seen')) d.classList.add('no-loader'); sessionStorage.setItem('plenitud-seen', '1'); } catch (e) {}
     // Arriving from the language toggle (site.js leaves a note): no splash, and the page
-    // cross-fades in; any other arrival skips the cross-fade and gets the splash as usual.
+    // cross-fades in; any other arrival skips the cross-fade.
     try { if (localStorage.getItem('plenitud-demo-ok')) d.classList.add('demo-ok'); } catch (e) {}
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
     if (sw) {
@@ -42,7 +55,9 @@
 <link rel="preload" href="../../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../../../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../../../site.css?v=ad3d399a" />
+<link rel="stylesheet" href="../../../site.css?v=b936bfad" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Incense sticks","description":"Incense sticks in three scents.","brand":{"@type":"Brand","name":"Plenitud Center"},"url":"https://ronferix.github.io/PlenitudCenterWebPage/en/productos/inciensos/","image":"https://ronferix.github.io/PlenitudCenterWebPage/media/inciensos.jpg","offers":{"@type":"Offer","price":45,"priceCurrency":"MXN","seller":{"@type":"HealthAndBeautyBusiness","name":"Plenitud Center","url":"https://ronferix.github.io/PlenitudCenterWebPage/"}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ronferix.github.io/PlenitudCenterWebPage/en/"},{"@type":"ListItem","position":2,"name":"Products","item":"https://ronferix.github.io/PlenitudCenterWebPage/en/productos/"},{"@type":"ListItem","position":3,"name":"Incense sticks","item":"https://ronferix.github.io/PlenitudCenterWebPage/en/productos/inciensos/"}]}</script>
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -307,7 +322,7 @@
   </div>
 </dialog>
 
-<script src="../../../site.js?v=4dd51d42"></script>
+<script src="../../../site.js?v=1eb9b95e"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

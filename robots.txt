@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ronferix.github.io/PlenitudCenterWebPage/sitemap.xml

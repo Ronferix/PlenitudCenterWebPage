@@ -3,8 +3,18 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Limpia (energy cleansing) · Plenitud Center</title>
-<meta name="description" content="A ritual cleansing of your personal energy space." />
+<title>Limpia (energy cleansing) in Zapopan · Plenitud Center</title>
+<meta name="description" content="A ritual cleansing of your personal energy space. 40 min session · $450 MXN, by appointment Monday to Saturday in Zapopan, Mexico. Book on WhatsApp." />
+<meta name="robots" content="noindex, follow" />
+<link rel="canonical" href="https://ronferix.github.io/PlenitudCenterWebPage/en/terapias/limpia/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Plenitud Center" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Limpia (energy cleansing) in Zapopan · Plenitud Center" />
+<meta property="og:description" content="A ritual cleansing of your personal energy space. 40 min session · $450 MXN, by appointment Monday to Saturday in Zapopan, Mexico. Book on WhatsApp." />
+<meta property="og:url" content="https://ronferix.github.io/PlenitudCenterWebPage/en/terapias/limpia/" />
+<meta property="og:image" content="https://ronferix.github.io/PlenitudCenterWebPage/media/limpia.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
 <script>
   (function () {
     var d = document.documentElement, s = null;
@@ -14,8 +24,11 @@
     d.dataset.theme = (s === 'light' || s === 'dark' || s === 'high-contrast') ? s
       : (s === 'auto') ? (m('(prefers-contrast: more)') ? 'high-contrast' : m('(prefers-color-scheme: dark)') ? 'dark' : 'light')
       : 'light';
+    // The splash plays once per visit (browser tab session); moving between pages after that
+    // shows the page straight away.
+    try { if (sessionStorage.getItem('plenitud-seen')) d.classList.add('no-loader'); sessionStorage.setItem('plenitud-seen', '1'); } catch (e) {}
     // Arriving from the language toggle (site.js leaves a note): no splash, and the page
-    // cross-fades in; any other arrival skips the cross-fade and gets the splash as usual.
+    // cross-fades in; any other arrival skips the cross-fade.
     try { if (localStorage.getItem('plenitud-demo-ok')) d.classList.add('demo-ok'); } catch (e) {}
     var sw = null; try { sw = sessionStorage.getItem('plenitud-lang-switch'); } catch (e) {}
     if (sw) {
@@ -42,7 +55,9 @@
 <link rel="preload" href="../../../design-system/fonts/Jost-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="../../../design-system/colors_and_type.css?v=a0ee520b" />
 <link rel="stylesheet" href="../../../design-system/components.css?v=c95e0146" />
-<link rel="stylesheet" href="../../../site.css?v=ad3d399a" />
+<link rel="stylesheet" href="../../../site.css?v=b936bfad" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Limpia (energy cleansing)","description":"A ritual practice to clear what builds up in your personal space — thoughts, burdens, the residue of everyday life — and start again from a clearer place.","serviceType":"Spiritual","provider":{"@type":"HealthAndBeautyBusiness","name":"Plenitud Center","url":"https://ronferix.github.io/PlenitudCenterWebPage/"},"areaServed":{"@type":"City","name":"Zapopan"},"url":"https://ronferix.github.io/PlenitudCenterWebPage/en/terapias/limpia/","image":"https://ronferix.github.io/PlenitudCenterWebPage/media/limpia.jpg","offers":{"@type":"Offer","price":450,"priceCurrency":"MXN"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ronferix.github.io/PlenitudCenterWebPage/en/"},{"@type":"ListItem","position":2,"name":"Therapies","item":"https://ronferix.github.io/PlenitudCenterWebPage/en/terapias/"},{"@type":"ListItem","position":3,"name":"Limpia (energy cleansing)","item":"https://ronferix.github.io/PlenitudCenterWebPage/en/terapias/limpia/"}]}</script>
 </head>
 <body>
 <div class="loader" aria-hidden="true">
@@ -111,6 +126,10 @@
         </ol>
         <p class="caption"><a href="../../terapias/">← See all therapies</a></p>
       </div>
+    </div>
+    <div class="reserve-bar" data-reserve-bar hidden>
+      <p class="reserve-bar__meta"><span>$450 MXN</span><span class="reserve-bar__time">40 min</span></p>
+      <button class="btn btn--primary" type="button" data-reserve data-session="limpia">Book<span class="sr-only"> Limpia (energy cleansing)</span></button>
     </div>
   </section>
 </main>
@@ -259,7 +278,7 @@
   </div>
 </dialog>
 
-<script src="../../../site.js?v=4dd51d42"></script>
+<script src="../../../site.js?v=1eb9b95e"></script>
 <span id="page-ready" hidden></span>
 </body>
 </html>

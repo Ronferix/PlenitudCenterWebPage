@@ -439,6 +439,17 @@
     placeToTop();
   }
 
+  /* ---------- Therapy pages: Book bar while the main Book button is above the screen ----------
+     (CSS draws it on phones only.) Below the button, never above it, so it doesn't repeat
+     the button while it is still in view. */
+  var bar2 = $('[data-reserve-bar]'), mainCta = $('.detail__cta');
+  if (bar2 && mainCta && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      var e = entries[0];
+      bar2.hidden = e.isIntersecting || e.boundingClientRect.top > 0;
+    }, { rootMargin: '-96px 0px 0px 0px' }).observe(mainCta);   /* under the floating nav bar counts as gone */
+  }
+
   /* ---------- Booking dialog (native <dialog>) ---------- */
   var dlg = $('#reserve'), form = $('#reserve-form');
   if (!dlg || typeof dlg.showModal !== 'function') return;
