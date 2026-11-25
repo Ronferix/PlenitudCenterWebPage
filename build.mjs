@@ -12,7 +12,13 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
-const SITE_URL = 'https://ronferix.github.io/PlenitudCenterWebPage/';
+/* The one official address of the site: canonical links, sitemap, robots.txt, share previews and
+   search-engine data all hang from it. Change it here (or run `SITE_URL=https://… node build.mjs`)
+   when the site moves; nothing else in the code names a host. */
+const SITE_URL = (process.env.SITE_URL || 'https://ronferix.github.io/PlenitudCenterWebPage/').replace(/\/*$/, '/');
+/* Same address without the host ("/" at a domain root, "/PlenitudCenterWebPage/" on GitHub Pages):
+   lets 404.html load its files from whichever host serves it. */
+const SITE_PATH = new URL(SITE_URL).pathname;
 /* While prices, photos and testimonials are samples, search engines are asked not to index
    the site (so sample content never shows next to the real name, address and phones).
    Set to false the day the content is real. */
@@ -27,7 +33,8 @@ const prefixFor = (depth) => '../'.repeat(depth);
 
 // GitHub Pages lets browsers keep CSS/JS for 10 minutes, so a fresh page could run last
 // deploy's script. Each asset URL carries a hash of its contents: new contents, new URL.
-const versioned = (file) => `${file}?v=${createHash('sha1').update(fs.readFileSync(path.join(ROOT, file))).digest('hex').slice(0, 8)}`;
+// Line endings are evened out first: a Windows checkout (CRLF) must give the same hash as Linux.
+const versioned = (file) => `${file}?v=${createHash('sha1').update(fs.readFileSync(path.join(ROOT, file), 'utf8').replace(/\r\n/g, '\n')).digest('hex').slice(0, 8)}`;
 
 function write(relPath, html) {
   const full = path.join(ROOT, relPath);
@@ -1122,22 +1129,23 @@ function build(lang) {
 
 for (const lang of Object.keys(UI)) build(lang);
 
-/* GitHub Pages serves 404.html for any missing address, at whatever depth, so every link
-   on it is absolute (SITE_URL). Spanish page with an English line for English visitors. */
+/* GitHub Pages and Vercel serve 404.html for any missing address, at whatever depth, so every
+   link on it starts at the site root (SITE_PATH) instead of being relative. Root-relative, not
+   absolute: the page then works on whichever host serves it. Spanish page with an English line. */
 {
   LANG = 'es'; L = UI.es;
   const N = L.notFound;
-  write('404.html', layout({ prefix: SITE_URL, pagePath: '', active: null, canonical: false, title: N.title, description: N.lead, bodyHtml: `  <section class="section" aria-labelledby="nf-h1">
+  write('404.html', layout({ prefix: SITE_PATH, pagePath: '', active: null, canonical: false, title: N.title, description: N.lead, bodyHtml: `  <section class="section" aria-labelledby="nf-h1">
     <div class="container container--narrow not-found">
       <p class="label eyebrow">404</p>
       <h1 class="display-h1" id="nf-h1">${N.h1}</h1>
       <p class="lead">${N.lead}</p>
       <div class="hero__actions not-found__actions">
-        <a class="btn btn--primary btn--lg" href="${SITE_URL}">${N.home}</a>
-        <a class="btn btn--secondary btn--lg" href="${SITE_URL}terapias/">${L.home.heroSee}</a>
-        <a class="btn btn--secondary btn--lg" href="${SITE_URL}productos/">${L.home.seeProducts}</a>
+        <a class="btn btn--primary btn--lg" href="${SITE_PATH}">${N.home}</a>
+        <a class="btn btn--secondary btn--lg" href="${SITE_PATH}terapias/">${L.home.heroSee}</a>
+        <a class="btn btn--secondary btn--lg" href="${SITE_PATH}productos/">${L.home.seeProducts}</a>
       </div>
-      <p class="body" lang="en">${N.en} <a href="${SITE_URL}en/">${N.enLink}</a>.</p>
+      <p class="body" lang="en">${N.en} <a href="${SITE_PATH}en/">${N.enLink}</a>.</p>
     </div>
   </section>` }));
 }
